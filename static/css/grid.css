@@ -3,13 +3,15 @@
     GRID COLORS
 */
 
-/* colors
-
- dfc27d #yellowish
-            .style('fill', '#35978f')
-            .style('stroke', '#01665e')
-
- */
+#logo-container {
+    left: 39vw;
+    top: 39vh;
+    width: 20vw;
+    height: 20vh;
+    border: thin solid grey;
+    position: relative;
+    background: white;
+}
 
 
 /* background color */
