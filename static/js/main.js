@@ -1,19 +1,19 @@
 //
 
-
-
 function explore(){
     console.log('clicked')
     d3.select("#logo-container")
         .style("left","39vw")
         .style("top", "39vh")
+        .style("height", "20vh")
 
-        .transition()
-        .duration(500)
-        .style("left", "0vw")
 
         .transition()
         .duration(1000)
+        .style("left", "0vw")
+
+        .transition()
+        .duration(500)
         .style("top", "0vh")
 
 
@@ -26,3 +26,6 @@ function explore(){
         .style("border-left", "0px")
 
 }
+
+let vis = new Vis("vis-container")
+

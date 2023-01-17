@@ -6,11 +6,18 @@
 #logo-container {
     left: 39vw;
     top: 39vh;
-    width: 20vw;
+    width: 25vw;
     height: 20vh;
     border: thin solid grey;
     position: relative;
     background: white;
+}
+
+#vis-container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 

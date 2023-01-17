@@ -1,12 +1,8 @@
 class Vis {
 
     // constructor method to initialize Timeline object
-    constructor(parentElement, data) {
+    constructor(parentElement) {
         this.parentElement = parentElement;
-        this.data = data;
-        this.filteredData = []
-        this.wrangledDate = []
-        this.stopWordsSwitch = true
 
         // call initVis method
         this.initVis()
@@ -15,9 +11,13 @@ class Vis {
     initVis(){
         let vis = this;
 
-        vis.margin = {top: 10, right: 30, bottom: 50, left: 10};
-        vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-        vis.height = $("#" + vis.parentElement).height()*5 - vis.margin.top - vis.margin.bottom;
+        vis.margin = {top: 0, right: 0, bottom: 0, left: 0};
+        vis.width = $("#" + vis.parentElement).width()- vis.margin.left - vis.margin.right;
+        vis.height = $("#" + vis.parentElement).height() - vis.margin.top - vis.margin.bottom;
+
+
+        console.log($("#" + vis.parentElement).width(), document.querySelector("#" + vis.parentElement).getBoundingClientRect(), document.querySelector("#" + vis.parentElement).getClientRects())
+
 
         // init drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -34,19 +34,25 @@ class Vis {
         //     .attr('transform', `translate(${vis.width / 2}, -15)`)
         //     .attr('text-anchor', 'middle');
 
+        vis.allRect = vis.svg.append("rect")
+            .attr("width", vis.width)
+            .attr("height", vis.height)
+            .style('fill', 'red')
+
+        console.log('232')
 
         // tooltip
-        vis.tooltip = d3.select("body").append('div')
-            .attr('class', "tooltip")
-            .attr('id', 'distributionTooltip')
+        // vis.tooltip = d3.select("body").append('div')
+        //     .attr('class', "tooltip")
+        //     .attr('id', 'distributionTooltip')
 
         // axis groups
-        vis.xAxisGroup = vis.svg.append('g')
-            .attr('class', 'axis x-axis')
-            .attr('transform', `translate (0,${vis.height})`);
-
-        vis.yAxisGroup = vis.svg.append('g')
-            .attr('class', 'axis y-axis');
+        // vis.xAxisGroup = vis.svg.append('g')
+        //     .attr('class', 'axis x-axis')
+        //     .attr('transform', `translate (0,${vis.height})`);
+        //
+        // vis.yAxisGroup = vis.svg.append('g')
+        //     .attr('class', 'axis y-axis');
 
         // having initialized the map, move on to wrangle data
         // this.wrangleData();
