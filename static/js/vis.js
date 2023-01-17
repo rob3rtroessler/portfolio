@@ -11,13 +11,29 @@ class Vis {
     initVis(){
         let vis = this;
 
-        vis.margin = {top: 0, right: 0, bottom: 0, left: 0};
+        // relative margins
+        vis.margin =
+            {
+            top: $("#" + vis.parentElement).height()/50,
+            right: $("#" + vis.parentElement).width()/50,
+            bottom: $("#" + vis.parentElement).height()/50,
+            left: $("#" + vis.parentElement).width()/50
+            };
+
         vis.width = $("#" + vis.parentElement).width()- vis.margin.left - vis.margin.right;
         vis.height = $("#" + vis.parentElement).height() - vis.margin.top - vis.margin.bottom;
 
+        // calculations
+        vis.visHeight =  vis.height * 0.66
+        vis.semesters = {bs: 7, ma: 4, phd: 16}
+        vis.totalElements = vis.semesters.bs + 1 + vis.semesters.ma + 1 + vis.semesters.phd
 
-        console.log($("#" + vis.parentElement).width(), document.querySelector("#" + vis.parentElement).getBoundingClientRect(), document.querySelector("#" + vis.parentElement).getClientRects())
+        vis.bs_width = vis.semesters.bs/vis.totalElements
+        vis.ma_width = vis.semesters.ma/vis.totalElements
+        vis.phd_width = vis.semesters.phd/vis.totalElements
 
+        vis.ma_start = (vis.semesters.bs + 1)/vis.totalElements * vis.width
+        vis.phd_start = (vis.semesters.bs + 1 + vis.semesters.ma + 1)/ vis.totalElements * vis.width
 
         // init drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -26,25 +42,49 @@ class Vis {
             .append('g')
             .attr('transform', `translate (${vis.margin.left}, ${vis.margin.top})`);
 
-        // add title
-        // vis.svg.append('g')
-        //     .attr('class', 'title bar-title')
-        //     .append('text')
-        //     .text('most frequent words')
-        //     .attr('transform', `translate(${vis.width / 2}, -15)`)
-        //     .attr('text-anchor', 'middle');
 
-        vis.allRect = vis.svg.append("rect")
-            .attr("width", vis.width)
-            .attr("height", vis.height)
-            .style('fill', 'red')
+        // groups
+        vis.bs_group = vis.svg
+            .append('g')
+            .attr('transform', `translate (${0}, ${vis.margin.top})`);
 
-        console.log('232')
+        vis.ma_group = vis.svg
+            .append('g')
+            .attr('transform', `translate (${vis.ma_start}, ${vis.margin.top})`);
 
-        // tooltip
-        // vis.tooltip = d3.select("body").append('div')
-        //     .attr('class', "tooltip")
-        //     .attr('id', 'distributionTooltip')
+        vis.phd_group = vis.svg
+            .append('g')
+            .attr('transform', `translate (${vis.phd_start}, ${vis.margin.top})`);
+
+
+        // rects
+        vis.bs_group.append('rect')
+            .attr("width", vis.bs_width * vis.width)
+            .attr("height", vis.visHeight)
+            .attr("rx", "5")
+            .style('fill', 'rgba(218,218,218,0.76)')
+            .style('stroke', 'black')
+            .style('stroke-width', '0.5px')
+
+        vis.ma_group.append('rect')
+            .attr("width", vis.ma_width * vis.width)
+            .attr("height", vis.visHeight)
+            .attr("rx", "5")
+            .style('fill', 'rgba(218,218,218,0.76)')
+            .style('stroke', 'black')
+            .style('stroke-width', '0.5px')
+
+        vis.phd_group.append('rect')
+            .attr("width", vis.phd_width * vis.width)
+            .attr("height", vis.visHeight)
+            .attr("rx", "5")
+            .style('fill', 'rgba(218,218,218,0.76)')
+            .style('stroke', 'black')
+            .style('stroke-width', '0.5px')
+
+
+
+        // axis
 
         // axis groups
         // vis.xAxisGroup = vis.svg.append('g')
