@@ -25,6 +25,8 @@ function explore(){
         .style("border-bottom", "0px")
         .style("border-left", "0px")
 
+    // vis.phd_group.attr("opacity", 1).transition().duration(1000).attr("opacity", 0).transition().duration(1000).attr("opacity", 1)
+
 }
 
 let vis = new Vis("vis-container")
