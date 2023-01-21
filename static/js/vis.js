@@ -114,7 +114,7 @@ class Vis {
         // phd circle #1
         vis.phd_group.append('circle')
             .attr("cx", vis.phd_width * vis.width / 2 - vis.circle_radius * 3 / 2)
-            .attr("cy", vis.visHeight * 0.8)
+            .attr("cy", vis.visHeight * 0.88)
             .attr("r", vis.circle_radius)
             .style("fill", "#ffffff")
             .style("stroke", "black")
@@ -122,7 +122,7 @@ class Vis {
         // phd circle #2
         vis.phd_group.append('circle')
             .attr("cx", vis.phd_width * vis.width / 2 + vis.circle_radius * 3 / 2)
-            .attr("cy", vis.visHeight * 0.8)
+            .attr("cy", vis.visHeight * 0.88)
             .attr("r", vis.circle_radius)
             .style("fill", "#ffffff")
             .style("stroke", "black")
@@ -143,21 +143,21 @@ class Vis {
             .attr("width", vis.circle_radius * 2)
             .style("opacity", 0.3)
 
-        // phd circle #1
+        // phd seal #1
         vis.phd_group.append('image')
             .attr('xlink:href', '/static/img/HarvardSeal.png/')
             .attr("x", vis.phd_width * vis.width / 2 - vis.circle_radius * 3 / 2 - vis.circle_radius)
-            .attr("y", vis.visHeight * 0.8 - vis.circle_radius)
+            .attr("y", vis.visHeight * 0.88 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
             .style("opacity", 0.3)
 
 
 
-        // phd circle #2
+        // phd seal #2
         vis.phd_group.append('image')
             .attr('xlink:href', '/static/img/HarvardSeal.png/')
             .attr("x", vis.phd_width * vis.width / 2 + vis.circle_radius * 3 / 2 - vis.circle_radius)
-            .attr("y", vis.visHeight * 0.8 - vis.circle_radius)
+            .attr("y", vis.visHeight * 0.88 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
             .style("opacity", 0.3)
 
@@ -183,7 +183,7 @@ class Vis {
         vis.phd_group.append('text')
             .attr("class", "degree-title")
             .attr("x", vis.phd_width *vis.width/2 - vis.circle_radius*3/2 )
-            .attr("y", vis.visHeight * 0.8)
+            .attr("y", vis.visHeight * 0.88)
             .style("text-anchor", "middle")
             .text('M.Sc.')
 
@@ -191,7 +191,7 @@ class Vis {
         vis.phd_group.append('text')
             .attr("class", "degree-title")
             .attr("x", vis.phd_width *vis.width/2 + vis.circle_radius*3/2 )
-            .attr("y", vis.visHeight * 0.8)
+            .attr("y", vis.visHeight * 0.88)
             .style("text-anchor", "middle")
             .text('Ph.D.')
 
@@ -254,7 +254,45 @@ class Vis {
 
         vis.phd_xAxisGroup.call(vis.phd_axis);
 
+        vis.drawLines()
+
+    }
+
+    drawLines(){
+
+        let vis = this;
+
+        vis.phd_lines = vis.phd_group.selectAll().data(courses)
+
+
+        const link = d3.link(d3.curveBumpY);
+
+        vis.phd_lines.enter().append("path")
+            .attr('d', d => {
+                let x_start = vis.phd_x(vis.parseDate(d.year[0])) +
+                    (vis.phd_x( vis.parseDate(d.year[1]) ) - vis.phd_x(vis.parseDate(d.year[0])))/  2;
+                let y_start = vis.visHeight * 0.66 - 11 - 15*d.z;
+                let x_end = 0;
+                if (d.degree === 'msc'){
+                    x_end =  vis.phd_width * vis.width / 2 - vis.circle_radius * 3 / 2
+
+                } else {
+                    x_end =  vis.phd_width * vis.width / 2 + vis.circle_radius * 3 / 2
+
+                }
+
+                let y_end = vis.visHeight * 0.88 - vis.circle_radius;
+
+                return link({
+                    source: [x_start, y_start],
+                    target: [x_end, y_end]
+                })
+            })
+            .style('fill', 'transparent')
+            .style('stroke', 'rgba(171,171,171,0.4)')
+
         vis.drawCourses()
+
     }
 
     drawCourses(){
@@ -262,23 +300,118 @@ class Vis {
 
         vis.phd_courses = vis.phd_group.selectAll().data(courses)
 
-        vis.phd_courses.enter().append("circle")
-            .attr("cx", vis.phd_x(vis.parseDate("03/03/2022")))
-            .attr("cy", d => vis.visHeight * 0.66 - 5 - 15*d.z)
-            .attr("r", "7")
-            .style('fill', 'rgba(185,50,50,0.76)')
+        vis.phd_courses.enter().append("rect")
+            .attr("x", d => vis.phd_x(vis.parseDate(d.year[0])))
+            .attr("y", d => vis.visHeight * 0.66 - 11 - 15*d.z)
+            .attr("width", d => {
+                let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
+                console.log(d, diff)
+                return diff
+            })
+            .attr("height", 10)
+            .style('fill', d =>{
+                let color = '#E29578'
+                if(d.degree === 'msc'){
+                    color = '#006D77'
+                }
+                return color
+            })
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
 
+        vis.drawStipends()
+    }
+
+    drawStipends(){
+        let vis = this;
+
+        vis.phd_courses = vis.phd_group.selectAll().data(courses)
+
         vis.phd_courses.enter().append("rect")
-            .attr("x", vis.phd_x(vis.parseDate("03/03/2022")))
-            .attr("y", d => vis.visHeight * 0.66 - 5 - 15*d.z)
-            .attr("width", 20)
-            .attr("height", 5)
-            .style('fill', 'rgba(185,50,50,0.76)')
+            .attr("x", d => vis.phd_x(vis.parseDate(d.year[0])))
+            .attr("y", d => vis.visHeight * 0.66 - 11 - 15*d.z)
+            .attr("width", d => {
+                let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
+                console.log(d, diff)
+                return diff
+            })
+            .attr("height", 10)
+            .style('fill', d =>{
+                let color = '#E29578'
+                if(d.degree === 'msc'){
+                    color = '#006D77'
+                }
+                return color
+            })
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
+
+        vis.drawAwards()
     }
+
+    drawAwards(){
+        let vis = this;
+
+        // add line before awards
+        vis.phd_group.append("line")
+            .attr("x1", 0)
+            .attr("y1", vis.visHeight*0.55)
+            .attr("x2", vis.phd_width*vis.width)
+            .attr("y2", vis.visHeight*0.55)
+            .style('stroke', "#707070")
+            .style('stroke-width', '0.5')
+            .style('stroke-dasharray', 5)
+
+
+        vis.phd_awards = vis.phd_group.selectAll().data(phd_awards);
+
+        vis.phd_awards.enter().append('circle')
+            .attr("cx", d => vis.phd_x(vis.parseDate(d.year)))
+            .attr("cy", d => vis.visHeight * 0.51)
+            .attr('r', 5)
+            .style('fill', d => "transparent")
+            .style('stroke', 'black')
+            .style('stroke-width', '0.5px')
+        vis.drawTeaching()
+    }
+
+    drawTeaching(){
+        let vis = this;
+
+        // add line before teaching
+        vis.phd_group.append("line")
+            .attr("x1", 0)
+            .attr("y1", vis.visHeight*0.47)
+            .attr("x2", vis.phd_width*vis.width)
+            .attr("y2", vis.visHeight*0.47)
+            .style('stroke', "#707070")
+            .style('stroke-width', '0.5')
+            .style('stroke-dasharray', 5)
+
+        vis.phd_teaching = vis.phd_group.selectAll().data(teaching)
+
+        vis.phd_teaching.enter().append("rect")
+            .attr("x", d => vis.phd_x(vis.parseDate(d.year[0])))
+            .attr("y", d => vis.visHeight * 0.46 - 11 - 15*d.z)
+            .attr("width", d => {
+                let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
+                console.log(d, diff)
+                return diff
+            })
+            .attr("height", 10)
+            //.style('fill', d => "#83C5BE")
+            .style('fill', d => "transparent")
+
+            .style('stroke', 'black')
+            .style('stroke-width', '0.5px')
+
+    }
+
+
+
+
+
+
 }
 
 
