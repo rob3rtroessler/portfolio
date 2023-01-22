@@ -226,7 +226,7 @@ let courses = [
         name: 'Data Science 1: Introduction to Data Science',
         course_number: 'CS 109a',
         degree: 'msc',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['ml', 'python', 'nlp'],
         year: ["09/01/2020", "12/13/2020"],
         z: 1
     },
@@ -244,7 +244,7 @@ let courses = [
         name: 'Data Science 2: Advanced Topics in Data Science',
         course_number: 'GERMAN 300',
         degree: 'msc',
-        skills: ['machine learning', 'natural language processing'],
+        skills: ['ml', 'python', 'nlp'],
         year: ["01/22/2021", "05/01/2021"],
         z: 1
     },
@@ -262,7 +262,7 @@ let courses = [
         name: 'Systems Development for Computational Science',
         course_number: 'APCOMP 207',
         degree: 'msc',
-        skills: ['machine learning'],
+        skills: ['ml', 'python'],
         year: ["09/01/2021", "12/13/2021"],
         z: 1
     },
@@ -290,7 +290,7 @@ let courses = [
         name: 'Quantitative Methods for Natural Language Processing',
         course_number: 'MIT 6.8610',
         degree: 'msc',
-        skills: ['machine learning', 'natural language processing'],
+        skills: ['ml', 'natural language processing', 'js'],
         year: ["09/01/2022", "12/13/2022"],
         z: 1
     },
@@ -306,7 +306,7 @@ let courses = [
         name: 'Computational Science and Engineering Capstone Project',
         course_number: 'APCOMP 297R',
         degree: 'msc',
-        skills: ['machine learning', 'visualization'],
+        skills: ['ml', 'visualization'],
         year: ["09/01/2022", "12/13/2022"],
         z: 3
     },
@@ -342,8 +342,8 @@ let teaching = [
         name: 'Beginning German I',
         course_number: 'GERM 10A',
         q_score: '4.9',
-        degree: 'phd',
-        taught_skills: ['German', 'Literature'],
+        paradigm: 'humanities',
+        taught_skills: ['germgram', 'germlit'],
         year: ["09/01/2017", "12/13/2017"],
         z: 0
     },
@@ -351,8 +351,8 @@ let teaching = [
         name: 'Digital Mary Magdalene - Paleography and Text-Editing',
         course_number: 'GERM 10A',
         q_score: 'N/A',
-        degree: 'phd',
-        taught_skills: ['Digital Humanities', 'XML', 'HTML'],
+        paradigm: 'cs',
+        taught_skills: ['dighum', 'xml', 'html'],
         year: ["09/01/2017", "12/13/2017"],
         z: 1
     },
@@ -362,8 +362,8 @@ let teaching = [
         name: 'Beginning German II',
         course_number: 'GERM 10B',
         q_score: '4.9',
-        degree: 'phd',
-        taught_skills: ['German', 'Literature'],
+        paradigm: 'humanities',
+        taught_skills: ['germlang', 'germgram', 'germlit'],
         year: ["01/22/2018", "05/01/2018"],
         z: 0
     },
@@ -371,8 +371,8 @@ let teaching = [
         name: 'Special Reading and Research: Distant Reading Karl Marx',
         course_number: 'GERM 91R',
         q_score: 'N/A',
-        degree: 'phd',
-        taught_skills: ['Digital Humanities', 'Literature'],
+        paradigm: 'cs',
+        taught_skills: ['dighum', 'germlit', 'philosophy'],
         year: ["01/22/2018", "05/01/2018"],
         z: 1
     },
@@ -382,8 +382,8 @@ let teaching = [
         name: 'Advanced German Language and Arts',
         course_number: '??',
         q_score: '4.8',
-        degree: 'phd',
-        taught_skills: ['German', 'Literature'],
+        paradigm: 'humanities',
+        taught_skills: ['germlang', 'germlit', 'history', 'arthist'],
         year: ["06/01/2018", "07/15/2018"],
         z: 0
     },
@@ -391,7 +391,7 @@ let teaching = [
         name: 'Intermediate German Language and Arts',
         course_number: '??',
         q_score: '4.8',
-        degree: 'phd',
+        paradigm: 'humanities',
         taught_skills: ['German', 'Literature'],
         year: ["06/01/2018", "07/15/2018"],
         z: 1
@@ -402,7 +402,7 @@ let teaching = [
         name: 'Intermediate German',
         course_number: 'GERM 20 II',
         q_score: '4.8',
-        degree: 'phd',
+        paradigm: 'humanities',
         taught_skills: ['German', 'Literature'],
         year: ["09/01/2018", "12/13/2018"],
         z: 0
@@ -413,7 +413,7 @@ let teaching = [
         name: 'Intensive Beginning German',
         course_number: 'GERM 10AB',
         q_score: '5.0',
-        degree: 'phd',
+        paradigm: 'humanities',
         taught_skills: ['German', 'Literature'],
         year: ["01/22/2019", "05/01/2019"],
         z: 0
@@ -424,8 +424,8 @@ let teaching = [
         name: 'Data Visualization',
         course_number: 'CS 171',
         q_score: '5.0',
-        degree: 'phd',
-        taught_skills: ['Data Visualization', 'JavaScript'],
+        paradigm: 'cs',
+        taught_skills: ['datavis', 'js'],
         year: ["09/01/2019", "12/13/2019"],
         z: 0
     },
@@ -433,8 +433,8 @@ let teaching = [
         name: 'Software Engineering in the Arts and Humanities',
         course_number: 'CS 100',
         q_score: '4.75',
-        degree: 'phd',
-        taught_skills: ['JavaScript', 'React', 'Node.JS'],
+        paradigm: 'cs',
+        taught_skills: ['js', 'react', 'nodejs'],
         year: ["09/01/2019", "12/13/2019"],
         z: 1
     },
@@ -444,8 +444,8 @@ let teaching = [
         name: 'Data in the Humanities: An Introduction to Distant Reading and Data Visualization ',
         course_number: 'CS 171',
         q_score: 'N/A',
-        degree: 'phd',
-        taught_skills: ['Data Visualization', 'JavaScript'],
+        paradigm: 'cs',
+        taught_skills: ['datavis', 'js'],
         year: ["01/06/2020", "01/20/2020"],
         z: 0
     },
@@ -454,7 +454,7 @@ let teaching = [
     {
         name: 'Intensive Beginning German',
         course_number: 'GERM 10AB-S',
-        degree: 'phd',
+        paradigm: 'humanities',
         taught_skills: ['German', 'Literature'],
         year: ["07/01/2020", "08/14/2020"],
         z: 0
@@ -464,8 +464,8 @@ let teaching = [
     {
         name: 'Data Visualization',
         course_number: 'CS 171',
-        degree: 'phd',
-        skills: ['data visualization', 'JavaScript'],
+        paradigm: 'cs',
+        taught_skills: ['datavis', 'js'],
         year: ["09/01/2020", "12/13/2020"],
         z: 0
     },
@@ -473,9 +473,9 @@ let teaching = [
     // SUMMER 2021
     {
         name: 'Intensive Beginning German',
-        course_number: 'CS 171',
-        degree: 'phd',
-        skills: ['data visualization', 'JavaScript'],
+        course_number: 'GERM 10AB-S',
+        paradigm: 'humanities',
+        taught_skills: ['germlit', 'germlang', 'germgram'],
         year: ["07/01/2021", "08/14/2021"],
         z: 0
     },
@@ -484,25 +484,25 @@ let teaching = [
     // SUMMER 2022
     {
         name: 'Intensive Beginning German',
-        course_number: 'CS 171',
-        degree: 'phd',
-        skills: ['data visualization', 'JavaScript'],
+        course_number: 'GERM 10AB-S',
+        paradigm: 'humanities',
+        taught_skills: ['data visualization', 'JavaScript'],
         year: ["07/01/2022", "08/14/2022"],
         z: 0
     },
     {
         name: 'Introdcution to Data Science',
         course_number: 'CS 171',
-        degree: 'phd',
-        skills: ['data visualization', 'JavaScript'],
+        paradigm: 'cs',
+        taught_skills: ['data visualization', 'js'],
         year: ["06/23/2022", "07/07/2022"],
         z: 1
     },
     {
         name: 'Introduction to Data Science',
         course_number: 'CS 171',
-        degree: 'phd',
-        skills: ['data visualization', 'JavaScript'],
+        paradigm: 'cs',
+        taught_skills: ['datavis', 'js'],
         year: ["07/09/2022", "07/23/2022"],
         z: 1
     },
@@ -513,8 +513,8 @@ let teaching = [
     {
         name: 'Data Visualization',
         course_number: 'CS 171',
-        degree: 'phd',
-        skills: ['data visualization', 'JavaScript'],
+        paradigm: 'cs',
+        taught_skills: ['datavis', 'JavaScript'],
         year: ["09/01/2022", "12/13/2022"],
         z: 0
     }
@@ -524,26 +524,6 @@ let teaching = [
 
 
 ]
-
-
-
-//     2022				‘Distinction in Teaching Award for Summer 2021’; Derek Bok Center, Harvard University
-// 2021			‘Dissertation Completion Fellowship’; Harvard University (special award, 35.000$)
-// ‘GSAS Support Initiative; Harvard University (special award, 6.000$)
-// ‘Distinction in Teaching Award for Fall 2020’; Derek Bok Center, Harvard University
-// 2020			‘Lost Time Funding; Harvard University (special award, 6.000$)
-// ‘Distinction in Teaching Award for Fall 2019’; Derek Bok Center, Harvard University
-// 2019			‘Term Merit Stipend’; Harvard University (special award, 14.000$)
-// ‘Pfortzheimer Fellowship’; Harvard University (special award, 5.000$)
-// ‘Summer Research Award’; Harvard University (annual award, 5.204$)
-// ‘Distinction in Teaching Award for Spring 2019’; Derek Bok Center, Harvard University
-// 			‘Distinction in Teaching Award for Fall 2018’; Derek Bok Center, Harvard University
-// 2018	‘Summer Research Award’; Harvard University (annual award, 5.204$)
-// ‘Distinction in Teaching Award for Spring 2018’; Derek Bok Center, Harvard University
-// 			‘Distinction in Teaching Award for Fall 2017’; Derek Bok Center, Harvard University
-//
-//
-
 
 let phd_awards = [
 
@@ -714,4 +694,447 @@ let phd_awards = [
         year: "01/01/2023",
         tag: 'teaching'
     },
+]
+
+let projectsAndPapers = [
+    {
+        title: 'a',
+        date: '09/01/2016',
+        timeframe: ['09/01/2015', '09/01/2016']
+    },
+    {
+        title: 'b',
+        date: '09/01/2019',
+        timeframe: ['09/01/2018', '09/01/2019']
+    }
+]
+
+let dissertationProgress = [
+
+    {
+        date: "09/01/2015",
+        pages: 0
+    },
+    {
+        date: "10/01/2015",
+        pages: 0
+    },
+    {
+        date: "11/01/2015",
+        pages: 0
+    },
+    {
+        date: "12/01/2015",
+        pages: 0
+    },
+
+    // 2016
+    {
+        date: "01/01/2016",
+        pages: 0
+    },
+    {
+        date: "02/01/2016",
+        pages: 0
+    },
+    {
+        date: "03/01/2016",
+        pages: 0
+    },
+    {
+        date: "04/01/2016",
+        pages: 0
+    },
+    {
+        date: "05/01/2016",
+        pages: 0
+    },
+    {
+        date: "06/01/2016",
+        pages: 0
+    },
+    {
+        date: "07/01/2016",
+        pages: 0
+    },
+    {
+        date: "08/01/2016",
+        pages: 0
+    },
+    {
+        date: "09/01/2016",
+        pages: 0
+    },
+    {
+        date: "10/01/2016",
+        pages: 0
+    },
+    {
+        date: "11/01/2016",
+        pages: 0
+    },
+    {
+        date: "12/01/2016",
+        pages: 0
+    },
+
+
+    // 2017
+    {
+        date: "01/01/2017",
+        pages: 0
+    },
+    {
+        date: "02/01/2017",
+        pages: 0
+    },
+    {
+        date: "03/01/2017",
+        pages: 0
+    },
+    {
+        date: "04/01/2017",
+        pages: 0
+    },
+    {
+        date: "05/01/2017",
+        pages: 0
+    },
+    {
+        date: "06/01/2017",
+        pages: 10
+    },
+    {
+        date: "07/01/2017",
+        pages: 11
+    },
+    {
+        date: "08/01/2017",
+        pages: 15
+    },
+    {
+        date: "09/01/2017",
+        pages: 15
+    },
+    {
+        date: "10/01/2017",
+        pages: 15
+    },
+    {
+        date: "11/01/2017",
+        pages: 15
+    },
+    {
+        date: "12/01/2017",
+        pages: 15
+    },
+
+
+    // 2018
+    {
+        date: "01/01/2018",
+        pages: 15
+    },
+    {
+        date: "02/01/2018",
+        pages: 15
+    },
+    {
+        date: "03/01/2018",
+        pages: 15
+    },
+    {
+        date: "04/01/2018",
+        pages: 15
+    },
+    {
+        date: "05/01/2018",
+        pages: 15
+    },
+    {
+        date: "06/01/2018",
+        pages: 15
+    },
+    {
+        date: "07/01/2018",
+        pages: 15
+    },
+    {
+        date: "08/01/2018",
+        pages: 15
+    },
+    {
+        date: "09/01/2018",
+        pages: 15
+    },
+    {
+        date: "10/01/2018",
+        pages: 15
+    },
+    {
+        date: "11/01/2018",
+        pages: 15
+    },
+    {
+        date: "12/01/2018",
+        pages: 15
+    },
+
+
+    // 2019
+    {
+        date: "01/01/2019",
+        pages: 15
+    },
+    {
+        date: "02/01/2019",
+        pages: 15
+    },
+    {
+        date: "03/01/2019",
+        pages: 15
+    },
+    {
+        date: "04/01/2019",
+        pages: 15
+    },
+    {
+        date: "05/01/2019",
+        pages: 15
+    },
+    {
+        date: "06/01/2019",
+        pages: 20
+    },
+    {
+        date: "07/01/2019",
+        pages: 25
+    },
+    {
+        date: "08/01/2019",
+        pages: 28
+    },
+    {
+        date: "09/01/2019",
+        pages: 31
+    },
+    {
+        date: "10/01/2019",
+        pages: 31
+    },
+    {
+        date: "11/01/2019",
+        pages: 31
+    },
+    {
+        date: "12/01/2019",
+        pages: 31
+    },
+
+
+    // 2020
+    {
+        date: "01/01/2020",
+        pages: 31
+    },
+    {
+        date: "02/01/2020",
+        pages: 31
+    },
+    {
+        date: "03/01/2020",
+        pages: 31
+    },
+    {
+        date: "04/01/2020",
+        pages: 31
+    },
+    {
+        date: "05/01/2020",
+        pages: 31
+    },
+    {
+        date: "06/01/2020",
+        pages: 35
+    },
+    {
+        date: "07/01/2020",
+        pages: 42
+    },
+    {
+        date: "08/01/2020",
+        pages: 48
+    },
+    {
+        date: "09/01/2020",
+        pages: 50
+    },
+    {
+        date: "10/01/2020",
+        pages: 50
+    },
+    {
+        date: "11/01/2020",
+        pages: 50
+    },
+    {
+        date: "12/01/2020",
+        pages: 50
+    },
+
+
+    // 2021
+    {
+        date: "01/01/2021",
+        pages: 31
+    },
+    {
+        date: "02/01/2021",
+        pages: 31
+    },
+    {
+        date: "03/01/2021",
+        pages: 31
+    },
+    {
+        date: "04/01/2021",
+        pages: 31
+    },
+    {
+        date: "05/01/2021",
+        pages: 31
+    },
+    {
+        date: "06/01/2021",
+        pages: 35
+    },
+    {
+        date: "07/01/2021",
+        pages: 42
+    },
+    {
+        date: "08/01/2021",
+        pages: 48
+    },
+    {
+        date: "09/01/2021",
+        pages: 50
+    },
+    {
+        date: "10/01/2021",
+        pages: 50
+    },
+    {
+        date: "11/01/2021",
+        pages: 50
+    },
+    {
+        date: "12/01/2021",
+        pages: 50
+    },
+
+
+    // 2022
+    {
+        date: "01/01/2022",
+        pages: 50
+    },
+    {
+        date: "02/01/2022",
+        pages: 50
+    },
+    {
+        date: "03/01/2022",
+        pages: 50
+    },
+    {
+        date: "04/01/2022",
+        pages: 55
+    },
+    {
+        date: "05/01/2022",
+        pages: 70
+    },
+    {
+        date: "06/01/2022",
+        pages: 85
+    },
+    {
+        date: "07/01/2022",
+        pages: 90
+    },
+    {
+        date: "08/01/2022",
+        pages: 95
+    },
+    {
+        date: "09/01/2022",
+        pages: 105
+    },
+    {
+        date: "10/01/2022",
+        pages: 110
+    },
+    {
+        date: "11/01/2022",
+        pages: 110
+    },
+    {
+        date: "12/01/2022",
+        pages: 110
+    },
+
+
+    // 2023
+    {
+        date: "01/01/2023",
+        pages: 133
+    },
+    {
+        date: "02/01/2023",
+        pages: 160
+    },
+    {
+        date: "03/01/2023",
+        pages: 200
+    }
+
+]
+
+let skills = [
+    {
+        skill_abbreviation: "ml",
+        skill_long: "Machine Learning",
+        rel_start_x: 0.0,
+        rel_end_x: 0.2,
+        row: 0
+    },
+    {
+        skill_abbreviation: "js",
+        skill_long: "JavaScript",
+        rel_start_x: 0.25,
+        rel_end_x: 0.4,
+        row: 0
+    },
+    {
+        skill_abbreviation: "python",
+        skill_long: "Python",
+        rel_start_x: 0.45,
+        rel_end_x: 0.6,
+        row: 1
+    },
+    {
+        skill_abbreviation: "tf",
+        skill_long: "TensorFlow",
+        rel_start_x: 0.65,
+        rel_end_x: 0.80,
+        row: 0
+    },
+    {
+        skill_abbreviation: "pt",
+        skill_long: "PyTorch",
+        rel_start_x: 0.85,
+        rel_end_x: 1,
+        row: 0
+    }
 ]

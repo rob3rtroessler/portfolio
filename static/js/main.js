@@ -29,5 +29,7 @@ function explore(){
 
 }
 
+
+
 let vis = new Vis("vis-container")
 
