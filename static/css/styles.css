@@ -5,3 +5,19 @@
 .clickable {
     cursor: pointer;
 }
+
+#intro-button {
+    cursor: pointer;
+    height: 5vh;
+    text-align: center;
+    background: white;
+    border: 0.5px solid black
+}
+
+#intro-button:hover{
+    height: 5vh;
+    text-align: center;
+    background: black;
+    border: 3px solid black;
+    color: white
+}

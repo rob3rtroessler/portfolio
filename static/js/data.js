@@ -7,7 +7,7 @@ let courses = [
         name: 'Special Reading and Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2015", "12/13/2015"],
         z: 0
     },
@@ -15,7 +15,7 @@ let courses = [
         name: 'Literatur, Theorie, Wissen',
         course_number: 'GERMAN 236',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2015", "12/13/2015"],
         z: 1
     },
@@ -23,7 +23,7 @@ let courses = [
         name: 'Robert Musil: Seminar',
         course_number: 'GERMAN 243',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'fin de siecle', 'histsci'],
         year: ["09/01/2015", "12/13/2015"],
         z: 2
     },
@@ -31,7 +31,7 @@ let courses = [
         name: 'Questions of Theory',
         course_number: 'ROM-STD 201',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'histsci'],
         year: ["09/01/2015", "12/13/2015"],
         z: 3
     },
@@ -41,7 +41,7 @@ let courses = [
         name: 'Social Dynamics in Twentieth-Century Modernism',
         course_number: 'GERMAN 141',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["01/22/2016", "05/01/2016"],
         z: 0
     },
@@ -49,21 +49,21 @@ let courses = [
         name: 'Skandal! Postmoderne und Dekonstruktion in Deutschland?',
         course_number: 'GERMAN 267',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'histsci'],
         year: ["01/22/2016", "05/01/2016"],
         z: 1
     },    {
         name: 'Hermeneutics and the Philology of the Flesh',
         course_number: 'GERMAN 272',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'literary theory', 'modernism', 'histsci'],
         year: ["01/22/2016", "05/01/2016"],
         z: 2
     },    {
         name: 'Figures of Orpheus: Literature, Music and Visual Arts ',
         course_number: 'COMPLIT 177',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'arthist'],
         year: ["01/22/2016", "05/01/2016"],
         z: 3
     },
@@ -88,8 +88,8 @@ let courses = [
     {
         name: 'Introduction to Computer Science',
         course_number: 'CS 50',
-        degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        degree: 'msc',
+        skills: ['python', 'c', 'js'],
         year: ["09/01/2016", "12/13/2016"],
         z: 2
     },
@@ -99,7 +99,7 @@ let courses = [
         name: 'What should or could (scholarly) knowledge look like in the 21st Century? A Knowledge Design seminar',
         course_number: 'COMPLIT 279',
         degree: 'msc',
-        skills: ['digital humanities', 'design'],
+        skills: ['dighum', 'design'],
         year: ["01/22/2017", "05/01/2017"],
         z: 0
     },
@@ -107,7 +107,7 @@ let courses = [
         name: 'Architecture and the Literary Imagination from the 19th to the 21st Century',
         course_number: 'COMPLIT 279',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["01/22/2017", "05/01/2017"],
         z: 1
     },
@@ -117,7 +117,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2017", "12/13/2017"],
         z: 0
     },
@@ -125,7 +125,7 @@ let courses = [
         name: 'Data Visualization',
         course_number: 'CS 171',
         degree: 'msc',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['datavis', 'design', 'js', 'html', 'css'],
         year: ["09/01/2017", "12/13/2017"],
         z: 1
     },
@@ -133,7 +133,7 @@ let courses = [
         name: 'Approaches to Foreign Language Teaching',
         course_number: 'GERMAN 280',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['germgram'],
         year: ["09/01/2017", "12/13/2017"],
         z: 2
     },
@@ -151,7 +151,7 @@ let courses = [
         name: 'Approaches to Foreign Language Teaching',
         course_number: 'GERMAN 280',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['teaching'],
         year: ["01/22/2018", "05/01/2018"],
         z: 1
     },
@@ -161,7 +161,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'fin de siecle', 'history of science'],
         year: ["09/01/2018", "12/13/2018"],
         z: 0
     },
@@ -169,7 +169,7 @@ let courses = [
         name: 'Software Engineering in the Arts and Humanities',
         course_number: 'CS 100',
         degree: 'msc',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['js', 'react', 'css', 'html', 'sql'],
         year: ["09/01/2018", "12/13/2018"],
         z: 1
     },
@@ -187,7 +187,7 @@ let courses = [
         name: 'Topics in Data Visualization',
         course_number: 'CS 271',
         degree: 'msc',
-        skills: ['data visualization', 'JavaScript'],
+        skills: ['datavis', 'js'],
         year: ["01/22/2019", "05/01/2019"],
         z: 1
     },
@@ -198,7 +198,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2019", "12/13/2019"],
         z: 0
     },
@@ -208,7 +208,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["01/22/2020", "05/01/2020"],
         z: 0
     },
@@ -218,7 +218,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2020", "12/13/2020"],
         z: 0
     },
@@ -226,7 +226,7 @@ let courses = [
         name: 'Data Science 1: Introduction to Data Science',
         course_number: 'CS 109a',
         degree: 'msc',
-        skills: ['ml', 'python', 'nlp'],
+        skills: ['ml', 'python', 'nlp', 'tf', 'pandas', 'scikit'],
         year: ["09/01/2020", "12/13/2020"],
         z: 1
     },
@@ -236,7 +236,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["01/22/2021", "05/01/2021"],
         z: 0
     },
@@ -244,7 +244,7 @@ let courses = [
         name: 'Data Science 2: Advanced Topics in Data Science',
         course_number: 'GERMAN 300',
         degree: 'msc',
-        skills: ['ml', 'python', 'nlp'],
+        skills: ['ml', 'python', 'nlp', 'tf', 'pandas', 'scikit'],
         year: ["01/22/2021", "05/01/2021"],
         z: 1
     },
@@ -254,7 +254,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2021", "12/13/2021"],
         z: 0
     },
@@ -272,7 +272,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["01/22/2022", "05/26/2022"],
         z: 0
     },
@@ -282,7 +282,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2022", "12/13/2022"],
         z: 0
     },
@@ -290,7 +290,7 @@ let courses = [
         name: 'Quantitative Methods for Natural Language Processing',
         course_number: 'MIT 6.8610',
         degree: 'msc',
-        skills: ['ml', 'natural language processing', 'js'],
+        skills: ['ml', 'nlp', 'js', 'pytorch'],
         year: ["09/01/2022", "12/13/2022"],
         z: 1
     },
@@ -306,7 +306,7 @@ let courses = [
         name: 'Computational Science and Engineering Capstone Project',
         course_number: 'APCOMP 297R',
         degree: 'msc',
-        skills: ['ml', 'visualization'],
+        skills: ['ml', 'visualization', 'pytorch', 'js', 'python'],
         year: ["09/01/2022", "12/13/2022"],
         z: 3
     },
@@ -445,7 +445,7 @@ let teaching = [
         course_number: 'CS 171',
         q_score: 'N/A',
         paradigm: 'cs',
-        taught_skills: ['datavis', 'js'],
+        taught_skills: ['datavis', 'js', 'python'],
         year: ["01/06/2020", "01/20/2020"],
         z: 0
     },
@@ -465,7 +465,7 @@ let teaching = [
         name: 'Data Visualization',
         course_number: 'CS 171',
         paradigm: 'cs',
-        taught_skills: ['datavis', 'js'],
+        taught_skills: ['datavis', 'js', 'html', 'css'],
         year: ["09/01/2020", "12/13/2020"],
         z: 0
     },
@@ -486,7 +486,7 @@ let teaching = [
         name: 'Intensive Beginning German',
         course_number: 'GERM 10AB-S',
         paradigm: 'humanities',
-        taught_skills: ['data visualization', 'JavaScript'],
+        taught_skills: ['germlang', 'germgram'],
         year: ["07/01/2022", "08/14/2022"],
         z: 0
     },
@@ -494,7 +494,7 @@ let teaching = [
         name: 'Introdcution to Data Science',
         course_number: 'CS 171',
         paradigm: 'cs',
-        taught_skills: ['data visualization', 'js'],
+        taught_skills: ['datavis', 'js', 'python', 'pandas'],
         year: ["06/23/2022", "07/07/2022"],
         z: 1
     },
@@ -502,7 +502,7 @@ let teaching = [
         name: 'Introduction to Data Science',
         course_number: 'CS 171',
         paradigm: 'cs',
-        taught_skills: ['datavis', 'js'],
+        taught_skills: ['datavis', 'js', 'python', 'pandas'],
         year: ["07/09/2022", "07/23/2022"],
         z: 1
     },
@@ -514,7 +514,7 @@ let teaching = [
         name: 'Data Visualization',
         course_number: 'CS 171',
         paradigm: 'cs',
-        taught_skills: ['datavis', 'JavaScript'],
+        taught_skills: ['datavis', 'js', 'html'],
         year: ["09/01/2022", "12/13/2022"],
         z: 0
     }
@@ -697,15 +697,98 @@ let phd_awards = [
 ]
 
 let projectsAndPapers = [
+
     {
         title: 'a',
-        date: '09/01/2016',
-        timeframe: ['09/01/2015', '09/01/2016']
+        type: 'project',
+        date: '09/30/2016',
+    },
+    {
+        title: 'a',
+        type: 'project',
+        date: '09/30/2017',
+    },
+    {
+        title: 'a',
+        type: 'project',
+        date: '09/30/2018',
+    },
+    {
+        title: 'a',
+        type: 'project',
+        date: '09/30/2019',
+    },
+    {
+        title: 'a',
+        type: 'project',
+        date: '09/30/2020',
+    },
+    {
+        title: 'a',
+        type: 'project',
+        date: '05/30/2021',
+    },
+    {
+        title: 'a',
+        type: 'project',
+        date: '11/30/2021',
+    },
+    {
+        title: 'a',
+        type: 'project',
+        date: '11/30/2022',
     },
     {
         title: 'b',
-        date: '09/01/2019',
-        timeframe: ['09/01/2018', '09/01/2019']
+        type: 'project',
+        date: '12/13/2022',
+    }
+]
+
+let presentations = [
+    {
+        title: 'Urbane Körperkultur und moderne Leistungsethik in Robert Musils Der Riese Agoag',
+        info: 'Presentation at the GSA Convention 2016 in San Diego',
+        date: '09/30/2016',
+
+    },
+    {
+        title: 'Die angeleitete Freizeit. Zur Optimierung der freien Stunden von Arbeitern und Angestellten im frühen 20. Jahrhundert',
+        info: 'Talk at the BTWH Conference in Vienna',
+        date: '08/21/2017',
+    },
+    {
+        title: 'Urbane Körperkultur und moderne Leistungsethik in Robert Musils Der Riese Agoag',
+        info: 'Presentation at the GSA Convention 2016 in San Diego',
+        date: '09/30/2017',
+
+    },
+    {
+        title: 'Die angeleitete Freizeit. Zur Optimierung der freien Stunden von Arbeitern und Angestellten im frühen 20. Jahrhundert',
+        info: 'Talk at the BTWH Conference in Vienna',
+        date: '06/21/2017',
+    },
+    {
+        title: 'Urbane Körperkultur und moderne Leistungsethik in Robert Musils Der Riese Agoag',
+        info: 'Presentation at the GSA Convention 2016 in San Diego',
+        date: '09/30/2018',
+
+    },
+    {
+        title: 'Die angeleitete Freizeit. Zur Optimierung der freien Stunden von Arbeitern und Angestellten im frühen 20. Jahrhundert',
+        info: 'Talk at the BTWH Conference in Vienna',
+        date: '05/17/2019',
+    },
+    {
+        title: 'Urbane Körperkultur und moderne Leistungsethik in Robert Musils Der Riese Agoag',
+        info: 'Presentation at the GSA Convention 2016 in San Diego',
+        date: '06/22/2019',
+
+    },
+    {
+        title: 'TexTiles: Exploring Patterns in Historical Discourse.',
+        info: 'Presentation at the 4th Workshop on Visualization for the Digital Humanities (at IEEE Vis 2019, Vancouver)',
+        date: '10/21/2019',
     }
 ]
 
@@ -1107,34 +1190,96 @@ let skills = [
         skill_long: "Machine Learning",
         rel_start_x: 0.0,
         rel_end_x: 0.2,
-        row: 0
+        row: 0,
+        paradigm: 'cs'
     },
     {
         skill_abbreviation: "js",
         skill_long: "JavaScript",
         rel_start_x: 0.25,
         rel_end_x: 0.4,
-        row: 0
+        row: 0,
+        paradigm: 'cs'
     },
     {
         skill_abbreviation: "python",
         skill_long: "Python",
         rel_start_x: 0.45,
         rel_end_x: 0.6,
-        row: 1
+        row: 0,
+        paradigm: 'cs'
     },
     {
         skill_abbreviation: "tf",
         skill_long: "TensorFlow",
         rel_start_x: 0.65,
         rel_end_x: 0.80,
-        row: 0
+        row: 0,
+        paradigm: 'cs'
     },
     {
-        skill_abbreviation: "pt",
+        skill_abbreviation: "pytorch",
         skill_long: "PyTorch",
         rel_start_x: 0.85,
         rel_end_x: 1,
-        row: 0
-    }
+        row: 0,
+        paradigm: 'cs'
+    },
+    {
+        skill_abbreviation: "scikit",
+        skill_long: "scikit-learn",
+        rel_start_x: 0.0,
+        rel_end_x: 0.14,
+        row: 1,
+        paradigm: 'cs'
+    },
+    {
+        skill_abbreviation: "pandas",
+        skill_long: "pandas",
+        rel_start_x: 0.16,
+        rel_end_x: 0.34,
+        row: 1,
+        paradigm: 'cs'
+    },
+    {
+        skill_abbreviation: "philosophy",
+        skill_long: "Philosophy",
+        rel_start_x: 0.36,
+        rel_end_x: 0.48,
+        row: 1,
+        paradigm: 'humanities'
+    },
+    {
+        skill_abbreviation: "theory",
+        skill_long: "Literary Theory",
+        rel_start_x: 0.50,
+        rel_end_x: 0.70,
+        row: 1,
+        paradigm: 'humanities'
+    },
 ]
+
+let colorCourseLookupTable = {
+    theory: "#E29578",
+    philosophy: "#E29578",
+    pandas:"#006D77",
+    js: "#006D77",
+    ml: "#006D77",
+    python: "#006D77",
+    tf: "#006D77",
+    pytorch: "#006D77",
+    html: "#006D77",
+    css: "#006D77",
+    nlp: "#006D77",
+    history: "#E29578",
+    lit: "#E29578",
+    histsci: "#E29578",
+    discourse: "#E29578",
+    dighum: "#E29578",
+    pandas: "#006D77",
+    datavis: "#006D77",
+    statistics: "#006D77",
+    react: "#006D77",
+    scikit: "#006D77"
+
+}

@@ -10,7 +10,7 @@ class Vis {
 
         this.fixed = {
             phdCircle: false,
-            mscCircle: false
+            mscCircle: false,
         }
         this.expanded = {
             "js": false,
@@ -221,14 +221,14 @@ class Vis {
             .style("opacity", 0.3)
             .on('click', function (event, d){
 
-                if(!vis.fixed.phdCircle){
-                    vis.fixed.phdCircle = true
+                if(!vis.fixed.mscCircle){
+                    vis.fixed.mscCircle = true
                     d3.select(`#msccircle`).style("stroke", vis.colors[0])
                     d3.selectAll(`.classline.msc`).style("stroke", vis.colors[0])
                     d3.selectAll(`.course.msc`).style("fill", vis.colors[0])
 
                 } else {
-                    vis.fixed.phdCircle = false
+                    vis.fixed.mscCircle = false
                 }
 
             })
@@ -239,7 +239,7 @@ class Vis {
 
             })
             .on('mouseout', function (event, d){
-                if (!vis.fixed.phdCircle){
+                if (!vis.fixed.mscCircle){
                     d3.select(`#msccircle`)
                         .style("stroke", "black")
                     d3.selectAll(`.classline.msc`)
@@ -522,10 +522,10 @@ class Vis {
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
 
-        vis.drawPapers()
+        vis.drawPresentations()
     }
 
-    drawPapers(){
+    drawPresentations(){
 
         let vis = this;
 
@@ -551,26 +551,29 @@ class Vis {
 
 
         vis.phd_diss_progress_group = vis.phd_group.append('g')
-            .attr('transform', `translate(${0}, ${vis.visHeight*0.29})`)
+            .attr('transform', `translate(${0}, ${vis.visHeight*0.23})`)
             .attr('id', 'diss-progress')
             .style('fill', 'transparent')
             .style('stroke', 'grey')
             .style('stroke-width', 2)
 
 
-
+        // diss progress path
         vis.phd_diss_progress = vis.phd_diss_progress_group.append('path')
             .datum(dissertationProgress)
             .attr('id', 'disspath')
             .attr('d', vis.disspath)
 
 
-        vis.phd_projects_and_papers = vis.phd_group.selectAll("pp-rect").data(projectsAndPapers)
+        //console.log(d3.select('#disspath').getPointAtLength())
+
+        // p rect
+        vis.phd_projects_and_papers = vis.phd_group.selectAll("p-rect").data(presentations)
 
         vis.phd_projects_and_papers.enter().append("rect")
-            .attr('class', d => 'pp-rect')
+            .attr('class', d => 'p-rect')
             .attr("x", d => vis.phd_x(vis.parseDate(d.date)))
-            .attr("y", d => vis.visHeight * 0.38 - 20)
+            .attr("y", d => vis.visHeight * 0.35 - 20)
             .attr("width", 21)
             .attr("height", 10)
             //.style('fill', d => "#83C5BE")
@@ -578,21 +581,10 @@ class Vis {
             .style('stroke', 'grey')
             .style('stroke-width', '1px')
 
-        // vis.phd_projects_and_papers.enter().append("rect")
-        //     .attr('class', d => 'pp-rect')
-        //     .attr("x", d => vis.phd_x(vis.parseDate(d.date)) -  (vis.phd_x(vis.parseDate(d.timeframe[1])) - vis.phd_x(vis.parseDate(d.timeframe[0]))) )
-        //     .attr("y", d => vis.visHeight * 0.38 - 15)
-        //     .attr("width", d=> (vis.phd_x(vis.parseDate(d.timeframe[1])) - vis.phd_x(vis.parseDate(d.timeframe[0]))))
-        //     .attr("height", 1)
-        //     //.style('fill', d => "#83C5BE")
-        //     .style('fill', d => "transparent")
-        //     .style('stroke', 'black')
-        //     .style('stroke-width', '0.5px')
-
         vis.phd_projects_and_papers.enter().append("rect")
-            .attr('class', d => 'pp-rect')
+            .attr('class', d => 'p-rect')
             .attr("x", d => vis.phd_x(vis.parseDate(d.date)) + 10)
-            .attr("y", d => vis.visHeight * 0.38 - 60)
+            .attr("y", d => vis.visHeight * 0.35 - 60)
             .attr("width", 1)
             .attr("height", 40)
             //.style('fill', d => "#83C5BE")
@@ -600,8 +592,37 @@ class Vis {
             .style('stroke', 'grey')
             .style('stroke-width', '0.5px')
 
-        vis.drawSkills()
 
+
+        // pp circle
+        vis.phd_projects_and_papers = vis.phd_group.selectAll("pp-circle").data(projectsAndPapers)
+
+        vis.phd_projects_and_papers.enter().append("circle")
+            .attr('class', d => 'pp-circle')
+            .attr("cx", d => vis.phd_x(vis.parseDate(d.date)))
+            .attr("cy", d => vis.visHeight * 0.20)
+            .attr("r", 12)
+            //.style('fill', d => "#83C5BE")
+            .style('fill', d => "transparent")
+            .style('stroke', 'grey')
+            .style('stroke-width', '1px')
+
+        vis.phd_projects_and_papers.enter().append("rect")
+            .attr('class', d => 'pp-circle-line')
+            .attr("x", d => vis.phd_x(vis.parseDate(d.date)) )
+            .attr("y", d => vis.visHeight * 0.20 + 12)
+            .attr("width", 1)
+            .attr("height", 40)
+            //.style('fill', d => "#83C5BE")
+            .style('fill', d => "grey")
+            .style('stroke', 'grey')
+            .style('stroke-width', '0.5px')
+
+
+
+
+
+        vis.drawSkills()
     }
 
     drawSkills(){
@@ -611,6 +632,7 @@ class Vis {
 
 
         vis.skillRects.enter().append('rect')
+            .attr('class', 'clickable')
             .attr('id', d => `${d.skill_abbreviation}-card`)
             .attr('width', d => d.rel_end_x * vis.width - d.rel_start_x * vis.width)
             .attr('height', 40)
@@ -652,15 +674,11 @@ class Vis {
             .style('text-anchor', 'middle')
     }
 
-
-
     clickOnJS(selection){
         let vis = this;
 
-
         // uncolor all other elements
         d3.selectAll(`.el`).style('fill', 'transparent')
-
 
         if (vis.expanded[selection] === false) {
 
@@ -714,7 +732,7 @@ class Vis {
                         })
                     })
                     .style('fill', 'transparent')
-                    .style('stroke', '#006D77')
+                    .style('stroke', colorCourseLookupTable[selection])
             })
         }
 
@@ -734,8 +752,6 @@ class Vis {
 
     resetColors(){
 
-        console.log('reset')
-
         // courses
         d3.selectAll('.course').each(function (){
             d3.select(this)
@@ -744,7 +760,7 @@ class Vis {
                     if(d.degree === 'msc'){
                         color = vis.colors[0]
                     }
-                    return color
+                    return 'transparent'
                 })
         })
 
@@ -756,12 +772,10 @@ class Vis {
                     if(d.paradigm === 'cs'){
                         color = vis.colors[1]
                     }
-                    return color
+                    return 'transparent'
                 })
         })
-
     }
-
 }
 
 
