@@ -29,7 +29,10 @@ class Vis {
             "pandas": false,
             "datavis": false,
             "statistics": false,
-            "react": false
+            "react": false,
+            "sklearn": false,
+            "philosophy": false,
+            "theory": false
         }
 
         // call initVis method
@@ -89,6 +92,8 @@ class Vis {
             .attr('id', 'phd-group')
             .attr('transform', `translate (${vis.phd_start}, ${vis.margin.top})`);
 
+        // create tmp group that can contains various temporary subgroups such as connections
+        vis.tmp_group = vis.svg.append('g')
 
         // rects
         vis.ba_group.append('rect')
@@ -630,7 +635,6 @@ class Vis {
 
         vis.skillRects = vis.svg.selectAll().data(skills)
 
-
         vis.skillRects.enter().append('rect')
             .attr('class', 'clickable')
             .attr('id', d => `${d.skill_abbreviation}-card`)
@@ -644,25 +648,89 @@ class Vis {
             .style('stroke-width', '0.5px')
 
             .on('click', function (event, d){
-                vis.clickOnJS(d.skill_abbreviation)
+                // when you click on it, you actually should have triggered the hover event first,
+                // so the only thing you need to do is to lock the selection
+                if (vis.expanded[d.skill_abbreviation] === false){
+                    vis.expanded[d.skill_abbreviation] = true
+                } else {
+                    vis.expanded[d.skill_abbreviation] = false
+                }
             })
             .on('mouseover', function (event, d){
-                vis.clickOnJS(d.skill_abbreviation)
-            })
-            .on('mouseout', function (event, d){
-                vis.clickOnJS(d.skill_abbreviation)
-            })
 
-        // TEST RECT
-        // vis.svg.append('rect')
-        //     .attr('width', vis.width)
-        //     .attr('height', 40)
-        //     .attr('x', 0)
-        //     .attr('y', vis.visHeight + vis.margin.top)
-        //     .attr('rx', 5)
-        //     .style('fill', 'red')
-        //     .style('stroke', 'black')
+                // check whether current skill is locked.
+                // if the skill is not locked, that means it's the first time hovering over it
+                if (vis.expanded[d.skill_abbreviation] === false) {
 
+                    // generate a tmp group for the connecting lines
+                    // (multiple skill cards can be selected and expanded at same time!)
+                    let tmp_group = vis.tmp_group.append('g')
+                        .attr('id', `${d.skill_abbreviation}-lines-group`)
+
+
+                    // first, color card
+                    d3.select(`#${d.skill_abbreviation}-card`)
+                        .style('fill', d => colorCourseLookupTable[d.skill_abbreviation])
+
+                    // loop over all selected elements
+                    d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).each(function () {
+
+                        // color all elements
+                        d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).style('fill', colorCourseLookupTable[d.skill_abbreviation])
+
+                        // grab positions of start and ending elements
+                        let x_end = +d3.select(this).attr("x") + +d3.select(this).attr("width") / 2
+                        let y_end = +d3.select(this).attr("y") + vis.margin.top + 10
+                        let x_start = +d3.select(`#${d.skill_abbreviation}-card`).attr("x") + +d3.select(`#${d.skill_abbreviation}-card`).attr("width") / 2
+                        let y_start = +d3.select(`#${d.skill_abbreviation}-card`).attr("y")
+
+                        // grab info
+                        let degree = d3.select(this).data()[0].degree
+                        let name = d3.select(this).data()[0].name
+                        let paradigm = d3.select(this).data()[0].paradigm
+
+
+                        // make x position adjustments based on the degree group element was in
+                        if (degree === 'phd' || degree === 'msc' || paradigm === 'cs' || paradigm === 'humanities') {
+                            x_end += vis.phd_start
+                        }
+
+                        // init path generator
+                        const link = d3.link(d3.curveBumpY);
+
+                        // draw path
+                        tmp_group.append("path")
+                            .attr('class', `el ${name} ${d.skill_abbreviation}`)
+                            .attr('d', d => {
+                                return link({
+                                    source: [x_start, y_start],
+                                    target: [x_end, y_end]
+                                })
+                            })
+                            .style('fill', 'transparent')
+                            .style('stroke', colorCourseLookupTable[d.skill_abbreviation])
+                    })
+
+
+                }
+            })
+            .on('mouseout', function (event, d) {
+
+                // check whether current skill is locked.
+                // if skill is not locked, then you were just hovering over it but have not clicked it
+                if (vis.expanded[d.skill_abbreviation] === false) {
+
+                    // set card to transparent
+                    d3.select(`#${d.skill_abbreviation}-card`).style('fill', 'rgba(218,218,218,0.38)')
+
+                    // set courses and other elements to transparent
+                    d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).style('fill', 'transparent')
+
+                    // remove the current group with all lines
+                    d3.select(`#${d.skill_abbreviation}-lines-group`).remove()
+
+                }
+            })
 
         vis.skillRects.enter().append('text')
             .attr('id', d => `${d.skill_abbreviation}-card-text`)
@@ -672,82 +740,6 @@ class Vis {
             .attr('y', d => vis.visHeight + vis.margin.top + vis.margin.bottom + d.row*50 + 24)
             .text(d=> d.skill_long)
             .style('text-anchor', 'middle')
-    }
-
-    clickOnJS(selection){
-        let vis = this;
-
-        // uncolor all other elements
-        d3.selectAll(`.el`).style('fill', 'transparent')
-
-        if (vis.expanded[selection] === false) {
-
-            console.log('in', vis.expanded[selection])
-
-            // color card
-            d3.select(`#${selection}-card`).style('fill', "#006D77")
-
-
-            // if false, then set to true and draw all connections
-            vis.expanded[selection] = true
-
-            // create tmp group that can be removed once clicked again
-            vis.tmp_group = vis.svg.append('g')
-                .attr('id', `${selection}-lines-group`)
-
-
-            // loop over all selected elements
-            d3.selectAll(`.course.${selection}, .teaching.${selection}`).each(function () {
-
-                // color all elements
-                d3.selectAll(`.course.${selection}, .teaching.${selection}`).style('fill', '#006D77')
-
-                // grab positions of start and ending elements
-                let x_end = +d3.select(this).attr("x") + +d3.select(this).attr("width") / 2
-                let y_end = +d3.select(this).attr("y") + vis.margin.top + 10
-                let x_start = +d3.select(`#${selection}-card`).attr("x") + +d3.select(`#${selection}-card`).attr("width") / 2
-                let y_start = +d3.select(`#${selection}-card`).attr("y")
-
-                // grab info
-                let degree = d3.select(this).data()[0].degree
-                let name = d3.select(this).data()[0].name
-                let paradigm = d3.select(this).data()[0].paradigm
-
-
-                // make x position adjustments based on the degree group element was in
-                if (degree === 'phd' || degree === 'msc' || paradigm === 'cs' || paradigm === 'humanities') {
-                    x_end += vis.phd_start
-                }
-
-                // init path generator
-                const link = d3.link(d3.curveBumpY);
-
-                // draw path
-                vis.tmp_group.append("path")
-                    .attr('class', `el ${name} ${selection}`)
-                    .attr('d', d => {
-                        return link({
-                            source: [x_start, y_start],
-                            target: [x_end, y_end]
-                        })
-                    })
-                    .style('fill', 'transparent')
-                    .style('stroke', colorCourseLookupTable[selection])
-            })
-        }
-
-        // else, if clicked a second time, remove
-        else {
-
-            // set to false and remove all contents
-            vis.expanded[selection] = false
-            d3.select(`#${selection}-lines-group`).remove()
-
-            // reset colors
-            vis.resetColors()
-            d3.select(`#${selection}-card`).style('fill', "transparent")
-
-        }
     }
 
     resetColors(){

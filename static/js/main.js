@@ -2,6 +2,12 @@
 
 function explore(){
     console.log('clicked')
+
+    d3.select("#logo-container")
+        .transition()
+        .delay(1000)
+
+
     d3.select("#logo-container")
         .style("left","39vw")
         .style("top", "39vh")
@@ -15,7 +21,10 @@ function explore(){
         .transition()
         .duration(500)
         .style("top", "0vh")
-
+        .on("start", function() {
+            console.log('hi')
+            document.getElementById("intro-button-container").innerHTML = '';
+        })
 
         .transition()
         .duration(500)
@@ -24,6 +33,8 @@ function explore(){
         .style("border-top", "0px")
         .style("border-bottom", "0px")
         .style("border-left", "0px")
+
+
 
     // vis.phd_group.attr("opacity", 1).transition().duration(1000).attr("opacity", 0).transition().duration(1000).attr("opacity", 1)
 

@@ -1226,7 +1226,7 @@ let skills = [
         paradigm: 'cs'
     },
     {
-        skill_abbreviation: "scikit",
+        skill_abbreviation: "sklearn",
         skill_long: "scikit-learn",
         rel_start_x: 0.0,
         rel_end_x: 0.14,
@@ -1257,6 +1257,14 @@ let skills = [
         row: 1,
         paradigm: 'humanities'
     },
+    {
+        skill_abbreviation: "design",
+        skill_long: "Design Thinking",
+        rel_start_x: 0.72,
+        rel_end_x: 0.85,
+        row: 1,
+        paradigm: 'humanities'
+    },
 ]
 
 let colorCourseLookupTable = {
@@ -1276,10 +1284,9 @@ let colorCourseLookupTable = {
     histsci: "#E29578",
     discourse: "#E29578",
     dighum: "#E29578",
-    pandas: "#006D77",
     datavis: "#006D77",
     statistics: "#006D77",
     react: "#006D77",
-    scikit: "#006D77"
+    sklearn: "#006D77"
 
 }
