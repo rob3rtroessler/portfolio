@@ -35,6 +35,11 @@ class Vis {
             "theory": false
         }
 
+        this.switches ={
+            teaching_sorted: false,
+            awards_sorted: false
+        }
+
         // call initVis method
         this.initVis()
     }
@@ -94,6 +99,11 @@ class Vis {
 
         // create tmp group that can contains various temporary subgroups such as connections
         vis.tmp_group = vis.svg.append('g')
+
+        // tooltip
+        vis.tooltip = d3.select("body").append('div')
+            .attr('class', "tooltip")
+            .attr('id', 'barTooltip')
 
         // rects
         vis.ba_group.append('rect')
@@ -487,7 +497,52 @@ class Vis {
     drawTeaching(){
         let vis = this;
 
-        vis.phd_teaching_group = vis.phd_group.append('g').attr('id', 'phd-teaching')
+        vis.phd_teaching_group = vis.phd_group.append('g')
+            .attr('id', 'phd-teaching')
+
+        // add rect
+        vis.phd_teaching_group.append('rect')
+            .attr("id", "teachingrect")
+            .attr("x", 0)
+            .attr("y", vis.visHeight*0.47 - vis.visHeight*0.09)
+            .attr("width", vis.phd_width*vis.width)
+            .attr("height", vis.visHeight*0.09)
+            .style("fill", 'transparent')
+            .on('mouseover', function (event,d){
+                d3.select(this)
+                    .style("fill", "rgba(255,255,255,0.36)")
+            })
+            .on('mouseout', function (event,d){
+                d3.select(this)
+                    .style("fill", "transparent")
+            })
+            .on('click', function (event,d){
+                // if the switch currently says sorted, then reset to base view if on click
+                if(vis.switches.teaching_sorted){
+                    vis.switches.teaching_sorted = false
+                    vis.teaching_rects
+                        .transition()
+                        .duration(500)
+                        .attr("x", d => vis.phd_x(vis.parseDate(d.year[0])))
+                        .attr("y", d => vis.visHeight * 0.46 - 11 - 15*d.z)
+                        .attr("width", d => {
+                            let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
+                            console.log(d, diff)
+                            return diff
+                        })
+                        .attr("height", 10)
+
+                } else {
+                    vis.switches.teaching_sorted = true
+                    vis.sortTeaching()
+
+                    // d3.select("#teachingrect")
+                    //     .attr("y", vis.visHeight*0.55 - vis.visHeight*0.17)
+                    //     .attr("height", vis.visHeight*0.17)
+
+                }
+            })
+
         // add line before teaching
         vis.phd_group.append("line")
             .attr("x1", 0)
@@ -500,7 +555,7 @@ class Vis {
 
         vis.phd_teaching = vis.phd_teaching_group.selectAll().data(teaching)
 
-        vis.phd_teaching.enter().append("rect")
+        vis.teaching_rects = vis.phd_teaching.enter().append("rect")
             .attr('class', d => {
                 let class_string = ``
                 d.taught_skills.forEach(d =>{
@@ -523,9 +578,42 @@ class Vis {
                 }
                 return color
             })
-
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
+            .on('mouseover', function (event, d){
+                d3.select(this)
+                    .style('opacity', 0.8)
+                    .style('stroke-width', '1.5px')
+
+                console.log(d)
+                vis.tooltip
+                    .style("opacity", 0.9)
+                    .style("left", event.pageX - 20 - $(".tooltip").width() + "px")
+                    .style("top", event.pageY + "px")
+                    .html(`
+                        <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+                            <h3>${d.name}<h3>
+                            <h4>winter semester 2020</h4>
+                            <h4>skills taught: JS, </h4>
+                        </div>`);
+        })
+            .on('mouseout', function (event, d) {
+                d3.select(this)
+                    .style('opacity', 1)
+                    .style('stroke-width', '0.5px')
+
+                // update tooltip
+                vis.tooltip
+                    .style("opacity", 0)
+                    .style("left", 0 + "px")
+                    .style("top", 0 + "px")
+
+            })
+            .on('click', function (event, d){
+                // update tooltip
+
+            })
+
 
         vis.drawPresentations()
     }
@@ -742,6 +830,32 @@ class Vis {
             .style('text-anchor', 'middle')
     }
 
+    sortTeaching(){
+
+        // create a scale
+        vis.teaching_scale = d3.scaleLinear()
+            .range([0, vis.phd_width * vis.width])
+            .domain([0, 150])
+
+        // grab all course
+        let taught_courses = vis.teaching_rects
+            .transition()
+            .duration(500)
+            .attr("x", d => vis.teaching_scale(d.students))
+            .attr("y", d => vis.visHeight * 0.46 - 21)
+            .attr("width", 5)
+            .attr("height", 20)
+            .style('fill', d =>{
+                let color = vis.colors[3]
+                if(d.paradigm === 'cs'){
+                    color = vis.colors[1]
+                }
+                return color
+            })
+
+
+        console.log(taught_courses)
+    }
     resetColors(){
 
         // courses

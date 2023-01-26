@@ -21,3 +21,17 @@
     border: 3px solid black;
     color: white
 }
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    font: 12px sans-serif;
+    width: 15vw;
+    /*  pointer-events: none;	This line needs to be removed */
+}
+.tooltip h3,h4 {
+    text-align: left;
+}
+.tooltip h4 {
+    font: 14px sans-serif;
+}

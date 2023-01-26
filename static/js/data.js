@@ -345,7 +345,9 @@ let teaching = [
         paradigm: 'humanities',
         taught_skills: ['germgram', 'germlit'],
         year: ["09/01/2017", "12/13/2017"],
-        z: 0
+        z: 0,
+        q_score: 5.0,
+        students: 15
     },
     {
         name: 'Digital Mary Magdalene - Paleography and Text-Editing',
@@ -354,7 +356,9 @@ let teaching = [
         paradigm: 'cs',
         taught_skills: ['dighum', 'xml', 'html'],
         year: ["09/01/2017", "12/13/2017"],
-        z: 1
+        z: 1,
+        q_score: 5.0,
+        students: 15
     },
 
     // SPRING 2018
@@ -365,7 +369,9 @@ let teaching = [
         paradigm: 'humanities',
         taught_skills: ['germlang', 'germgram', 'germlit'],
         year: ["01/22/2018", "05/01/2018"],
-        z: 0
+        z: 0,
+        q_score: 5.0,
+        students: 7
     },
     {
         name: 'Special Reading and Research: Distant Reading Karl Marx',
@@ -374,7 +380,9 @@ let teaching = [
         paradigm: 'cs',
         taught_skills: ['dighum', 'germlit', 'philosophy'],
         year: ["01/22/2018", "05/01/2018"],
-        z: 1
+        z: 1,
+        q_score: 5.0,
+        students: 1
     },
 
     // SUMMER 2018
@@ -385,7 +393,9 @@ let teaching = [
         paradigm: 'humanities',
         taught_skills: ['germlang', 'germlit', 'history', 'arthist'],
         year: ["06/01/2018", "07/15/2018"],
-        z: 0
+        z: 0,
+        q_score: 5.0,
+        students: 5
     },
     {
         name: 'Intermediate German Language and Arts',
@@ -394,7 +404,9 @@ let teaching = [
         paradigm: 'humanities',
         taught_skills: ['German', 'Literature'],
         year: ["06/01/2018", "07/15/2018"],
-        z: 1
+        z: 1,
+        q_score: 5.0,
+        students: 8
     },
 
     // FALL 2018
@@ -405,7 +417,9 @@ let teaching = [
         paradigm: 'humanities',
         taught_skills: ['German', 'Literature'],
         year: ["09/01/2018", "12/13/2018"],
-        z: 0
+        z: 0,
+        q_score: 4.8,
+        students: 15
     },
 
     // SPRING 2019
@@ -416,7 +430,9 @@ let teaching = [
         paradigm: 'humanities',
         taught_skills: ['German', 'Literature'],
         year: ["01/22/2019", "05/01/2019"],
-        z: 0
+        z: 0,
+        q_score: 5.0,
+        students: 15
     },
 
     // FALL 2019
@@ -427,7 +443,9 @@ let teaching = [
         paradigm: 'cs',
         taught_skills: ['datavis', 'js'],
         year: ["09/01/2019", "12/13/2019"],
-        z: 0
+        z: 0,
+        q_score: 5.0,
+        students: 110
     },
     {
         name: 'Software Engineering in the Arts and Humanities',
@@ -436,7 +454,9 @@ let teaching = [
         paradigm: 'cs',
         taught_skills: ['js', 'react', 'nodejs'],
         year: ["09/01/2019", "12/13/2019"],
-        z: 1
+        z: 1,
+        q_score: 5.0,
+        students: 35
     },
 
     // J-TERM 2020
@@ -447,7 +467,9 @@ let teaching = [
         paradigm: 'cs',
         taught_skills: ['datavis', 'js', 'python'],
         year: ["01/06/2020", "01/20/2020"],
-        z: 0
+        z: 0,
+        q_score: 'N/A',
+        students: 10
     },
 
     // SUMMER 2020
@@ -457,7 +479,9 @@ let teaching = [
         paradigm: 'humanities',
         taught_skills: ['German', 'Literature'],
         year: ["07/01/2020", "08/14/2020"],
-        z: 0
+        z: 0,
+        q_score: 5.0,
+        students: 10
     },
 
     // FALL 2020
@@ -467,7 +491,9 @@ let teaching = [
         paradigm: 'cs',
         taught_skills: ['datavis', 'js', 'html', 'css'],
         year: ["09/01/2020", "12/13/2020"],
-        z: 0
+        z: 0,
+        q_score: 5.0,
+        students: 120
     },
 
     // SUMMER 2021
@@ -477,7 +503,9 @@ let teaching = [
         paradigm: 'humanities',
         taught_skills: ['germlit', 'germlang', 'germgram'],
         year: ["07/01/2021", "08/14/2021"],
-        z: 0
+        z: 0,
+        q_score: 5.0,
+        students: 15
     },
     // FALL 2021
 
@@ -488,7 +516,9 @@ let teaching = [
         paradigm: 'humanities',
         taught_skills: ['germlang', 'germgram'],
         year: ["07/01/2022", "08/14/2022"],
-        z: 0
+        z: 0,
+        q_score: 4.75,
+        students: 4
     },
     {
         name: 'Introdcution to Data Science',
@@ -496,7 +526,9 @@ let teaching = [
         paradigm: 'cs',
         taught_skills: ['datavis', 'js', 'python', 'pandas'],
         year: ["06/23/2022", "07/07/2022"],
-        z: 1
+        z: 1,
+        q_score: 5.0,
+        students: 18
     },
     {
         name: 'Introduction to Data Science',
@@ -504,7 +536,9 @@ let teaching = [
         paradigm: 'cs',
         taught_skills: ['datavis', 'js', 'python', 'pandas'],
         year: ["07/09/2022", "07/23/2022"],
-        z: 1
+        z: 1,
+        q_score: 4.9,
+        students: 25
     },
 
     // SPRING 2022
@@ -516,7 +550,9 @@ let teaching = [
         paradigm: 'cs',
         taught_skills: ['datavis', 'js', 'html'],
         year: ["09/01/2022", "12/13/2022"],
-        z: 0
+        z: 0,
+        q_score: 5.0,
+        students: 110
     }
 
 
