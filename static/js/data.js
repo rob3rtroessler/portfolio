@@ -347,6 +347,7 @@ let teaching = [
         year: ["09/01/2017", "12/13/2017"],
         z: 0,
         q_score: 5.0,
+        q_avg: 4.1,
         students: 15
     },
     {
@@ -358,6 +359,7 @@ let teaching = [
         year: ["09/01/2017", "12/13/2017"],
         z: 1,
         q_score: 5.0,
+        q_avg: 4.1,
         students: 15
     },
 
@@ -371,6 +373,7 @@ let teaching = [
         year: ["01/22/2018", "05/01/2018"],
         z: 0,
         q_score: 5.0,
+        q_avg: 4.1,
         students: 7
     },
     {
@@ -382,6 +385,7 @@ let teaching = [
         year: ["01/22/2018", "05/01/2018"],
         z: 1,
         q_score: 5.0,
+        q_avg: 4.1,
         students: 1
     },
 
@@ -395,6 +399,7 @@ let teaching = [
         year: ["06/01/2018", "07/15/2018"],
         z: 0,
         q_score: 5.0,
+        q_avg: 4.1,
         students: 5
     },
     {
@@ -406,6 +411,7 @@ let teaching = [
         year: ["06/01/2018", "07/15/2018"],
         z: 1,
         q_score: 5.0,
+        q_avg: 4.1,
         students: 8
     },
 
@@ -419,6 +425,7 @@ let teaching = [
         year: ["09/01/2018", "12/13/2018"],
         z: 0,
         q_score: 4.8,
+        q_avg: 4.1,
         students: 15
     },
 
@@ -432,6 +439,7 @@ let teaching = [
         year: ["01/22/2019", "05/01/2019"],
         z: 0,
         q_score: 5.0,
+        q_avg: 4.1,
         students: 15
     },
 
@@ -445,6 +453,7 @@ let teaching = [
         year: ["09/01/2019", "12/13/2019"],
         z: 0,
         q_score: 5.0,
+        q_avg: 4.1,
         students: 110
     },
     {
@@ -456,6 +465,7 @@ let teaching = [
         year: ["09/01/2019", "12/13/2019"],
         z: 1,
         q_score: 5.0,
+        q_avg: 4.1,
         students: 35
     },
 
@@ -469,6 +479,7 @@ let teaching = [
         year: ["01/06/2020", "01/20/2020"],
         z: 0,
         q_score: 'N/A',
+        q_avg: 'N/A',
         students: 10
     },
 
@@ -481,6 +492,7 @@ let teaching = [
         year: ["07/01/2020", "08/14/2020"],
         z: 0,
         q_score: 5.0,
+        q_avg: 3.9,
         students: 10
     },
 
@@ -493,6 +505,7 @@ let teaching = [
         year: ["09/01/2020", "12/13/2020"],
         z: 0,
         q_score: 5.0,
+        q_avg: 3.9,
         students: 120
     },
 
@@ -505,6 +518,7 @@ let teaching = [
         year: ["07/01/2021", "08/14/2021"],
         z: 0,
         q_score: 5.0,
+        q_avg: 3.9,
         students: 15
     },
     // FALL 2021
@@ -518,6 +532,7 @@ let teaching = [
         year: ["07/01/2022", "08/14/2022"],
         z: 0,
         q_score: 4.75,
+        q_avg: 3.9,
         students: 4
     },
     {
@@ -528,6 +543,7 @@ let teaching = [
         year: ["06/23/2022", "07/07/2022"],
         z: 1,
         q_score: 5.0,
+        q_avg: 3.9,
         students: 18
     },
     {
@@ -538,6 +554,7 @@ let teaching = [
         year: ["07/09/2022", "07/23/2022"],
         z: 1,
         q_score: 4.9,
+        q_avg: 3.9,
         students: 25
     },
 
@@ -552,6 +569,7 @@ let teaching = [
         year: ["09/01/2022", "12/13/2022"],
         z: 0,
         q_score: 5.0,
+        q_avg: 3.9,
         students: 110
     }
 

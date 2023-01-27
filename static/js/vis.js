@@ -36,7 +36,7 @@ class Vis {
         }
 
         this.switches ={
-            teaching_sorted: false,
+            teaching_sorted: 0,
             awards_sorted: false
         }
 
@@ -60,7 +60,7 @@ class Vis {
         vis.height = $("#" + vis.parentElement).height() - vis.margin.top - vis.margin.bottom;
 
         // calculations
-        vis.visHeight = vis.height * 0.66
+        vis.visHeight = vis.height * 0.75
         vis.semesters = {ba: 7, ma: 4, phd: 16}
         vis.totalElements = vis.semesters.ba + 1 + vis.semesters.ma + 1 + vis.semesters.phd
 
@@ -108,6 +108,9 @@ class Vis {
         vis.tooltip = d3.select("#wrapper").append('div')
             .attr('class', "tooltip")
             .attr('id', 'barTooltip')
+            .style("opacity", 0)
+            .style("left", 0 + "px")
+            .style("top", 0 + "px")
 
         // rects
         vis.ba_group.append('rect')
@@ -134,6 +137,31 @@ class Vis {
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
 
+        vis.drawSeparators()
+    }
+
+    drawSeparators(){
+        let vis = this;
+
+        // add line under teaching row
+        vis.phd_group.append("line")
+            .attr("x1", 0)
+            .attr("y1", vis.visHeight*0.47)
+            .attr("x2", vis.phd_width*vis.width)
+            .attr("y2", vis.visHeight*0.47)
+            .style('stroke', "#707070")
+            .style('stroke-width', '0.5')
+            .style('stroke-dasharray', 5)
+
+        // add line under awards
+        vis.phd_group.append("line")
+            .attr("x1", 0)
+            .attr("y1", vis.visHeight*0.55)
+            .attr("x2", vis.phd_width*vis.width)
+            .attr("y2", vis.visHeight*0.55)
+            .style('stroke', "#707070")
+            .style('stroke-width', '0.5')
+            .style('stroke-dasharray', 5)
 
         vis.drawDegreeCircles()
     }
@@ -452,18 +480,10 @@ class Vis {
             .attr("y", d => vis.visHeight * 0.66 - 11 - 15*d.z)
             .attr("width", d => {
                 let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
-                console.log(d, diff)
                 return diff
             })
             .attr("height", 10)
             .style('fill', 'transparent')
-            // .style('fill', d =>{
-            //     let color = '#E29578'
-            //     if(d.degree === 'msc'){
-            //         color = '#006D77'
-            //     }
-            //     return color
-            // })
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
 
@@ -472,16 +492,6 @@ class Vis {
 
     drawAwards(){
         let vis = this;
-
-        // add line before awards
-        vis.phd_group.append("line")
-            .attr("x1", 0)
-            .attr("y1", vis.visHeight*0.55)
-            .attr("x2", vis.phd_width*vis.width)
-            .attr("y2", vis.visHeight*0.55)
-            .style('stroke', "#707070")
-            .style('stroke-width', '0.5')
-            .style('stroke-dasharray', 5)
 
         vis.phd_awards_group = vis.phd_group.append('g').attr('id', 'phd-awards')
 
@@ -504,7 +514,14 @@ class Vis {
         vis.phd_teaching_group = vis.phd_group.append('g')
             .attr('id', 'phd-teaching')
 
-        // add rect
+        vis.teaching_text = vis.phd_teaching_group.append('text')
+            .attr('x', vis.phd_width*vis.width/2)
+            .attr("y", vis.visHeight*0.47 - vis.visHeight*0.06)
+            .style('font-style','italic')
+            .style('text-anchor','middle')
+
+
+        // add interactive rect that triggers sorting of all courses by q scores or enrollment
         vis.phd_teaching_group.append('rect')
             .attr("id", "teachingrect")
             .attr("x", 0)
@@ -521,9 +538,12 @@ class Vis {
                     .style("fill", "transparent")
             })
             .on('click', function (event,d){
+
+                vis.switches.teaching_sorted += 1
+
                 // if the switch currently says sorted, then reset to base view if on click
-                if(vis.switches.teaching_sorted){
-                    vis.switches.teaching_sorted = false
+                if(vis.switches.teaching_sorted % 3 === 0){
+                    vis.teaching_text.text('')
                     vis.teaching_rects
                         .transition()
                         .duration(500)
@@ -531,31 +551,24 @@ class Vis {
                         .attr("y", d => vis.visHeight * 0.46 - 11 - 15*d.z)
                         .attr("width", d => {
                             let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
-                            console.log(d, diff)
                             return diff
                         })
                         .attr("height", 10)
 
-                } else {
-                    vis.switches.teaching_sorted = true
-                    vis.sortTeaching()
 
-                    // d3.select("#teachingrect")
-                    //     .attr("y", vis.visHeight*0.55 - vis.visHeight*0.17)
-                    //     .attr("height", vis.visHeight*0.17)
+
+                } else if(vis.switches.teaching_sorted % 3 === 1){
+
+                    vis.teaching_text.text('sorted by enrolled students')
+                    vis.sortTeachingByStudents()
+
+                } else if(vis.switches.teaching_sorted % 3 === 2) {
+                    vis.teaching_text.text('sorted by q score')
+                    vis.sortTeachingByScore()
 
                 }
-            })
 
-        // add line before teaching
-        vis.phd_group.append("line")
-            .attr("x1", 0)
-            .attr("y1", vis.visHeight*0.47)
-            .attr("x2", vis.phd_width*vis.width)
-            .attr("y2", vis.visHeight*0.47)
-            .style('stroke', "#707070")
-            .style('stroke-width', '0.5')
-            .style('stroke-dasharray', 5)
+            })
 
         vis.phd_teaching = vis.phd_teaching_group.selectAll().data(teaching)
 
@@ -571,7 +584,6 @@ class Vis {
             .attr("y", d => vis.visHeight * 0.46 - 11 - 15*d.z)
             .attr("width", d => {
                 let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
-                console.log(d, diff)
                 return diff
             })
             .attr("height", 10)
@@ -592,7 +604,8 @@ class Vis {
                 // generate html string with all courses
                 let courses_string = ''
                 d.taught_skills.forEach( (d,i) => {
-                    courses_string += `<span style="border: thin solid black; border-radius: 2px; background: lightcoral; padding: 2px; margin:2px">${shortTolongSkill[d]}</span>`
+
+                    courses_string += `<span style="border: thin solid black; border-radius: 2px; background: ${colorCourseLookupTable[d]}; padding: 2px; margin:2px">${shortTolongSkill[d]}</span>`
                     if(i==1 || i==3 || i == 5){
                         courses_string += `<br>`
                     }
@@ -603,45 +616,96 @@ class Vis {
                     .style("left", event.pageX - 20 - $(".tooltip").width() + "px")
                     .style("top", event.pageY + "px")
                     .html(`
-                        <div class="row" style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px; overflow-wrap: break-word; word-break: break-word; ">
+                        <div class="row" style="border: thin solid grey; border-radius: 5px; background: #ececec; padding: 8px; overflow-wrap: break-word; word-break: break-word; ">
                             <h3>${d.name}<h3>
-                            <h4>winter semester 2020</h4>
+                            <h4>semester:</h4>
+                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">WS2020</span></h4>
+                            <h4>students:</h4>
+                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">150</span></h4>
                             <h4>skills taught: </h4>
-                            <h4 style="overflow-wrap: break-word; word-break: break-word;">${courses_string} </h4>
-                            <svg id="tooltipskills" style="width=100%; height: 50%; fill: red">
+                            <h4 style="overflow-wrap: break-word; word-break: break-word; line-height: 3vh;">${courses_string} </h4>
+                            <h4>q-score: </h4>
+                            <div id="tooltipQScore" style="width=100%; height: 7vh;"></div>
                         </div>`);
 
-                console.log(d.taught_skills)
+
+                let w_tooltip = $("#tooltipQScore").width() - 16
+                let h_tooltip = $("#tooltipQScore").height()
+
+                let margins = {left: 10, right: 10, top: 15, bottom:20}
+                let height = h_tooltip - margins.top - margins.bottom
+                let width = w_tooltip - margins.left - margins.right
+
+                let q_group = d3.select("#tooltipQScore").append('svg')
+                    .attr('width', width +  margins.left + margins.right)
+                    .attr('height', height +  margins.top + margins.bottom)
+                    .append('g')
+                    .attr('transform', `translate(${margins.left},${margins.top})`)
+
+                let qScale = d3.scaleLinear()
+                    .range([0,width])
+                    .domain([0,5])
+
+                let qAxisGroup = q_group.append('g')
+                    .attr('class', 'axis x-axis')
+                    .attr('transform', `translate (0,${height})`);
+
+                let qAxis = d3.axisBottom(qScale)
+                    .tickValues([0,1,2,3,4,5])
+
+                qAxisGroup.call(qAxis)
+
+                q_group.append('rect')
+                    .attr("x", function(){
+                        if(d.q_avg === 'N/A'){
+                            return qScale(2.5)-2
+                        } else {
+                            return qScale(d.q_score)-2
+                        }
+                    })
+                    .attr("y", 0)
+                    .attr("width", 5)
+                    .attr("height", height)
+                    .style("fill", vis.colors[1])
+                    .style('stroke', '#000000')
 
 
+                q_group.append('rect')
+                    .attr("x", function(){
+                        if(d.q_avg === 'N/A'){
+                            return qScale(2.5)-2
+                        } else {
+                            return qScale(d.q_avg)-2
+                        }
+                    })
+                    .attr("y", 0)
+                    .attr("width", 5)
+                    .attr("height", height)
+                    .style("fill", "transparent")
+                    .style('stroke', 'grey')
 
-
-                let w_tototal = $(".tooltip").width() - 40
-                let course_count = d.taught_skills.length
-
-                //
-
-                d.taught_skills.forEach((d, i) => {
-                    d3.select("#tooltipskills").append('rect')
-                        .attr("x", w_tototal/course_count * i)
-                        .attr("y", 50)
-                        .attr("width", w_tototal/course_count - 10)
-                        .attr("height", 20)
-                        .style("fill", "red")
-
-                    d3.select("#tooltipskills").append('text')
-                        .attr("x", w_tototal/course_count * i + (w_tototal/course_count - 10)/2)
-                        .attr("y", 50)
-                        .style('fill', "black")
-                        .style('text-anchor', "middle")
-
-                        .text(shortTolongSkill[d])
-
-
-
+                q_group.append('text')
+                    .attr("x", function(){
+                    if(d.q_avg === 'N/A'){
+                        return qScale(2.5)-2
+                    } else {
+                        return qScale(d.q_avg)-2
+                    }
                 })
-            })
+                    .attr("y", -5)
+                    .text(function(){
+                        if(d.q_avg === 'N/A'){
+                            return 'N/A'
+                        } else {
+                            return 'avg'
+                        }
+                    })
+                    .style("fill", 'darkgrey')
+                    .style("text-anchor", 'middle')
 
+
+
+            })
             .on('mouseout', function (event, d) {
                 d3.select(this)
                     .style('opacity', 1)
@@ -656,7 +720,6 @@ class Vis {
             })
             .on('click', function (event, d){
                 // update tooltip
-
             })
 
 
@@ -875,7 +938,8 @@ class Vis {
             .style('text-anchor', 'middle')
     }
 
-    sortTeaching(){
+
+    sortTeachingByStudents(){
 
         // create a scale
         vis.teaching_scale = d3.scaleLinear()
@@ -897,10 +961,32 @@ class Vis {
                 }
                 return color
             })
-
-
-        console.log(taught_courses)
     }
+
+    sortTeachingByScore(){
+
+        // create a scale
+        vis.teaching_scale = d3.scaleLinear()
+            .range([0, vis.phd_width * vis.width])
+            .domain([0, 5.5])
+
+        // grab all course
+        let taught_courses = vis.teaching_rects
+            .transition()
+            .duration(500)
+            .attr("x", d => vis.teaching_scale(d.q_score))
+            .attr("y", d => vis.visHeight * 0.46 - 21)
+            .attr("width", 5)
+            .attr("height", 20)
+            .style('fill', d =>{
+                let color = vis.colors[3]
+                if(d.paradigm === 'cs'){
+                    color = vis.colors[1]
+                }
+                return color
+            })
+    }
+
     resetColors(){
 
         // courses
