@@ -85,23 +85,27 @@ class Vis {
         vis.ba_group = vis.svg
             .append('g')
             .attr('id', 'ba-group')
-            .attr('transform', `translate (${0}, ${vis.margin.top})`);
+            .attr('transform', `translate (${0}, ${vis.margin.top})`)
+            .attr('opacity', 0);
 
         vis.ma_group = vis.svg
             .append('g')
             .attr('id', 'ma-group')
-            .attr('transform', `translate (${vis.ma_start}, ${vis.margin.top})`);
+            .attr('transform', `translate (${vis.ma_start}, ${vis.margin.top})`)
+            .attr('opacity', 0);
+
 
         vis.phd_group = vis.svg
             .append('g')
             .attr('id', 'phd-group')
-            .attr('transform', `translate (${vis.phd_start}, ${vis.margin.top})`);
+            .attr('transform', `translate (${vis.phd_start}, ${vis.margin.top})`)
+            .attr('opacity', 0);
 
         // create tmp group that can contains various temporary subgroups such as connections
         vis.tmp_group = vis.svg.append('g')
 
         // tooltip
-        vis.tooltip = d3.select("body").append('div')
+        vis.tooltip = d3.select("#wrapper").append('div')
             .attr('class', "tooltip")
             .attr('id', 'barTooltip')
 
@@ -580,23 +584,64 @@ class Vis {
             })
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
-            .on('mouseover', function (event, d){
+            .on('mouseover', function (event, d) {
                 d3.select(this)
                     .style('opacity', 0.8)
                     .style('stroke-width', '1.5px')
 
-                console.log(d)
+                // generate html string with all courses
+                let courses_string = ''
+                d.taught_skills.forEach( (d,i) => {
+                    courses_string += `<span style="border: thin solid black; border-radius: 2px; background: lightcoral; padding: 2px; margin:2px">${shortTolongSkill[d]}</span>`
+                    if(i==1 || i==3 || i == 5){
+                        courses_string += `<br>`
+                    }
+                })
+
                 vis.tooltip
                     .style("opacity", 0.9)
                     .style("left", event.pageX - 20 - $(".tooltip").width() + "px")
                     .style("top", event.pageY + "px")
                     .html(`
-                        <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+                        <div class="row" style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px; overflow-wrap: break-word; word-break: break-word; ">
                             <h3>${d.name}<h3>
                             <h4>winter semester 2020</h4>
-                            <h4>skills taught: JS, </h4>
+                            <h4>skills taught: </h4>
+                            <h4 style="overflow-wrap: break-word; word-break: break-word;">${courses_string} </h4>
+                            <svg id="tooltipskills" style="width=100%; height: 50%; fill: red">
                         </div>`);
-        })
+
+                console.log(d.taught_skills)
+
+
+
+
+                let w_tototal = $(".tooltip").width() - 40
+                let course_count = d.taught_skills.length
+
+                //
+
+                d.taught_skills.forEach((d, i) => {
+                    d3.select("#tooltipskills").append('rect')
+                        .attr("x", w_tototal/course_count * i)
+                        .attr("y", 50)
+                        .attr("width", w_tototal/course_count - 10)
+                        .attr("height", 20)
+                        .style("fill", "red")
+
+                    d3.select("#tooltipskills").append('text')
+                        .attr("x", w_tototal/course_count * i + (w_tototal/course_count - 10)/2)
+                        .attr("y", 50)
+                        .style('fill', "black")
+                        .style('text-anchor', "middle")
+
+                        .text(shortTolongSkill[d])
+
+
+
+                })
+            })
+
             .on('mouseout', function (event, d) {
                 d3.select(this)
                     .style('opacity', 1)

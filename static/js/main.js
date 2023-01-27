@@ -22,17 +22,18 @@ function explore(){
         .duration(500)
         .style("top", "0vh")
         .on("start", function() {
-            console.log('hi')
             document.getElementById("intro-button-container").innerHTML = '';
         })
 
         .transition()
         .duration(500)
         .style("height", "calc(98vh - 2px)")
-
         .style("border-top", "0px")
         .style("border-bottom", "0px")
         .style("border-left", "0px")
+        .on("start", function(){
+            startNarration()
+        })
 
 
 
@@ -44,3 +45,14 @@ function explore(){
 
 let vis = new Vis("vis-container")
 
+
+
+// NARRATIVE CV
+function startNarration(){
+
+    // show all rects
+    vis.ba_group.transition().duration(500).attr('opacity',1)
+    vis.ma_group.transition().duration(500).attr('opacity',1)
+    vis.phd_group.transition().duration(500).attr('opacity',1)
+
+}

@@ -32,6 +32,9 @@
 .tooltip h3,h4 {
     text-align: left;
 }
+.tooltip h3 {
+    font: 2vh sans-serif;
+}
 .tooltip h4 {
     font: 14px sans-serif;
 }

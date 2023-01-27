@@ -548,7 +548,7 @@ let teaching = [
         name: 'Data Visualization',
         course_number: 'CS 171',
         paradigm: 'cs',
-        taught_skills: ['datavis', 'js', 'html'],
+        taught_skills: ['datavis', 'js', 'html', 'css'],
         year: ["09/01/2022", "12/13/2022"],
         z: 0,
         q_score: 5.0,
@@ -1324,5 +1324,23 @@ let colorCourseLookupTable = {
     statistics: "#006D77",
     react: "#006D77",
     sklearn: "#006D77"
+}
+
+let shortTolongSkill = {
+        css: "CSS",
+        datavis: "Data&nbsp;Visualization",
+        ml: "Machine&nbsp;Learning",
+        js: "JavaScript",
+        python: "Python",
+        pandas: "Pandas",
+        tf: "TensorFlow",
+        pytorch: "PyTorch",
+        sklearn: "scikit-learn",
+        pandas: "pandas",
+        html: "HTML",
+        philosophy: "Philosophy",
+        theory: "Literary&nbsp;Theory",
+        design: "Design&nbsp;Thinking",
+        dighum: "Digital&nbsp;Humanities"
 
 }
