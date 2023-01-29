@@ -36,12 +36,45 @@
                             </div>
                             <div class="row" id="intro-button-container">
                                 <div class="col-8 offset-2">
-                                    <div class="row justify-content-center" id="intro-button" onclick="explore()">
+                                    <div class="row justify-content-center intro-button" id="intro-button" onclick="provideOptions()">
                                         <span class="align-self-center"></span>
                                         interactive CV and portfolio
                                     </div>
+                                    <div class="row" style="height: 0px;">
+                                        <div class="col" id="left"></div>
+                                        <div class="col" id="right" onclick="explore()"></div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="row" id="cv-links" style="height: 10vh; display: none">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-4">github</div>
+                                        <div class="col-4">cv</div>
+                                        <div class="col-4">linkedIn</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row" id="teaching" style="height:20vh; display: none; border-top: thin solid black; border-bottom: thin solid black">
+                                <div class="col">
+                                    <div class="row" style="height: 10vh; background: red"></div>
+                                    <div class="row" style="height: 10vh">
+                                        <div class="col-6">
+                                            <div class="row" style="background: red; height: 10vh"></div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="row" style="background: green; height: 10vh"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="height: 5vh">
+                                        <span>click on the highlighted row to sort all taught courses by enrolled students or q-scores</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="awards"></div>
+                            <div class="row" id="coursework"></div>
+
                         </div>
                     </div>
 
@@ -66,6 +99,9 @@
 
 
         <!-- own js -->
+        <script src="/static/js/data/teaching.js"></script>
+        <script src="/static/js/data/coursework.js"></script>
+
         <script src="/static/js/data.js"></script>
         <script src="/static/js/vis.js"></script>
         <script src="/static/js/main.js"></script>

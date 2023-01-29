@@ -13,7 +13,10 @@ class Vis {
             mscCircle: false,
         }
         this.expanded = {
+            "arthist": false,
+            "design": false,
             "js": false,
+            "linguistics": false,
             "ml": false,
             "python": false,
             "tf": false,
@@ -21,8 +24,9 @@ class Vis {
             "html": false,
             "css": false,
             "nlp": false,
+            "nodejs": false,
             "history": false,
-            "lit": false,
+            "lithist": false,
             "histsci": false,
             "discourse": false,
             "dighum": false,
@@ -37,7 +41,7 @@ class Vis {
 
         this.switches ={
             teaching_sorted: 0,
-            awards_sorted: false
+            awards_sorted: 0
         }
 
         // call initVis method
@@ -50,9 +54,9 @@ class Vis {
         // relative margins
         vis.margin =
             {
-                top: $("#" + vis.parentElement).height() / 50,
+                top: $("#" + vis.parentElement).height() / 40,
                 right: $("#" + vis.parentElement).width() / 50,
-                bottom: $("#" + vis.parentElement).height() / 10,
+                bottom: $("#" + vis.parentElement).height() / 30,
                 left: $("#" + vis.parentElement).width() / 50
             };
 
@@ -143,12 +147,22 @@ class Vis {
     drawSeparators(){
         let vis = this;
 
+        // add line above teaching
+        vis.phd_group.append("line")
+            .attr("x1", 0)
+            .attr("y1", vis.visHeight*0.35)
+            .attr("x2", vis.phd_width*vis.width)
+            .attr("y2", vis.visHeight*0.35)
+            .style('stroke', "#707070")
+            .style('stroke-width', '0.5')
+            .style('stroke-dasharray', 5)
+
         // add line under teaching row
         vis.phd_group.append("line")
             .attr("x1", 0)
-            .attr("y1", vis.visHeight*0.47)
+            .attr("y1", vis.visHeight*0.45)
             .attr("x2", vis.phd_width*vis.width)
-            .attr("y2", vis.visHeight*0.47)
+            .attr("y2", vis.visHeight*0.45)
             .style('stroke', "#707070")
             .style('stroke-width', '0.5')
             .style('stroke-dasharray', 5)
@@ -291,7 +305,7 @@ class Vis {
                         .style("stroke", "black")
                     d3.selectAll(`.classline.msc`)
                         .style('stroke', 'rgba(171,171,171,0.4)')
-                    d3.selectAll(`.course.msc`).style("fill", 'transparent')
+                    d3.selectAll(`.course.msc`).style("fill", `rgb(200, 200, 200)`)
 
                 }
             })
@@ -328,7 +342,7 @@ class Vis {
                         .style("stroke", "black")
                     d3.selectAll(`.classline.phd`)
                         .style('stroke', 'rgba(171,171,171,0.4)')
-                    d3.selectAll(`.course.phd`).style("fill", `transparent`)
+                    d3.selectAll(`.course.phd`).style("fill", `rgb(200, 200, 200)`)
 
                 }
             })
@@ -456,17 +470,49 @@ class Vis {
             // })
 
 
-        vis.drawCourses()
+        vis.drawCourseWork()
 
     }
 
-    drawCourses(){
+    drawCourseWork(){
         let vis = this;
 
-        vis.phd_courses_group = vis.phd_group.append('g')
+        vis.phdCourseWorkGroup = vis.phd_group.append('g')
             .attr('id', 'phd-courses')
 
-        vis.phd_courses = vis.phd_courses_group.selectAll().data(courses)
+
+        // define descriptive text shown when hovering
+        vis.courseWorkText = vis.phdCourseWorkGroup.append('text')
+            .attr('x', vis.phd_width*vis.width/2)
+            .attr("y", vis.visHeight*0.66 - vis.visHeight*0.085)
+            .style('font-style','italic')
+            .style('text-anchor','middle')
+            .style('opacity', 0)
+            .text('course work')
+
+        // draw overlay rect showing descriptive text
+        vis.phdCourseWorkGroup.append('rect')
+            .attr("id", "teachingrect")
+            .attr("x", 0)
+            .attr("y", vis.visHeight*0.66 - vis.visHeight*0.11)
+            .attr("width", vis.phd_width*vis.width)
+            .attr("height", vis.visHeight*0.11)
+            .style("fill", 'transparent')
+            .on('mouseover', function (event,d){
+                d3.select(this)
+                    .style("fill", "rgba(255,255,255,0.36)")
+                vis.courseWorkText
+                    .style('opacity', 1)
+            })
+            .on('mouseout', function (event,d){
+                d3.select(this)
+                    .style("fill", "transparent")
+                vis.courseWorkText
+                    .style('opacity', 0)
+            })
+
+        // draw all course work rectangles
+        vis.phd_courses = vis.phdCourseWorkGroup.selectAll().data(courses)
 
         vis.phd_courses.enter().append("rect")
             .attr('class', d => {
@@ -483,9 +529,192 @@ class Vis {
                 return diff
             })
             .attr("height", 10)
-            .style('fill', 'transparent')
+            .style('fill', `rgb(200, 200, 200)`)
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
+            .on('mouseover', function (event, d) {
+
+                d3.select(this)
+                    .style('opacity', 0.8)
+                    .style('stroke-width', '1.5px')
+
+                console.log(d)
+
+                // CONNECTIONS
+
+                // create tmp group that can be deleted on mouseout
+                let tmp_group = vis.tmp_group.append('g')
+                    .attr('id', `course-skills-lines-group`)
+
+
+                // grab taught skills
+                d.skills.forEach(d => {
+
+                    // grab skill card location
+                    console.log(d)
+                    // grab positions of start and ending elements of each individual skill card
+
+                    // start is the current rect
+                    let x_start = +d3.select(this).attr("x") + +d3.select(this).attr("width") / 2
+                    let y_start = +d3.select(this).attr("y") + vis.margin.top + 10
+                    let x_end = +d3.select(`#${d}-card`).attr("x") + +d3.select(`#${d}-card`).attr("width") / 2
+                    let y_end = +d3.select(`#${d}-card`).attr("y")
+
+                    // grab info
+                    let degree = d3.select(this).data()[0].degree
+                    let name = d3.select(this).data()[0].name
+                    let paradigm = d3.select(this).data()[0].paradigm
+
+
+                    // make x position adjustments based on the degree group element was in
+                    if (degree === 'phd' || degree === 'msc' || paradigm === 'cs' || paradigm === 'humanities') {
+                        x_start += vis.phd_start
+                    }
+
+                    // init path generator
+                    const link = d3.link(d3.curveBumpY);
+
+                    // draw path
+                    tmp_group.append("path")
+                        .attr('class', `el`)
+                        .attr('d', d => {
+                            return link({
+                                source: [x_start, y_start],
+                                target: [x_end, y_end]
+                            })
+                        })
+                        .style('fill', 'transparent')
+                        .style('stroke', colorCourseLookupTable[d])
+
+                    // color skill card
+                    d3.select(`#${d}-card`)
+                        .style('fill', colorCourseLookupTable[d])
+
+                })
+
+                // TOOLTIP
+
+                // generate html string with all courses
+                let courses_string = ''
+                d.skills.forEach( (d,i) => {
+
+                    courses_string += `<span style="border: thin solid black; border-radius: 2px; background: ${colorCourseLookupTable[d]}; padding: 2px; margin:2px">${shortTolongSkill[d]}</span>`
+                    if(i==1 || i==3 || i == 5){
+                        courses_string += `<br>`
+                    }
+                })
+
+                vis.tooltip
+                    .style("opacity", 0.9)
+                    .style("left", event.pageX - 20 - $(".tooltip").width() + "px")
+                    .style("top", event.pageY + "px")
+                    .html(`
+                        <div class="row" style="border: thin solid grey; border-radius: 5px; background: #ececec; padding: 8px; overflow-wrap: break-word; word-break: break-word; ">
+                            <h3>${d.name}<h3>
+                            <h4>grade:</h4>
+                            <h4><span style="border: thin solid black; border-radius: 2px; background: ${gradeColorLookUpTable[d.grade]}; padding: 2px; margin:2px">${d.grade}</span></h4>
+                            <h4>semester:</h4>
+                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">${d.semester}</span></h4>
+                            <h4>hours:</h4>
+                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">${d.students}</span></h4>
+                            <h4>skills taught: </h4>
+                            <h4 style="overflow-wrap: break-word; word-break: break-word; line-height: 3vh;">${courses_string} </h4>
+                            <h4>q-score: </h4>
+                            <div id="tooltipQScore" style="width=100%; height: 7vh;"></div>
+                        </div>`);
+
+                let w_tooltip = $("#tooltipQScore").width() - 16
+                let h_tooltip = $("#tooltipQScore").height()
+
+                let margins = {left: 10, right: 10, top: 15, bottom:20}
+                let height = h_tooltip - margins.top - margins.bottom
+                let width = w_tooltip - margins.left - margins.right
+
+                let q_group = d3.select("#tooltipQScore").append('svg')
+                    .attr('width', width +  margins.left + margins.right)
+                    .attr('height', height +  margins.top + margins.bottom)
+                    .append('g')
+                    .attr('transform', `translate(${margins.left},${margins.top})`)
+
+                let qScale = d3.scaleLinear()
+                    .range([0,width])
+                    .domain([0,5])
+
+                let qAxisGroup = q_group.append('g')
+                    .attr('class', 'axis x-axis')
+                    .attr('transform', `translate (0,${height})`);
+
+                let qAxis = d3.axisBottom(qScale)
+                    .tickValues([0,1,2,3,4,5])
+
+                qAxisGroup.call(qAxis)
+
+                q_group.append('rect')
+                    .attr("x", function(){
+                        if(d.q_avg === 'N/A'){
+                            return qScale(2.5)-2
+                        } else {
+                            return qScale(d.q_score)-2
+                        }
+                    })
+                    .attr("y", 0)
+                    .attr("width", 5)
+                    .attr("height", height)
+                    .style("fill", vis.colors[1])
+                    .style('stroke', '#000000')
+
+                q_group.append('rect')
+                    .attr("x", function(){
+                        if(d.q_avg === 'N/A'){
+                            return qScale(2.5)-2
+                        } else {
+                            return qScale(d.q_avg)-2
+                        }
+                    })
+                    .attr("y", 0)
+                    .attr("width", 5)
+                    .attr("height", height)
+                    .style("fill", "transparent")
+                    .style('stroke', 'grey')
+
+                q_group.append('text')
+                    .attr("x", function(){
+                        if(d.q_avg === 'N/A'){
+                            return qScale(2.5)-2
+                        } else {
+                            return qScale(d.q_avg)-2
+                        }
+                    })
+                    .attr("y", -5)
+                    .text(function(){
+                        if(d.q_avg === 'N/A'){
+                            return 'N/A'
+                        } else {
+                            return 'avg'
+                        }
+                    })
+                    .style("fill", 'darkgrey')
+                    .style("text-anchor", 'middle')
+
+            })
+            .on('mouseout', function (event, d) {
+                d3.select(this)
+                    .style('opacity', 1)
+                    .style('stroke-width', '0.5px')
+
+                // update tooltip
+                vis.tooltip
+                    .style("opacity", 0)
+                    .style("left", 0 + "px")
+                    .style("top", 0 + "px")
+
+                // delete tooltip group
+                d3.select('#course-skills-lines-group').remove()
+                d3.selectAll('.skill-card')
+                    .style('fill', 'rgba(218,218,218,0.38)')
+
+
+            })
 
         vis.drawAwards()
     }
@@ -493,18 +722,84 @@ class Vis {
     drawAwards(){
         let vis = this;
 
-        vis.phd_awards_group = vis.phd_group.append('g').attr('id', 'phd-awards')
+        // awards group
+        vis.phdAwardsGroup = vis.phd_group.append('g')
+            .attr('id', 'phd-awards')
 
-        vis.phd_awards = vis.phd_awards_group.selectAll().data(phd_awards);
+        // awards text
+        vis.awardsText = vis.phdAwardsGroup.append('text')
+            .attr('x', vis.phd_width*vis.width/2)
+            .attr("y", vis.visHeight*0.55 - vis.visHeight*0.075)
+            .style('font-style','italic')
+            .style('text-anchor','middle')
 
-        vis.phd_awards.enter().append('circle')
+        // interactive overlay award rect
+        vis.phdAwardsGroup.append('rect')
+            .attr("id", "awardsrect")
+            .attr("x", 0)
+            .attr("y", vis.visHeight*0.55 - vis.visHeight*0.10)
+            .attr("width", vis.phd_width*vis.width)
+            .attr("height", vis.visHeight*0.10)
+            .style("fill", 'transparent')
+            .on('mouseover', function (event,d){
+                d3.select(this)
+                    .style("fill", "rgba(255,255,255,0.36)")
+                vis.awardsText
+                    .style('opacity', 1)
+                    .text('Awards, Stipends, Fellowships')
+            })
+            .on('mouseout', function (event,d){
+                d3.select(this)
+                    .style("fill", "transparent")
+                vis.awardsText
+                    .style('opacity', 0)
+            })
+            .on('click', function (event,d){
+                vis.iterateThroughAwardsViews()
+             })
+
+        // awards circles
+        vis.phdAwards = vis.phdAwardsGroup.selectAll().data(phd_awards);
+        vis.awardsCircles = vis.phdAwards.enter().append('circle')
             .attr('class', d=> `el`)
             .attr("cx", d => vis.phd_x(vis.parseDate(d.year)))
-            .attr("cy", d => vis.visHeight * 0.51)
-            .attr('r', 5)
-                .style('fill', d => "#83C5BE")
+            .attr("cy", d => vis.visHeight * 0.50)
+            .attr('r', 7)
+            .style('fill', `rgb(205,205,205)`)
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
+            .on("mouseover", function (event,d){
+
+                d3.select(this)
+                    .style('opacity', 0.8)
+                    .style('stroke-width', '1.5px')
+
+                vis.tooltip
+                    .style("opacity", 0.9)
+                    .style("left", event.pageX - 20 - $(".tooltip").width() + "px")
+                    .style("top", event.pageY + "px")
+                    .html(`
+                        <div class="row" style="border: thin solid grey; border-radius: 5px; background: #ececec; padding: 8px; overflow-wrap: break-word; word-break: break-word; ">
+                            <h3>${d.name}<h3>
+                            <h4>Type:</h4>
+                            <h4><span style="border: thin solid black; border-radius: 2px; background: ${awardTypeColorLookup[d.type]}; padding: 2px; margin:2px">${d.type}</span></h4>
+                            <h4>Amount:</h4>
+                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">${d.value}$</span></h4>
+                            
+                        </div>`);
+            })
+            .on("mouseout", function (d,i){
+
+                d3.select(this)
+                    .style('opacity', 1)
+                    .style('stroke-width', '0.5px')
+
+                // update tooltip
+                vis.tooltip
+                    .style("opacity", 0)
+                    .style("left", 0 + "px")
+                    .style("top", 0 + "px")
+            })
         vis.drawTeaching()
     }
 
@@ -516,57 +811,43 @@ class Vis {
 
         vis.teaching_text = vis.phd_teaching_group.append('text')
             .attr('x', vis.phd_width*vis.width/2)
-            .attr("y", vis.visHeight*0.47 - vis.visHeight*0.06)
+            .attr("y", vis.visHeight*0.45 - vis.visHeight*0.075)
             .style('font-style','italic')
             .style('text-anchor','middle')
+            .style('opacity', 0)
+            .text('teaching experience')
 
+        vis.teachingAxisGroup = vis.phd_teaching_group.append('g')
 
         // add interactive rect that triggers sorting of all courses by q scores or enrollment
         vis.phd_teaching_group.append('rect')
             .attr("id", "teachingrect")
             .attr("x", 0)
-            .attr("y", vis.visHeight*0.47 - vis.visHeight*0.09)
+            .attr("y", vis.visHeight*0.45 - vis.visHeight*0.10)
             .attr("width", vis.phd_width*vis.width)
-            .attr("height", vis.visHeight*0.09)
+            .attr("height", vis.visHeight*0.10)
             .style("fill", 'transparent')
             .on('mouseover', function (event,d){
                 d3.select(this)
                     .style("fill", "rgba(255,255,255,0.36)")
+                vis.teaching_text
+                    .style('opacity', 1)
+
+                d3.select('#teaching').style("display", "block")
             })
             .on('mouseout', function (event,d){
+
+                d3.select('#teaching').style("height", "0vh")
+
+
                 d3.select(this)
                     .style("fill", "transparent")
+                vis.teaching_text
+                    .style('opacity', 0)
             })
             .on('click', function (event,d){
 
-                vis.switches.teaching_sorted += 1
-
-                // if the switch currently says sorted, then reset to base view if on click
-                if(vis.switches.teaching_sorted % 3 === 0){
-                    vis.teaching_text.text('')
-                    vis.teaching_rects
-                        .transition()
-                        .duration(500)
-                        .attr("x", d => vis.phd_x(vis.parseDate(d.year[0])))
-                        .attr("y", d => vis.visHeight * 0.46 - 11 - 15*d.z)
-                        .attr("width", d => {
-                            let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
-                            return diff
-                        })
-                        .attr("height", 10)
-
-
-
-                } else if(vis.switches.teaching_sorted % 3 === 1){
-
-                    vis.teaching_text.text('sorted by enrolled students')
-                    vis.sortTeachingByStudents()
-
-                } else if(vis.switches.teaching_sorted % 3 === 2) {
-                    vis.teaching_text.text('sorted by q score')
-                    vis.sortTeachingByScore()
-
-                }
+                vis.iterateThroughTeachingViews()
 
             })
 
@@ -581,7 +862,7 @@ class Vis {
                 return `teaching el ${class_string}`
             })
             .attr("x", d => vis.phd_x(vis.parseDate(d.year[0])))
-            .attr("y", d => vis.visHeight * 0.46 - 11 - 15*d.z)
+            .attr("y", d => vis.visHeight * 0.445 - 11 - 15*d.z)
             .attr("width", d => {
                 let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
                 return diff
@@ -592,14 +873,70 @@ class Vis {
                 if(d.paradigm === 'cs'){
                     color = vis.colors[1]
                 }
-                return color
+                return 'transparent'
             })
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
             .on('mouseover', function (event, d) {
+
                 d3.select(this)
                     .style('opacity', 0.8)
                     .style('stroke-width', '1.5px')
+
+
+                // CONNECTIONS
+
+                // create tmp group that can be deleted on mouseout
+                let tmp_group = vis.tmp_group.append('g')
+                    .attr('id', `course-skills-lines-group`)
+
+
+                // grab taught skills
+                d.taught_skills.forEach(d =>{
+
+                    // grab skill card location
+                    console.log(d)
+                    // grab positions of start and ending elements of each individual skill card
+
+                    // start is the current rect
+                    let x_start = +d3.select(this).attr("x") + +d3.select(this).attr("width") / 2
+                    let y_start = +d3.select(this).attr("y") + vis.margin.top + 10
+                    let x_end = +d3.select(`#${d}-card`).attr("x") + +d3.select(`#${d}-card`).attr("width") / 2
+                    let y_end = +d3.select(`#${d}-card`).attr("y")
+
+                    // grab info
+                    let degree = d3.select(this).data()[0].degree
+                    let name = d3.select(this).data()[0].name
+                    let paradigm = d3.select(this).data()[0].paradigm
+
+
+                    // make x position adjustments based on the degree group element was in
+                    if (degree === 'phd' || degree === 'msc' || paradigm === 'cs' || paradigm === 'humanities') {
+                        x_start += vis.phd_start
+                    }
+
+                    // init path generator
+                    const link = d3.link(d3.curveBumpY);
+
+                    // draw path
+                    tmp_group.append("path")
+                        .attr('class', `el`)
+                        .attr('d', d => {
+                            return link({
+                                source: [x_start, y_start],
+                                target: [x_end, y_end]
+                            })
+                        })
+                        .style('fill', 'transparent')
+                        .style('stroke', colorCourseLookupTable[d])
+
+                    // color skill card
+                    d3.select(`#${d}-card`)
+                        .style('fill', colorCourseLookupTable[d])
+
+                })
+
+                // TOOLTIP
 
                 // generate html string with all courses
                 let courses_string = ''
@@ -619,9 +956,9 @@ class Vis {
                         <div class="row" style="border: thin solid grey; border-radius: 5px; background: #ececec; padding: 8px; overflow-wrap: break-word; word-break: break-word; ">
                             <h3>${d.name}<h3>
                             <h4>semester:</h4>
-                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">WS2020</span></h4>
+                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">${d.semester}</span></h4>
                             <h4>students:</h4>
-                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">150</span></h4>
+                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">${d.students}</span></h4>
                             <h4>skills taught: </h4>
                             <h4 style="overflow-wrap: break-word; word-break: break-word; line-height: 3vh;">${courses_string} </h4>
                             <h4>q-score: </h4>
@@ -703,8 +1040,6 @@ class Vis {
                     .style("fill", 'darkgrey')
                     .style("text-anchor", 'middle')
 
-
-
             })
             .on('mouseout', function (event, d) {
                 d3.select(this)
@@ -717,9 +1052,12 @@ class Vis {
                     .style("left", 0 + "px")
                     .style("top", 0 + "px")
 
-            })
-            .on('click', function (event, d){
-                // update tooltip
+                // delete tooltip group
+                d3.select('#course-skills-lines-group').remove()
+                d3.selectAll('.skill-card')
+                    .style('fill', 'rgba(218,218,218,0.38)')
+
+
             })
 
 
@@ -729,17 +1067,6 @@ class Vis {
     drawPresentations(){
 
         let vis = this;
-
-        // add line before teaching
-        vis.phd_group.append("line")
-            .attr("x1", 0)
-            .attr("y1", vis.visHeight*0.38)
-            .attr("x2", vis.phd_width*vis.width)
-            .attr("y2", vis.visHeight*0.38)
-            .style('stroke', "#707070")
-            .style('stroke-width', '0.5')
-            .style('stroke-dasharray', 5)
-
 
         vis.diss_y = d3.scaleLinear()
             .domain([0,200])
@@ -829,10 +1156,14 @@ class Vis {
     drawSkills(){
         let vis = this;
 
-        vis.skillRects = vis.svg.selectAll().data(skills)
+        vis.skillgroup = vis.svg.append('g')
+            .attr('id', 'skill-group')
+            .attr('opacity', 0)
+
+        vis.skillRects = vis.skillgroup.selectAll().data(skills)
 
         vis.skillRects.enter().append('rect')
-            .attr('class', 'clickable')
+            .attr('class', 'clickable skill-card')
             .attr('id', d => `${d.skill_abbreviation}-card`)
             .attr('width', d => d.rel_end_x * vis.width - d.rel_start_x * vis.width)
             .attr('height', 40)
@@ -938,6 +1269,114 @@ class Vis {
             .style('text-anchor', 'middle')
     }
 
+    iterateThroughAwardsViews(){
+
+        console.log('i',vis.switches.awards_sorted)
+
+        vis.switches.awards_sorted += 1
+
+        // if the switch currently says sorted, then reset to base view if on click
+        if(vis.switches.awards_sorted % 3 === 0) {
+
+            vis.awardsText
+                .text('Awards, Stipends, Fellowships')
+
+            vis.awardsCircles
+                .transition()
+                .duration(500)
+                .attr("cx", d => vis.phd_x(vis.parseDate(d.year)))
+                .attr("cy", d => vis.visHeight * 0.50)
+                .attr('r', 7)
+                .style('fill', `rgb(205,205,205)`)
+                .style('stroke', 'black')
+                .style('stroke-width', '0.5px')
+
+        } else if(vis.switches.awards_sorted % 3 === 1){
+
+            // update text
+            vis.awardsText.text('colored by award type')
+
+            // recolor circles
+            vis.awardsCircles
+                .style('fill', d => awardTypeColorLookup[d.type])
+        }
+
+        // 3rd view - sorted by enrollment
+        else if(vis.switches.awards_sorted % 3 === 2){
+
+            console.log('eigt jetzt', vis.awardsCircles)
+            // update text
+            vis.awardsText.text('sorted by award amount')
+
+            // create a scale
+            vis.awardAmountScale = d3.scaleLinear()
+                .range([0, vis.phd_width * vis.width])
+                .domain([-1000, 36000])
+
+            // grab all awards
+            vis.awardsCircles
+                .transition()
+                .duration(500)
+                .attr("cx", d => vis.awardAmountScale(d.value))
+                .attr("cy", d => vis.visHeight * 0.50 + 3*d.z)
+                .attr('r', 7)
+        }
+    }
+
+    iterateThroughTeachingViews(){
+        vis.switches.teaching_sorted += 1
+
+        // if the switch currently says sorted, then reset to base view if on click
+        if(vis.switches.teaching_sorted % 4 === 0) {
+
+            vis.teaching_text
+                .text('teaching experience')
+
+            vis.teaching_rects
+                .transition()
+                .duration(500)
+                .attr("x", d => vis.phd_x(vis.parseDate(d.year[0])))
+                .attr("y", d => vis.visHeight * 0.445 - 11 - 15*d.z)
+                .attr("width", d => {
+                    let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
+                    return diff
+                })
+                .attr("height", 10)
+                .style('fill', d => {
+                    let color = vis.colors[3]
+                    if (d.paradigm === 'cs') {
+                        color = vis.colors[1]
+                    }
+                    return 'transparent'
+                })
+
+        }
+
+        else if(vis.switches.teaching_sorted % 4 === 1){
+
+            vis.teaching_text
+                .text('colored by subject')
+
+            vis.teaching_rects
+                .style('fill', d =>{
+                    let color = vis.colors[3]
+                    if(d.paradigm === 'cs'){
+                        color = vis.colors[1]
+                    }
+                    return color
+                })
+
+        } else if(vis.switches.teaching_sorted % 4 === 2){
+
+            vis.teaching_text.text('sorted by enrolled students')
+            vis.sortTeachingByStudents()
+
+        } else if(vis.switches.teaching_sorted % 4 === 3) {
+            vis.teaching_text.text('sorted by q score')
+            vis.sortTeachingByScore()
+
+        }
+    }
 
     sortTeachingByStudents(){
 
@@ -951,7 +1390,7 @@ class Vis {
             .transition()
             .duration(500)
             .attr("x", d => vis.teaching_scale(d.students))
-            .attr("y", d => vis.visHeight * 0.46 - 21)
+            .attr("y", d => vis.visHeight * 0.445 - 21)
             .attr("width", 5)
             .attr("height", 20)
             .style('fill', d =>{
@@ -975,7 +1414,7 @@ class Vis {
             .transition()
             .duration(500)
             .attr("x", d => vis.teaching_scale(d.q_score))
-            .attr("y", d => vis.visHeight * 0.46 - 21)
+            .attr("y", d => vis.visHeight * 0.445 - 21)
             .attr("width", 5)
             .attr("height", 20)
             .style('fill', d =>{

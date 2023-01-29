@@ -1,5 +1,30 @@
 //
 
+function provideOptions(){
+
+    console.log('fired')
+    document.getElementById('intro-button').style.height = 0;
+
+    document.getElementById("intro-button").classList.remove("intro-button");
+
+    //
+    document.getElementById("left").classList.add("intro-button");
+    document.getElementById("right").classList.add("intro-button");
+    document.getElementById("left").innerHTML = `    
+    <div class="row justify-content-center" style="height: 100%">
+        <span class="align-self-center"> 
+               guided tour
+        </span>
+    </div>`;
+
+    document.getElementById("right").innerHTML = `    
+    <div class="row justify-content-center" style="height: 100%">
+        <span class="align-self-center"> 
+               explore
+        </span>
+    </div>`;
+}
+
 function explore(){
     console.log('clicked')
 
@@ -33,6 +58,7 @@ function explore(){
         .style("border-left", "0px")
         .on("start", function(){
             startNarration()
+            d3.select(`#cv-links`).style('display', 'block')
         })
 
 
@@ -51,8 +77,10 @@ let vis = new Vis("vis-container")
 function startNarration(){
 
     // show all rects
-    vis.ba_group.transition().duration(500).attr('opacity',1)
-    vis.ma_group.transition().duration(500).attr('opacity',1)
-    vis.phd_group.transition().duration(500).attr('opacity',1)
+    vis.ba_group.transition().duration(500).attr('opacity', 1)
+    vis.ma_group.transition().duration(500).attr('opacity', 1)
+    vis.phd_group.transition().duration(500).attr('opacity', 1)
+
+    vis.skillgroup.transition().duration(500).attr('opacity', 1)
 
 }

@@ -6,7 +6,7 @@
     cursor: pointer;
 }
 
-#intro-button {
+.intro-button {
     cursor: pointer;
     height: 5vh;
     text-align: center;
@@ -14,7 +14,7 @@
     border: 0.5px solid black
 }
 
-#intro-button:hover{
+.intro-button:hover{
     height: 5vh;
     text-align: center;
     background: black;
