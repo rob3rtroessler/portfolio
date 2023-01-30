@@ -46,29 +46,46 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" id="cv-links" style="height: 10vh; display: none">
+                            <div class="row" id="cv-links" style="height: 10vh; display: none; padding: 1vh">
                                 <div class="col">
-                                    <div class="row">
-                                        <div class="col-4">github</div>
-                                        <div class="col-4">cv</div>
-                                        <div class="col-4">linkedIn</div>
+                                    <div class="row" style="border: thin solid black; background: #c7c7c7; height: 100%">
+                                        <div class="col-4">
+                                            <div class="row justify-content-center" style="height: 100%">
+                                                <img src="static/img/github_icon.png" class="cv-icon align-self-center">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="row justify-content-center" style="height: 100%">
+                                                <img src="static/img/pdf_icon.png" class="cv-icon align-self-center">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="row justify-content-center" style="height: 100%">
+                                                <img src="static/img/linkedin_icon.png" class="cv-icon align-self-center">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="row" id="teaching" style="height:20vh; display: none; border-top: thin solid black; border-bottom: thin solid black">
+                            <div class="row" id="teaching" style="height:35vh; display: none; padding: 1vh">
                                 <div class="col">
-                                    <div class="row" style="height: 10vh; background: red"></div>
-                                    <div class="row" style="height: 10vh">
-                                        <div class="col-6">
-                                            <div class="row" style="background: red; height: 10vh"></div>
+                                    <div class="row" style="height: 100%; border: thin solid black">
+                                        <div class="col">
+                                            <div class="row" style="height: 15vh">
+                                                <div class="col-6">
+                                                    <div class="row" id="cc-container" style="height: 15vh"></div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="row" id="sc-container" style="height: 15vh"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="height: 15vh">bar chart with hot topics taught</div>
+
+                                            <div class="row" style="height: 5vh">
+                                                <span>click on the highlighted row to sort all taught courses by enrolled students or q-scores</span>
+                                            </div>
                                         </div>
-                                        <div class="col-6">
-                                            <div class="row" style="background: green; height: 10vh"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="height: 5vh">
-                                        <span>click on the highlighted row to sort all taught courses by enrolled students or q-scores</span>
                                     </div>
                                 </div>
                             </div>
@@ -102,6 +119,7 @@
         <script src="/static/js/data/teaching.js"></script>
         <script src="/static/js/data/coursework.js"></script>
 
+        <script src="/static/js/pieVis.js"></script>
         <script src="/static/js/data.js"></script>
         <script src="/static/js/vis.js"></script>
         <script src="/static/js/main.js"></script>

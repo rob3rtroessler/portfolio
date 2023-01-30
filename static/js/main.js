@@ -68,13 +68,16 @@ function explore(){
 }
 
 
-
-let vis = new Vis("vis-container")
-
+let vis;
+let courseCircle = new PieVis("cc-container")
+// let studentCircle = new PieVis("sc-container")
+// let topicBars = new BarVis("bar-container")
 
 
 // NARRATIVE CV
 function startNarration(){
+
+    vis = new Vis("vis-container")
 
     // show all rects
     vis.ba_group.transition().duration(500).attr('opacity', 1)
@@ -84,3 +87,8 @@ function startNarration(){
     vis.skillgroup.transition().duration(500).attr('opacity', 1)
 
 }
+
+
+
+console.log(window.innerWidth, $("#intro-button-container").width() )
+

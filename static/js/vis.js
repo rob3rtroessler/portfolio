@@ -54,9 +54,9 @@ class Vis {
         // relative margins
         vis.margin =
             {
-                top: $("#" + vis.parentElement).height() / 40,
+                top: $("#" + vis.parentElement).height() / 55,
                 right: $("#" + vis.parentElement).width() / 50,
-                bottom: $("#" + vis.parentElement).height() / 30,
+                bottom: $("#" + vis.parentElement).height() / 50,
                 left: $("#" + vis.parentElement).width() / 50
             };
 
@@ -833,12 +833,14 @@ class Vis {
                 vis.teaching_text
                     .style('opacity', 1)
 
+                // show div
                 d3.select('#teaching').style("display", "block")
+
+                // draw vis #1
+                drawStudentCircle("sc-container")
+                drawCourseCircle("cc-container")
             })
             .on('mouseout', function (event,d){
-
-                d3.select('#teaching').style("height", "0vh")
-
 
                 d3.select(this)
                     .style("fill", "transparent")

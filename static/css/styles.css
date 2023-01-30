@@ -39,3 +39,11 @@
 .tooltip h4 {
     font: 14px sans-serif;
 }
+
+.cv-icon {
+    display: block;
+    max-width:5vw;
+    max-height:3vh;
+    width: auto;
+    height: auto;
+}
