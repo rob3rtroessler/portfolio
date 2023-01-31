@@ -6,7 +6,10 @@ let courses = [
         name: 'Special Reading and Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
+        grade: "N/A",
+        semester: "Fall 2021",
+        hours: 15,
+        skills: ['philosophy', 'theory', 'modernism'],
         year: ["09/01/2015", "12/13/2015"],
         z: 0
     },
@@ -14,7 +17,7 @@ let courses = [
         name: 'Literatur, Theorie, Wissen',
         course_number: 'GERMAN 236',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
+        skills: ['philosophy', 'theory', 'modernism', 'lithist'],
         year: ["09/01/2015", "12/13/2015"],
         z: 1
     },
@@ -22,7 +25,7 @@ let courses = [
         name: 'Robert Musil: Seminar',
         course_number: 'GERMAN 243',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'fin de siecle', 'histsci'],
+        skills: ['philosophy', 'theory', 'modernism', 'histsci', 'lithist'],
         year: ["09/01/2015", "12/13/2015"],
         z: 2
     },
@@ -30,7 +33,7 @@ let courses = [
         name: 'Questions of Theory',
         course_number: 'ROM-STD 201',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'fin de siecle', 'histsci'],
+        skills: ['philosophy', 'theory', 'ethics'],
         year: ["09/01/2015", "12/13/2015"],
         z: 3
     },
@@ -40,7 +43,7 @@ let courses = [
         name: 'Social Dynamics in Twentieth-Century Modernism',
         course_number: 'GERMAN 141',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
+        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci', 'lithist'],
         year: ["01/22/2016", "05/01/2016"],
         z: 0
     },
@@ -48,14 +51,14 @@ let courses = [
         name: 'Skandal! Postmoderne und Dekonstruktion in Deutschland?',
         course_number: 'GERMAN 267',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'histsci'],
+        skills: ['philosophy', 'theory', 'modernism', 'lithist'],
         year: ["01/22/2016", "05/01/2016"],
         z: 1
     },    {
         name: 'Hermeneutics and the Philology of the Flesh',
         course_number: 'GERMAN 272',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'modernism', 'histsci'],
+        skills: ['philosophy', 'theory', 'modernism', 'histsci'],
         year: ["01/22/2016", "05/01/2016"],
         z: 2
     },    {
@@ -72,7 +75,7 @@ let courses = [
         name: 'Special Reading Programs and Research Problems for Advanced Students',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['philosophy', 'theory', 'modernism', 'lithist'],
         year: ["09/01/2016", "12/13/2016"],
         z: 0
     },
@@ -80,7 +83,7 @@ let courses = [
         name: 'Methods in the Digital Humanities',
         course_number: 'ENGLISH 298DH',
         degree: 'msc',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['history', 'philosophy', 'theory', 'python', 'nlp'],
         year: ["09/01/2016", "12/13/2016"],
         z: 1
     },
@@ -88,7 +91,7 @@ let courses = [
         name: 'Introduction to Computer Science',
         course_number: 'CS 50',
         degree: 'msc',
-        skills: ['python', 'c', 'js'],
+        skills: ['python', 'c', 'js', 'html', 'css', 'sql'],
         year: ["09/01/2016", "12/13/2016"],
         z: 2
     },
@@ -98,7 +101,7 @@ let courses = [
         name: 'What should or could (scholarly) knowledge look like in the 21st Century? A Knowledge Design seminar',
         course_number: 'COMPLIT 279',
         degree: 'msc',
-        skills: ['dighum', 'design'],
+        skills: ['dighum', 'design', 'datavis'],
         year: ["01/22/2017", "05/01/2017"],
         z: 0
     },
@@ -106,7 +109,7 @@ let courses = [
         name: 'Architecture and the Literary Imagination from the 19th to the 21st Century',
         course_number: 'COMPLIT 279',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
+        skills: ['arthist', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["01/22/2017", "05/01/2017"],
         z: 1
     },
@@ -116,7 +119,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
+        skills: ['arthist', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2017", "12/13/2017"],
         z: 0
     },
@@ -132,7 +135,7 @@ let courses = [
         name: 'Approaches to Foreign Language Teaching',
         course_number: 'GERMAN 280',
         degree: 'phd',
-        skills: ['germgram'],
+        skills: ['linguistics'],
         year: ["09/01/2017", "12/13/2017"],
         z: 2
     },
@@ -142,7 +145,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['philosophy', 'theory', 'modernism', 'histsci', 'lithist'],
         year: ["01/22/2018", "05/01/2018"],
         z: 0
     },
@@ -160,7 +163,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'fin de siecle', 'history of science'],
+        skills: ['philosophy', 'theory', 'modernism', 'histsci', 'lithist'],
         year: ["09/01/2018", "12/13/2018"],
         z: 0
     },
@@ -178,7 +181,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'literary theory', 'fin de siecle', 'history of science'],
+        skills: ['philosophy', 'theory', 'modernism', 'histsci', 'lithist', 'python', 'js', 'html', 'css', 'nlp'],
         year: ["01/22/2019", "05/01/2019"],
         z: 0
     },
@@ -186,7 +189,7 @@ let courses = [
         name: 'Topics in Data Visualization',
         course_number: 'CS 271',
         degree: 'msc',
-        skills: ['datavis', 'js'],
+        skills: ['datavis', 'js', 'python', 'nlp', 'node.js'],
         year: ["01/22/2019", "05/01/2019"],
         z: 1
     },
@@ -197,7 +200,7 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
+        skills: ['philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2019", "12/13/2019"],
         z: 0
     },
@@ -253,6 +256,9 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
+        grade: "N/A",
+        semester: "Fall 2021",
+        hours: 15,
         skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2021", "12/13/2021"],
         z: 0
@@ -261,6 +267,9 @@ let courses = [
         name: 'Systems Development for Computational Science',
         course_number: 'APCOMP 207',
         degree: 'msc',
+        grade: "A-",
+        semester: "Fall 2021",
+        hours: 10,
         skills: ['ml', 'python'],
         year: ["09/01/2021", "12/13/2021"],
         z: 1
@@ -271,7 +280,10 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
+        grade: "N/A",
+        semester: "Spring 2022",
+        hours: 25,
+        skills: ['philosophy', 'theory', 'modernism', 'histsci', 'python', 'js'],
         year: ["01/22/2022", "05/26/2022"],
         z: 0
     },
@@ -281,7 +293,11 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
-        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
+        grade: "N/A",
+        semester: "Fall 2023",
+        hours: 15,
+        hours_avg: "N/A",
+        skills: ['philosophy', 'theory', 'modernism', 'histsci', 'python', 'js'],
         year: ["09/01/2022", "12/13/2022"],
         z: 0
     },
@@ -289,7 +305,11 @@ let courses = [
         name: 'Quantitative Methods for Natural Language Processing',
         course_number: 'MIT 6.8610',
         degree: 'msc',
-        skills: ['ml', 'nlp', 'js', 'pytorch'],
+        grade: "A",
+        semester: "Fall 2022",
+        hours: 15,
+        hours_avg: 10,
+        skills: ['ml', 'nlp', 'js', 'pytorch', 'python'],
         year: ["09/01/2022", "12/13/2022"],
         z: 1
     },
@@ -297,10 +317,11 @@ let courses = [
         name: 'Introduction to Probability',
         course_number: 'STAT 110',
         degree: 'msc',
-        grade: "A",
-        semester: "Fall 2023",
+        grade: "B",
+        semester: "Fall 2022",
         hours: 15,
-        skills: ['statistics'],
+        hours_avg: 14,
+        skills: ['stats'],
         year: ["09/01/2022", "12/13/2022"],
         z: 2
     },
@@ -309,9 +330,10 @@ let courses = [
         course_number: 'APCOMP 297R',
         degree: 'msc',
         grade: "A",
-        semester: "Fall 2023",
+        semester: "Fall 2022",
         hours: 15,
-        skills: ['ml', 'visualization', 'pytorch', 'js', 'python'],
+        hours_avg: 8,
+        skills: ['ml', 'datavis', 'pytorch', 'js', 'python'],
         year: ["09/01/2022", "12/13/2022"],
         z: 3
     },
@@ -324,10 +346,11 @@ let courses = [
         course_number: 'GERMAN 300',
         degree: 'phd',
         description: '',
-        grade: "A",
+        grade: "N/A",
         semester: "Spring 2023",
         hours: 40,
-        skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
+        hours_avg: "N/A",
+        skills: ['philosophy', 'theory', 'modernism', 'histsci'],
         year: ["01/22/2023", "05/26/2023"],
         z: 0
     },
@@ -339,7 +362,8 @@ let courses = [
         grade: "A",
         semester: "Spring 2023",
         hours: 10,
-        skills: ['machine learning', 'artificial intelligence', 'ethics'],
+        hours_avg: 8,
+        skills: ['ml', 'ai', 'ethics', 'python'],
         year: ["01/22/2023", "05/26/2023"],
         z: 1
     }

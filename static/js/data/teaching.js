@@ -25,7 +25,8 @@ let teaching = [
         z: 1,
         q_score: 5.0,
         q_avg: 4.1,
-        students: 15
+        students: 15,
+        text: digitalMary
     },
 
     // SPRING 2018
@@ -40,7 +41,7 @@ let teaching = [
         z: 0,
         q_score: 5.0,
         q_avg: 4.1,
-        students: 7
+        students: 11
     },
     {
         name: 'Special Reading and Research: Distant Reading Karl Marx',
@@ -182,7 +183,7 @@ let teaching = [
         z: 0,
         q_score: 5.0,
         q_avg: 3.9,
-        students: 120
+        students: 180
     },
 
     // SUMMER 2021

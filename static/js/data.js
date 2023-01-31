@@ -699,42 +699,51 @@ let skills = [
         skill_abbreviation: "ml",
         skill_long: "Machine Learning",
         rel_start_x: 0.0,
-        rel_end_x: 0.18,
+        rel_end_x: 0.16,
         row: 0,
         paradigm: 'cs'
     },
     {
         skill_abbreviation: "js",
         skill_long: "JavaScript",
-        rel_start_x: 0.2,
-        rel_end_x: 0.31,
+        rel_start_x: 0.18,
+        rel_end_x: 0.28,
         row: 0,
         paradigm: 'cs'
     },
     {
         skill_abbreviation: "python",
         skill_long: "Python",
-        rel_start_x: 0.33,
-        rel_end_x: 0.43,
+        rel_start_x: 0.3,
+        rel_end_x: 0.39,
         row: 0,
         paradigm: 'cs'
     },
     {
         skill_abbreviation: "react",
         skill_long: "React",
-        rel_start_x: 0.45,
-        rel_end_x: 0.53,
+        rel_start_x: 0.41,
+        rel_end_x: 0.48,
+        row: 0,
+        paradigm: 'cs'
+    },
+    {
+        skill_abbreviation: "stats",
+        skill_long: "Statistics",
+        rel_start_x: 0.5,
+        rel_end_x: 0.57,
         row: 0,
         paradigm: 'cs'
     },
     {
         skill_abbreviation: "tf",
         skill_long: "TensorFlow",
-        rel_start_x: 0.55,
+        rel_start_x: 0.59,
         rel_end_x: 0.72,
         row: 0,
         paradigm: 'cs'
     },
+
     {
         skill_abbreviation: "pytorch",
         skill_long: "PyTorch",
@@ -825,25 +834,33 @@ let skills = [
         paradigm: 'cs'
     },
     {
-        skill_abbreviation: "nlp",
-        skill_long: "Natural Language Processing",
+        skill_abbreviation: "ethics",
+        skill_long: "Ethics",
         rel_start_x: 0.3,
-        rel_end_x: 0.55,
+        rel_end_x: 0.39,
         row: 2,
-        paradigm: 'cs'
+        paradigm: 'humanities'
     },
     {
-        skill_abbreviation: "arthist",
-        skill_long: "History of Art and Architecture",
-        rel_start_x: 0.57,
-        rel_end_x: 0.8,
+        skill_abbreviation: "nlp",
+        skill_long: "Natural Language Processing",
+        rel_start_x: 0.41,
+        rel_end_x: 0.61,
         row: 2,
         paradigm: 'cs'
     },
     {
         skill_abbreviation: "lithist",
         skill_long: "Literary History",
-        rel_start_x: 0.82,
+        rel_start_x: 0.63,
+        rel_end_x: 0.75,
+        row: 2,
+        paradigm: 'humanities'
+    },
+    {
+        skill_abbreviation: "arthist",
+        skill_long: "History of Art and Architecture",
+        rel_start_x: 0.77,
         rel_end_x: 1,
         row: 2,
         paradigm: 'humanities'
@@ -887,6 +904,22 @@ let skills = [
         rel_end_x: 0.67,
         row: 3,
         paradigm: 'humanities'
+    },
+    {
+        skill_abbreviation: "medieval",
+        skill_long: "Medieval Studies",
+        rel_start_x: 0.69,
+        rel_end_x: 0.81,
+        row: 3,
+        paradigm: 'humanities'
+    },
+    {
+        skill_abbreviation: "ai",
+        skill_long: "Artificial Intelligence",
+        rel_start_x: 0.83,
+        rel_end_x: 1,
+        row: 3,
+        paradigm: 'cs'
     }
 ]
 
@@ -906,6 +939,7 @@ let colorCourseLookupTable = {
     design: "#006D77",
     dighum: "#006D77",
     discourse: "#E29578",
+    ethics: "#E29578",
     history: "#E29578",
     histsci: "#E29578",
     html: "#006D77",
@@ -917,13 +951,15 @@ let colorCourseLookupTable = {
     python: "#006D77",
     pytorch: "#006D77",
     psyhist: "#E29578",
+    medieval: "#E29578",
     ml: "#006D77",
     modernism: "#E29578",
     nlp: "#006D77",
     nodejs: "#006D77",
     react: "#006D77",
     sklearn: "#006D77",
-    statistics: "#006D77",
+    sql: "#006D77",
+    stats: "#006D77",
     theory: "#E29578",
     tf: "#006D77"
 }
@@ -934,12 +970,14 @@ let shortTolongSkill = {
     datavis: "Data&nbsp;Visualization",
     design: "Design&nbsp;Thinking",
     dighum: "Digital&nbsp;Humanities",
+    ethics: "Ethics",
     history: "History",
     histsci: "History&nbsp;of&nbsp;Science",
     html: "HTML",
     js: "JavaScript",
     linguistics: "Linguistics",
     lithist: "Literary&nbsp;History",
+    medieval: "Medieval Studies",
     ml: "Machine&nbsp;Learning",
     modernism: "Literary Modernisms",
     nlp: "Natural&nbsp;Language&nbsp;Processing",
@@ -949,11 +987,18 @@ let shortTolongSkill = {
     python: "Python",
     pytorch: "PyTorch",
     react: "React",
+    sql: "SQL",
     sklearn: "scikit-learn",
+    stats: "statistics",
     theory: "Literary&nbsp;Theory",
     tf: "TensorFlow",
 }
 
 let gradeColorLookUpTable = {
     A: "#ffaaaa"
+}
+
+let paradigmColorLookUpTable = {
+    cs: '#006D77',
+    humanities: '#E29578'
 }

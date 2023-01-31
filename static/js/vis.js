@@ -15,6 +15,7 @@ class Vis {
         this.expanded = {
             "arthist": false,
             "design": false,
+            "ethics": false,
             "js": false,
             "linguistics": false,
             "ml": false,
@@ -23,6 +24,8 @@ class Vis {
             "pytorch": false,
             "html": false,
             "css": false,
+            "medieval": false,
+            "modernism": false,
             "nlp": false,
             "nodejs": false,
             "history": false,
@@ -32,14 +35,14 @@ class Vis {
             "dighum": false,
             "pandas": false,
             "datavis": false,
-            "statistics": false,
+            "stats": false,
             "react": false,
             "sklearn": false,
             "philosophy": false,
             "theory": false
         }
 
-        this.switches ={
+        this.switches = {
             teaching_sorted: 0,
             awards_sorted: 0
         }
@@ -612,19 +615,15 @@ class Vis {
                         <div class="row" style="border: thin solid grey; border-radius: 5px; background: #ececec; padding: 8px; overflow-wrap: break-word; word-break: break-word; ">
                             <h3>${d.name}<h3>
                             <h4>grade:</h4>
-                            <h4><span style="border: thin solid black; border-radius: 2px; background: ${gradeColorLookUpTable[d.grade]}; padding: 2px; margin:2px">${d.grade}</span></h4>
-                            <h4>semester:</h4>
-                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">${d.semester}</span></h4>
-                            <h4>hours:</h4>
-                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">${d.students}</span></h4>
-                            <h4>skills taught: </h4>
+                            <h4><span style="border: thin solid black; border-radius: 2px; background: lightgrey; padding: 2px; margin:2px">${d.grade}</span></h4>
+                            <h4>skills learned: </h4>
                             <h4 style="overflow-wrap: break-word; word-break: break-word; line-height: 3vh;">${courses_string} </h4>
-                            <h4>q-score: </h4>
-                            <div id="tooltipQScore" style="width=100%; height: 7vh;"></div>
+                            <h4>weekly hours invested: </h4>
+                            <div id="tooltipHours" style="width=100%; height: 7vh;"></div>
                         </div>`);
 
-                let w_tooltip = $("#tooltipQScore").width() - 16
-                let h_tooltip = $("#tooltipQScore").height()
+                let w_tooltip = $("#tooltipHours").width() - 16
+                let h_tooltip = $("#tooltipHours").height()
 
                 let margins = {left: 10, right: 10, top: 15, bottom:20}
                 let height = h_tooltip - margins.top - margins.bottom
@@ -654,7 +653,7 @@ class Vis {
                         if(d.q_avg === 'N/A'){
                             return qScale(2.5)-2
                         } else {
-                            return qScale(d.q_score)-2
+                            return qScale(d.hours)-2
                         }
                     })
                     .attr("y", 0)
@@ -668,7 +667,7 @@ class Vis {
                         if(d.q_avg === 'N/A'){
                             return qScale(2.5)-2
                         } else {
-                            return qScale(d.q_avg)-2
+                            return qScale(d.hours_avg)-2
                         }
                     })
                     .attr("y", 0)
@@ -679,15 +678,15 @@ class Vis {
 
                 q_group.append('text')
                     .attr("x", function(){
-                        if(d.q_avg === 'N/A'){
+                        if(d.hours_avg === 'N/A'){
                             return qScale(2.5)-2
                         } else {
-                            return qScale(d.q_avg)-2
+                            return qScale(d.hours_avg)-2
                         }
                     })
                     .attr("y", -5)
                     .text(function(){
-                        if(d.q_avg === 'N/A'){
+                        if(d.hours_avg === 'N/A'){
                             return 'N/A'
                         } else {
                             return 'avg'
@@ -830,6 +829,7 @@ class Vis {
             .on('mouseover', function (event,d){
                 d3.select(this)
                     .style("fill", "rgba(255,255,255,0.36)")
+
                 vis.teaching_text
                     .style('opacity', 1)
 
@@ -837,8 +837,7 @@ class Vis {
                 d3.select('#teaching').style("display", "block")
 
                 // draw vis #1
-                drawStudentCircle("sc-container")
-                drawCourseCircle("cc-container")
+                showTextBox()
             })
             .on('mouseout', function (event,d){
 
@@ -846,6 +845,8 @@ class Vis {
                     .style("fill", "transparent")
                 vis.teaching_text
                     .style('opacity', 0)
+
+                hideTextBox()
             })
             .on('click', function (event,d){
 
@@ -870,20 +871,23 @@ class Vis {
                 return diff
             })
             .attr("height", 10)
-            .style('fill', d =>{
-                let color = vis.colors[3]
-                if(d.paradigm === 'cs'){
-                    color = vis.colors[1]
-                }
-                return 'transparent'
-            })
+            .style('fill', 'transparent')
             .style('stroke', 'black')
             .style('stroke-width', '0.5px')
+            .style('opacity', 0.7)
             .on('mouseover', function (event, d) {
 
+                // check if d.text is a function that generates addition text
+                if (typeof(d.text) === "function"){
+
+                    // if so, run it
+                    d.text()
+                }
+
                 d3.select(this)
-                    .style('opacity', 0.8)
                     .style('stroke-width', '1.5px')
+                    .style('fill', d => paradigmColorLookUpTable[d.paradigm])
+                    .style('opacity', 0.7)
 
 
                 // CONNECTIONS
@@ -1044,9 +1048,18 @@ class Vis {
 
             })
             .on('mouseout', function (event, d) {
+
+                hideTextBox()
                 d3.select(this)
-                    .style('opacity', 1)
                     .style('stroke-width', '0.5px')
+                    .style('fill', d => {
+                        if(vis.switches.teaching_sorted %4 !== 0){
+                            return paradigmColorLookUpTable[d.paradigm]
+                        } else {
+                            return 'transparent'
+                        }
+                    })
+
 
                 // update tooltip
                 vis.tooltip
@@ -1263,12 +1276,97 @@ class Vis {
 
         vis.skillRects.enter().append('text')
             .attr('id', d => `${d.skill_abbreviation}-card-text`)
+            .attr('class', 'clickable')
             .attr('width', d => d.rel_end_x * vis.width - d.rel_start_x * vis.width)
             .attr('height', 40)
             .attr('x', d => d.rel_start_x * vis.width + (d.rel_end_x * vis.width - d.rel_start_x * vis.width)/2)
             .attr('y', d => vis.visHeight + vis.margin.top + vis.margin.bottom + d.row*50 + 24)
             .text(d=> d.skill_long)
             .style('text-anchor', 'middle')
+            .on('click', function (event, d){
+                // when you click on it, you actually should have triggered the hover event first,
+                // so the only thing you need to do is to lock the selection
+                if (vis.expanded[d.skill_abbreviation] === false){
+                    vis.expanded[d.skill_abbreviation] = true
+                } else {
+                    vis.expanded[d.skill_abbreviation] = false
+                }
+            })
+            .on('mouseover', function (event, d){
+
+                // check whether current skill is locked.
+                // if the skill is not locked, that means it's the first time hovering over it
+                if (vis.expanded[d.skill_abbreviation] === false) {
+
+                    // generate a tmp group for the connecting lines
+                    // (multiple skill cards can be selected and expanded at same time!)
+                    let tmp_group = vis.tmp_group.append('g')
+                        .attr('id', `${d.skill_abbreviation}-lines-group`)
+
+
+                    // first, color card
+                    d3.select(`#${d.skill_abbreviation}-card`)
+                        .style('fill', d => colorCourseLookupTable[d.skill_abbreviation])
+
+                    // loop over all selected elements
+                    d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).each(function () {
+
+                        // color all elements
+                        d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).style('fill', colorCourseLookupTable[d.skill_abbreviation])
+
+                        // grab positions of start and ending elements
+                        let x_end = +d3.select(this).attr("x") + +d3.select(this).attr("width") / 2
+                        let y_end = +d3.select(this).attr("y") + vis.margin.top + 10
+                        let x_start = +d3.select(`#${d.skill_abbreviation}-card`).attr("x") + +d3.select(`#${d.skill_abbreviation}-card`).attr("width") / 2
+                        let y_start = +d3.select(`#${d.skill_abbreviation}-card`).attr("y")
+
+                        // grab info
+                        let degree = d3.select(this).data()[0].degree
+                        let name = d3.select(this).data()[0].name
+                        let paradigm = d3.select(this).data()[0].paradigm
+
+
+                        // make x position adjustments based on the degree group element was in
+                        if (degree === 'phd' || degree === 'msc' || paradigm === 'cs' || paradigm === 'humanities') {
+                            x_end += vis.phd_start
+                        }
+
+                        // init path generator
+                        const link = d3.link(d3.curveBumpY);
+
+                        // draw path
+                        tmp_group.append("path")
+                            .attr('class', `el ${name} ${d.skill_abbreviation}`)
+                            .attr('d', d => {
+                                return link({
+                                    source: [x_start, y_start],
+                                    target: [x_end, y_end]
+                                })
+                            })
+                            .style('fill', 'transparent')
+                            .style('stroke', colorCourseLookupTable[d.skill_abbreviation])
+                    })
+
+
+                }
+            })
+            .on('mouseout', function (event, d) {
+
+                // check whether current skill is locked.
+                // if skill is not locked, then you were just hovering over it but have not clicked it
+                if (vis.expanded[d.skill_abbreviation] === false) {
+
+                    // set card to transparent
+                    d3.select(`#${d.skill_abbreviation}-card`).style('fill', 'rgba(218,218,218,0.38)')
+
+                    // set courses and other elements to transparent
+                    d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).style('fill', 'transparent')
+
+                    // remove the current group with all lines
+                    d3.select(`#${d.skill_abbreviation}-lines-group`).remove()
+
+                }
+            })
     }
 
     iterateThroughAwardsViews(){
@@ -1344,13 +1442,7 @@ class Vis {
                     return diff
                 })
                 .attr("height", 10)
-                .style('fill', d => {
-                    let color = vis.colors[3]
-                    if (d.paradigm === 'cs') {
-                        color = vis.colors[1]
-                    }
-                    return 'transparent'
-                })
+                .style('fill',  'transparent')
 
         }
 
@@ -1360,13 +1452,8 @@ class Vis {
                 .text('colored by subject')
 
             vis.teaching_rects
-                .style('fill', d =>{
-                    let color = vis.colors[3]
-                    if(d.paradigm === 'cs'){
-                        color = vis.colors[1]
-                    }
-                    return color
-                })
+                .style('fill', d => paradigmColorLookUpTable[d.paradigm])
+                .style('opacity', 0.7)
 
         } else if(vis.switches.teaching_sorted % 4 === 2){
 

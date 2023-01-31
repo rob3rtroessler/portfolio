@@ -58,7 +58,7 @@ function explore(){
         .style("border-left", "0px")
         .on("start", function(){
             startNarration()
-            d3.select(`#cv-links`).style('display', 'block')
+            d3.select(`#cv-links`).style('opacity', 1)
         })
 
 
@@ -69,9 +69,6 @@ function explore(){
 
 
 let vis;
-let courseCircle = new PieVis("cc-container")
-// let studentCircle = new PieVis("sc-container")
-// let topicBars = new BarVis("bar-container")
 
 
 // NARRATIVE CV
