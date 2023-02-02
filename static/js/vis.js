@@ -12,6 +12,7 @@ class Vis {
             phdCircle: false,
             mscCircle: false,
         }
+
         this.expanded = {
             "arthist": false,
             "design": false,
@@ -37,14 +38,15 @@ class Vis {
             "datavis": false,
             "stats": false,
             "react": false,
-            "sklearn": false,
+            "scikit": false,
             "philosophy": false,
             "theory": false
         }
 
         this.switches = {
             teaching_sorted: 0,
-            awards_sorted: 0
+            awards_sorted: 0,
+            course_work_sorted: 0
         }
 
         // call initVis method
@@ -491,7 +493,7 @@ class Vis {
             .style('font-style','italic')
             .style('text-anchor','middle')
             .style('opacity', 0)
-            .text('course work')
+            .text('Course Work')
 
         // draw overlay rect showing descriptive text
         vis.phdCourseWorkGroup.append('rect')
@@ -513,11 +515,13 @@ class Vis {
                 vis.courseWorkText
                     .style('opacity', 0)
             })
+            .on('click', function (event,d){
+                vis.iterateThroughCourseWorkViews()
+            })
 
         // draw all course work rectangles
         vis.phd_courses = vis.phdCourseWorkGroup.selectAll().data(courses)
-
-        vis.phd_courses.enter().append("rect")
+            .enter().append("rect")
             .attr('class', d => {
                 let class_string = ``
                 d.skills.forEach(d =>{
@@ -714,6 +718,7 @@ class Vis {
 
 
             })
+
 
         vis.drawAwards()
     }
@@ -1082,6 +1087,16 @@ class Vis {
     drawPresentations(){
 
         let vis = this;
+
+
+        // add interactive rect that triggers sorting of all courses by q scores or enrollment
+        vis.phd_teaching_group.append('rect')
+            .attr("id", "teachingrect")
+            .attr("x", 0)
+            .attr("y", vis.visHeight*0.35 - vis.visHeight*0.10)
+            .attr("width", vis.phd_width*vis.width)
+            .attr("height", vis.visHeight*0.10)
+            .style("fill", 'transparent')
 
         vis.diss_y = d3.scaleLinear()
             .domain([0,200])
@@ -1464,6 +1479,65 @@ class Vis {
             vis.teaching_text.text('sorted by q score')
             vis.sortTeachingByScore()
 
+        }
+    }
+
+    iterateThroughCourseWorkViews(){
+
+
+        console.log(vis.switches.course_work_sorted)
+        vis.switches.course_work_sorted += 1
+
+        // if the switch currently says sorted, then reset to base view if on click
+        if(vis.switches.course_work_sorted % 3 === 0) {
+            console.log('in 0',vis.switches.course_work_sorted)
+
+            vis.courseWorkText
+                .text('Course Work')
+
+            vis.phd_courses
+                .transition()
+                .duration(500)
+                .attr('class', d => {
+                    let class_string = ``
+                    d.skills.forEach(d =>{
+                        class_string += `${d} `
+                    })
+                    return `course el ${d.degree} ${class_string}`
+                })
+                .attr("x", d => vis.phd_x(vis.parseDate(d.year[0])))
+                .attr("y", d => vis.visHeight * 0.66 - 11 - 15*d.z)
+                .attr("width", d => {
+                    let diff = vis.phd_x(vis.parseDate(d.year[1])) - vis.phd_x(vis.parseDate(d.year[0]))
+                    return diff
+                })
+                .attr("height", 10)
+                .style('fill', `rgb(200, 200, 200)`)
+                .style('stroke', 'black')
+                .style('stroke-width', '0.5px')
+
+        } else if(vis.switches.course_work_sorted % 3 === 1){
+
+            // update text
+            vis.courseWorkText.text('colored by grade')
+
+            // recolor circles
+            vis.phd_courses
+                .style('fill', d => {
+                    console.log('filling',d)
+                    return gradeColorLookUpTable[d.grade]
+                })
+        }
+
+        // 3rd view - sorted by enrollment
+        else if(vis.switches.course_work_sorted % 3 === 2){
+
+            // update text
+            vis.courseWorkText.text('colored by hours')
+
+            // recolor circles
+            vis.phd_courses
+                .style('fill', 'green')
         }
     }
 

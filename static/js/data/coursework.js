@@ -210,6 +210,9 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
+        grade: "N/A",
+        semester: "Spring 2020",
+        hours: 10,
         skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["01/22/2020", "05/01/2020"],
         z: 0
@@ -220,6 +223,9 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
+        grade: "N/A",
+        semester: "Fall 2020",
+        hours: 10,
         skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2020", "12/13/2020"],
         z: 0
@@ -228,6 +234,9 @@ let courses = [
         name: 'Data Science 1: Introduction to Data Science',
         course_number: 'CS 109a',
         degree: 'msc',
+        grade: "A",
+        semester: "Fall 2020",
+        hours: 23,
         skills: ['ml', 'python', 'nlp', 'tf', 'pandas', 'scikit'],
         year: ["09/01/2020", "12/13/2020"],
         z: 1
@@ -238,6 +247,9 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
+        grade: "N/A",
+        semester: "Spring 2021",
+        hours: 15,
         skills: ['history', 'philosophy', 'theory', 'modernism', 'histsci'],
         year: ["01/22/2021", "05/01/2021"],
         z: 0
@@ -246,6 +258,9 @@ let courses = [
         name: 'Data Science 2: Advanced Topics in Data Science',
         course_number: 'GERMAN 300',
         degree: 'msc',
+        grade: "A",
+        semester: "Spring 2021",
+        hours: 15,
         skills: ['ml', 'python', 'nlp', 'tf', 'pandas', 'scikit'],
         year: ["01/22/2021", "05/01/2021"],
         z: 1

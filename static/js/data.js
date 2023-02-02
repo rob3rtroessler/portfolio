@@ -761,7 +761,7 @@ let skills = [
         paradigm: 'humanities'
     },
     {
-        skill_abbreviation: "sklearn",
+        skill_abbreviation: "scikit",
         skill_long: "scikit-learn",
         rel_start_x: 0.0,
         rel_end_x: 0.14,
@@ -957,7 +957,7 @@ let colorCourseLookupTable = {
     nlp: "#006D77",
     nodejs: "#006D77",
     react: "#006D77",
-    sklearn: "#006D77",
+    scikit: "#006D77",
     sql: "#006D77",
     stats: "#006D77",
     theory: "#E29578",
@@ -988,15 +988,30 @@ let shortTolongSkill = {
     pytorch: "PyTorch",
     react: "React",
     sql: "SQL",
-    sklearn: "scikit-learn",
+    scikit: "scikit-learn",
     stats: "statistics",
     theory: "Literary&nbsp;Theory",
     tf: "TensorFlow",
 }
 
 let gradeColorLookUpTable = {
-    A: "#ffaaaa"
+    "A": "#4d9221",
+    "A-": "#b8e186",
+    "B+": "#f1b6da",
+    "B": "#de77ae",
+    "B-": "#c51b7d",
+    "N/A": 'transparent'
 }
+
+let hourLookup = {
+    "A": "#4d9221",
+    "Am": "#b8e186",
+    "Bp": "#f1b6da",
+    "B": "#de77ae",
+    "Bm": "#c51b7d",
+    "N/A": 'transparent'
+}
+
 
 let paradigmColorLookUpTable = {
     cs: '#006D77',
