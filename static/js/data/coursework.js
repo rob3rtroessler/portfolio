@@ -181,6 +181,9 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
+        grade: "N/A",
+        semester: "Spring 2019",
+        hours: 10,
         skills: ['philosophy', 'theory', 'modernism', 'histsci', 'lithist', 'python', 'js', 'html', 'css', 'nlp'],
         year: ["01/22/2019", "05/01/2019"],
         z: 0
@@ -189,7 +192,10 @@ let courses = [
         name: 'Topics in Data Visualization',
         course_number: 'CS 271',
         degree: 'msc',
-        skills: ['datavis', 'js', 'python', 'nlp', 'node.js'],
+        grade: "A",
+        semester: "Spring 2019",
+        hours: 10,
+        skills: ['datavis', 'js', 'python', 'nlp', 'nodejs'],
         year: ["01/22/2019", "05/01/2019"],
         z: 1
     },
@@ -200,6 +206,9 @@ let courses = [
         name: 'Dissertation Research',
         course_number: 'GERMAN 300',
         degree: 'phd',
+        grade: "N/A",
+        semester: "Fall 2019",
+        hours: 10,
         skills: ['philosophy', 'theory', 'modernism', 'histsci'],
         year: ["09/01/2019", "12/13/2019"],
         z: 0
