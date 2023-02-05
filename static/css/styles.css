@@ -40,10 +40,48 @@
     font: 14px sans-serif;
 }
 
+#lockedIcon {
+    position: absolute;
+    text-align: center;
+    font: 12px sans-serif;
+}
+
+#course-work-sort-button{
+    fill: white;
+    stroke: black;
+}
+
+#course-work-sort-button:hover{
+    fill: green;
+    stroke: black;
+}
+
+
+
+/*ICONS*/
+
+
 .cv-icon {
     display: block;
     max-width:5vw;
     max-height:3vh;
     width: auto;
     height: auto;
+    transition: all 0.5s ease-in-out;
+}
+
+
+#github-icon:hover {
+    content: url("/static/img/github_icon_hover.png");
+    cursor: pointer;
+}
+
+#adobe-icon:hover {
+    content: url("/static/img/pdf_icon_red.png");
+    cursor: pointer;
+}
+
+#linkedin-icon:hover {
+    content: url("/static/img/linkedin_icon_blue.png");
+    cursor: pointer;
 }

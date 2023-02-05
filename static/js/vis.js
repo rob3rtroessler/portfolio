@@ -8,6 +8,8 @@ class Vis {
         // d3 methods
         this.parseDate = d3.timeParse("%m/%d/%Y");
 
+        this.lockedText = 'legend'
+
         this.fixed = {
             phdCircle: false,
             mscCircle: false,
@@ -120,6 +122,18 @@ class Vis {
             .style("opacity", 0)
             .style("left", 0 + "px")
             .style("top", 0 + "px")
+
+        vis.lockedIcon = d3.select("body").append('div')
+            .attr('id', 'lockedIcon')
+            .style("opacity", 1)
+            .style("left", 22 + "vw")
+            .style("top", 27.25 + "vh")
+            .attr('height', 20)
+            .attr('width', 20)
+            .append("img")
+            .attr("src", "/static/img/locked.png")
+            .style('width', "25px")
+
 
         // rects
         vis.ba_group.append('rect')
@@ -301,7 +315,16 @@ class Vis {
             .on('mouseover', function (event, d){
                 d3.select(`#msccircle`).style("stroke", vis.colors[0])
                 d3.selectAll(`.classline.msc`).style("stroke", vis.colors[0])
-                d3.selectAll(`.course.msc`).style("fill", vis.colors[0])
+                d3.selectAll(`.course.msc`)
+                    .style('fill', function(){
+                        if (!d3.select(this).classed('locked')){
+                            return vis.colors[0]
+                        }
+                        else {
+                            console.log('locked')
+                            return d3.select(this).style("fill")
+                        }
+                    })
 
             })
             .on('mouseout', function (event, d){
@@ -310,8 +333,16 @@ class Vis {
                         .style("stroke", "black")
                     d3.selectAll(`.classline.msc`)
                         .style('stroke', 'rgba(171,171,171,0.4)')
-                    d3.selectAll(`.course.msc`).style("fill", `rgb(200, 200, 200)`)
-
+                    d3.selectAll(`.course.msc`)
+                        .style('fill', function(){
+                            if (!vis.phd_courses.classed('locked')){
+                                return 'rgb(200, 200, 200)'
+                            }
+                            else {
+                                console.log('locked')
+                                return d3.select(this).style("fill")
+                            }
+                        })
                 }
             })
 
@@ -339,7 +370,16 @@ class Vis {
             .on('mouseover', function (event, d){
                 d3.select(`#phdcircle`).style("stroke", vis.colors[4])
                 d3.selectAll(`.classline.phd`).style("stroke", vis.colors[4])
-                d3.selectAll(`.course.phd`).style("fill", vis.colors[4])
+                d3.selectAll(`.course.phd`)
+                    .style('fill', function(){
+                        if (!d3.select(this).classed('locked')){
+                            return vis.colors[4]
+                        }
+                        else {
+                            console.log('locked')
+                            return d3.select(this).style("fill")
+                        }
+                    })
             })
             .on('mouseout', function (event, d){
                 if (!vis.fixed.phdCircle){
@@ -347,8 +387,16 @@ class Vis {
                         .style("stroke", "black")
                     d3.selectAll(`.classline.phd`)
                         .style('stroke', 'rgba(171,171,171,0.4)')
-                    d3.selectAll(`.course.phd`).style("fill", `rgb(200, 200, 200)`)
-
+                    d3.selectAll(`.course.phd`)
+                        .style('fill', function(){
+                            if (!vis.phd_courses.classed('locked')){
+                                return 'rgb(200, 200, 200)'
+                            }
+                            else {
+                                console.log('locked')
+                                return d3.select(this).style("fill")
+                            }
+                        })
                 }
             })
 
@@ -466,6 +514,7 @@ class Vis {
             })
             .style('fill', 'transparent')
             .style('stroke', 'rgba(171,171,171,0.4)')
+
             // .style('stroke', d =>{
             //     let color = 'rgba(226,149,120,0.5)'
             //     if(d.degree === 'msc'){
@@ -495,6 +544,15 @@ class Vis {
             .style('opacity', 0)
             .text('Course Work')
 
+        vis.courseWorkTextExplanation = vis.phdCourseWorkGroup.append('text')
+            .attr('x', vis.phd_width*vis.width/2)
+            .attr("y", vis.visHeight*0.66 - vis.visHeight*0.062)
+            .style('font-style','italic')
+            .style('font-size','0.8em')
+            .style('text-anchor','middle')
+            .style('opacity', 0)
+            .text('(click for info, right click to sort)')
+
         // draw overlay rect showing descriptive text
         vis.phdCourseWorkGroup.append('rect')
             .attr("id", "teachingrect")
@@ -503,21 +561,30 @@ class Vis {
             .attr("width", vis.phd_width*vis.width)
             .attr("height", vis.visHeight*0.11)
             .style("fill", 'transparent')
+
             .on('mouseover', function (event,d){
                 d3.select(this)
                     .style("fill", "rgba(255,255,255,0.36)")
                 vis.courseWorkText
                     .style('opacity', 1)
+                vis.courseWorkTextExplanation
+                    .style('opacity', 1)
+
             })
             .on('mouseout', function (event,d){
                 d3.select(this)
                     .style("fill", "transparent")
                 vis.courseWorkText
                     .style('opacity', 0)
+                vis.courseWorkTextExplanation
+                    .style('opacity', 0)
             })
-            .on('click', function (event,d){
+            .on('contextmenu', function (event, d){
+                event.preventDefault()
                 vis.iterateThroughCourseWorkViews()
             })
+
+
 
         // draw all course work rectangles
         vis.phd_courses = vis.phdCourseWorkGroup.selectAll().data(courses)
@@ -736,6 +803,17 @@ class Vis {
             .attr("y", vis.visHeight*0.55 - vis.visHeight*0.075)
             .style('font-style','italic')
             .style('text-anchor','middle')
+            .style('opacity', 0)
+            .text('Awards, Stipends, Fellowships')
+
+        vis.awardsTextExplanation = vis.phdAwardsGroup.append('text')
+            .attr('x', vis.phd_width*vis.width/2)
+            .attr("y", vis.visHeight*0.55 - vis.visHeight*0.052)
+            .style('font-style','italic')
+            .style('font-size','0.8em')
+            .style('text-anchor','middle')
+            .style('opacity', 0)
+            .text('(click for info, right click to sort)')
 
         // interactive overlay award rect
         vis.phdAwardsGroup.append('rect')
@@ -750,15 +828,20 @@ class Vis {
                     .style("fill", "rgba(255,255,255,0.36)")
                 vis.awardsText
                     .style('opacity', 1)
-                    .text('Awards, Stipends, Fellowships')
+                vis.awardsTextExplanation
+                    .style('opacity', 1)
+
             })
             .on('mouseout', function (event,d){
                 d3.select(this)
                     .style("fill", "transparent")
                 vis.awardsText
                     .style('opacity', 0)
+                vis.awardsTextExplanation
+                    .style('opacity', 0)
             })
-            .on('click', function (event,d){
+            .on('contextmenu', function (event,d){
+                event.preventDefault()
                 vis.iterateThroughAwardsViews()
              })
 
@@ -767,7 +850,7 @@ class Vis {
         vis.awardsCircles = vis.phdAwards.enter().append('circle')
             .attr('class', d=> `el`)
             .attr("cx", d => vis.phd_x(vis.parseDate(d.year)))
-            .attr("cy", d => vis.visHeight * 0.50)
+            .attr("cy", d => vis.visHeight * 0.53)
             .attr('r', 7)
             .style('fill', `rgb(205,205,205)`)
             .style('stroke', 'black')
@@ -841,8 +924,41 @@ class Vis {
                 // show div
                 d3.select('#teaching').style("display", "block")
 
-                // draw vis #1
-                showTextBox()
+                // show text box
+                showTeachingTextBox()
+
+                // show locked status
+                if (vis.lockedText === 'teaching'){
+
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/locked.png")
+
+                } else {
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/unlocked.png")
+
+                }
+            })
+            .on('click', function (event,d){
+
+                if (vis.lockedText === 'teaching'){
+                    // show locked icon
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/unlocked.png")
+                    vis.lockedText = 'legend'
+                } else {
+                    // show locked icon
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/locked.png")
+
+                    // update lockedText
+                    vis.lockedText = 'teaching'
+                }
+
             })
             .on('mouseout', function (event,d){
 
@@ -851,10 +967,16 @@ class Vis {
                 vis.teaching_text
                     .style('opacity', 0)
 
-                hideTextBox()
-            })
-            .on('click', function (event,d){
 
+                // show the locked text box, and show the locked icon
+                showLockedTextBox(vis.lockedText)
+                vis.lockedIcon
+                    .style('opacity', 1)
+                    .attr("src", "/static/img/locked.png")
+
+            })
+            .on('contextmenu', function (event,d){
+                event.preventDefault()
                 vis.iterateThroughTeachingViews()
 
             })
@@ -884,8 +1006,7 @@ class Vis {
 
                 // check if d.text is a function that generates addition text
                 if (typeof(d.text) === "function"){
-
-                    // if so, run it
+                    // if it is indeed a function, run it to display the contents
                     d.text()
                 }
 
@@ -963,6 +1084,9 @@ class Vis {
                     .style("opacity", 0.9)
                     .style("left", event.pageX - 20 - $(".tooltip").width() + "px")
                     .style("top", event.pageY + "px")
+
+
+
                     .html(`
                         <div class="row" style="border: thin solid grey; border-radius: 5px; background: #ececec; padding: 8px; overflow-wrap: break-word; word-break: break-word; ">
                             <h3>${d.name}<h3>
@@ -1054,7 +1178,7 @@ class Vis {
             })
             .on('mouseout', function (event, d) {
 
-                hideTextBox()
+                hideTeachingTextBox()
                 d3.select(this)
                     .style('stroke-width', '0.5px')
                     .style('fill', d => {
@@ -1071,6 +1195,9 @@ class Vis {
                     .style("opacity", 0)
                     .style("left", 0 + "px")
                     .style("top", 0 + "px")
+                    .text('')
+
+
 
                 // delete tooltip group
                 d3.select('#course-skills-lines-group').remove()
@@ -1233,7 +1360,15 @@ class Vis {
                     d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).each(function () {
 
                         // color all elements
-                        d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).style('fill', colorCourseLookupTable[d.skill_abbreviation])
+                        d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).style('fill', function(){
+                            if (!vis.phd_courses.classed('locked')){
+                                return colorCourseLookupTable[d.skill_abbreviation]
+                            }
+                            else {
+                                console.log('locked')
+                                return d3.select(this).style("fill")
+                            }
+                        })
 
                         // grab positions of start and ending elements
                         let x_end = +d3.select(this).attr("x") + +d3.select(this).attr("width") / 2
@@ -1281,8 +1416,17 @@ class Vis {
                     d3.select(`#${d.skill_abbreviation}-card`).style('fill', 'rgba(218,218,218,0.38)')
 
                     // set courses and other elements to transparent
-                    d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).style('fill', 'transparent')
+                    d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`)
 
+                        .style('fill', function(){
+                            if (!vis.phd_courses.classed('locked')){
+                                return "rgb(200, 200, 200)"
+                            }
+                            else {
+                                console.log('locked, color:', d3.select(this).style("fill"))
+                                return d3.select(this).style("fill")
+                            }
+                        })
                     // remove the current group with all lines
                     d3.select(`#${d.skill_abbreviation}-lines-group`).remove()
 
@@ -1327,7 +1471,16 @@ class Vis {
                     d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).each(function () {
 
                         // color all elements
-                        d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).style('fill', colorCourseLookupTable[d.skill_abbreviation])
+                        d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`)
+                            .style('fill', function(){
+                                if (!vis.phd_courses.classed('locked')){
+                                    return colorCourseLookupTable[d.skill_abbreviation]
+                                }
+                                else {
+                                    console.log('locked')
+                                    return d3.select(this).style("fill")
+                                }
+                            })
 
                         // grab positions of start and ending elements
                         let x_end = +d3.select(this).attr("x") + +d3.select(this).attr("width") / 2
@@ -1375,7 +1528,16 @@ class Vis {
                     d3.select(`#${d.skill_abbreviation}-card`).style('fill', 'rgba(218,218,218,0.38)')
 
                     // set courses and other elements to transparent
-                    d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`).style('fill', 'transparent')
+                    d3.selectAll(`.course.${d.skill_abbreviation}, .teaching.${d.skill_abbreviation}`)
+                        .style('fill', function(){
+                            if (!vis.phd_courses.classed('locked')){
+                                return "rgb(200, 200, 200)"
+                            }
+                            else {
+                                console.log('locked, color:', d3.select(this).style("fill"))
+                                return d3.select(this).style("fill")
+                            }
+                        })
 
                     // remove the current group with all lines
                     d3.select(`#${d.skill_abbreviation}-lines-group`).remove()
@@ -1400,11 +1562,14 @@ class Vis {
                 .transition()
                 .duration(500)
                 .attr("cx", d => vis.phd_x(vis.parseDate(d.year)))
-                .attr("cy", d => vis.visHeight * 0.50)
+                .attr("cy", d => vis.visHeight * 0.53)
                 .attr('r', 7)
                 .style('fill', `rgb(205,205,205)`)
                 .style('stroke', 'black')
                 .style('stroke-width', '0.5px')
+
+            vis.awardsTextExplanation
+                .style('opacity', 0)
 
         } else if(vis.switches.awards_sorted % 3 === 1){
 
@@ -1414,6 +1579,9 @@ class Vis {
             // recolor circles
             vis.awardsCircles
                 .style('fill', d => awardTypeColorLookup[d.type])
+
+            vis.awardsTextExplanation
+                .style('opacity', 0)
         }
 
         // 3rd view - sorted by enrollment
@@ -1435,6 +1603,9 @@ class Vis {
                 .attr("cx", d => vis.awardAmountScale(d.value))
                 .attr("cy", d => vis.visHeight * 0.50 + 3*d.z)
                 .attr('r', 7)
+
+            vis.awardsTextExplanation
+                .style('opacity', 0)
         }
     }
 
@@ -1516,10 +1687,15 @@ class Vis {
                 .style('stroke', 'black')
                 .style('stroke-width', '0.5px')
 
+
+
         } else if(vis.switches.course_work_sorted % 3 === 1){
 
             // update text
             vis.courseWorkText.text('colored by grade')
+
+
+
 
             // recolor circles
             vis.phd_courses
@@ -1527,17 +1703,36 @@ class Vis {
                     console.log('filling',d)
                     return gradeColorLookUpTable[d.grade]
                 })
+
+            // lock color
+            vis.phd_courses.classed('locked', true)
+
+            vis.courseWorkTextExplanation
+                .style('opacity', 0)
         }
 
-        // 3rd view - sorted by enrollment
+        // 3rd view - sorted by hours
         else if(vis.switches.course_work_sorted % 3 === 2){
 
             // update text
             vis.courseWorkText.text('colored by hours')
 
+            let hourScale = d3.scaleLinear()
+                .range(['#fde0dd', '#ae017e'])
+                .domain([0,25])
+
             // recolor circles
             vis.phd_courses
-                .style('fill', 'green')
+                .style('fill', d => {
+                    console.log('filling',d)
+                    return hourScale(d.hours)
+                })
+
+            // lock color
+            vis.phd_courses.classed('locked', true)
+
+            vis.courseWorkTextExplanation
+                .style('opacity', 0)
         }
     }
 

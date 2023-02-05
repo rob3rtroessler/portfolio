@@ -80,8 +80,10 @@ function startNarration(){
     vis.ba_group.transition().duration(500).attr('opacity', 1)
     vis.ma_group.transition().duration(500).attr('opacity', 1)
     vis.phd_group.transition().duration(500).attr('opacity', 1)
-
     vis.skillgroup.transition().duration(500).attr('opacity', 1)
+
+    // start with legend text box
+    showIntroTextBox()
 
 }
 

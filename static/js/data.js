@@ -995,22 +995,15 @@ let shortTolongSkill = {
 }
 
 let gradeColorLookUpTable = {
-    "A": "#4d9221",
-    "A-": "#b8e186",
-    "B+": "#f1b6da",
-    "B": "#de77ae",
-    "B-": "#c51b7d",
-    "N/A": 'transparent'
+    "A": "#238443",
+    "A-": "#41ab5d",
+    "B+": "#78c679",
+    "B": "#addd8e",
+    "B-": "#d9f0a3",
+    "N/A": '#f7fcb9'
 }
 
-let hourLookup = {
-    "A": "#4d9221",
-    "Am": "#b8e186",
-    "Bp": "#f1b6da",
-    "B": "#de77ae",
-    "Bm": "#c51b7d",
-    "N/A": 'transparent'
-}
+
 
 
 let paradigmColorLookUpTable = {
