@@ -260,45 +260,56 @@ let presentations = [
         title: 'Urbane Körperkultur und moderne Leistungsethik in Robert Musils Der Riese Agoag',
         info: 'Presentation at the GSA Convention 2016 in San Diego',
         date: '09/30/2016',
+        z: 0,
+        x_trans: 0
 
     },
     {
         title: 'Die angeleitete Freizeit. Zur Optimierung der freien Stunden von Arbeitern und Angestellten im frühen 20. Jahrhundert',
         info: 'Talk at the BTWH Conference in Vienna',
         date: '08/21/2017',
+        z: 0,
+        x_trans: 0
     },
     {
         title: 'Urbane Körperkultur und moderne Leistungsethik in Robert Musils Der Riese Agoag',
         info: 'Presentation at the GSA Convention 2016 in San Diego',
         date: '09/30/2017',
+        z: 1,
+        x_trans: 0.1
 
     },
     {
         title: 'Die angeleitete Freizeit. Zur Optimierung der freien Stunden von Arbeitern und Angestellten im frühen 20. Jahrhundert',
         info: 'Talk at the BTWH Conference in Vienna',
         date: '06/21/2017',
+        z: 0
     },
     {
         title: 'Urbane Körperkultur und moderne Leistungsethik in Robert Musils Der Riese Agoag',
         info: 'Presentation at the GSA Convention 2016 in San Diego',
         date: '09/30/2018',
+        z: 0
 
     },
     {
         title: 'Die angeleitete Freizeit. Zur Optimierung der freien Stunden von Arbeitern und Angestellten im frühen 20. Jahrhundert',
         info: 'Talk at the BTWH Conference in Vienna',
-        date: '05/17/2019',
+        date: '06/17/2019',
+        z: 0
     },
     {
         title: 'Urbane Körperkultur und moderne Leistungsethik in Robert Musils Der Riese Agoag',
         info: 'Presentation at the GSA Convention 2016 in San Diego',
         date: '06/22/2019',
+        z: 1
 
     },
     {
         title: 'TexTiles: Exploring Patterns in Historical Discourse.',
         info: 'Presentation at the 4th Workshop on Visualization for the Digital Humanities (at IEEE Vis 2019, Vancouver)',
         date: '10/21/2019',
+        z: 0
     }
 ]
 

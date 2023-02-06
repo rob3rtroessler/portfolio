@@ -904,6 +904,16 @@ class Vis {
             .style('opacity', 0)
             .text('teaching experience')
 
+        vis.teachingTextExplanation = vis.phd_teaching_group.append('text')
+            .attr('x', vis.phd_width*vis.width/2)
+            .attr("y", vis.visHeight*0.45 - vis.visHeight*0.052)
+            .style('font-style','italic')
+            .style('font-size','0.8em')
+            .style('text-anchor','middle')
+            .style('opacity', 0)
+            .text('(click for info, right click to sort)')
+
+
         vis.teachingAxisGroup = vis.phd_teaching_group.append('g')
 
         // add interactive rect that triggers sorting of all courses by q scores or enrollment
@@ -919,6 +929,9 @@ class Vis {
                     .style("fill", "rgba(255,255,255,0.36)")
 
                 vis.teaching_text
+                    .style('opacity', 1)
+
+                vis.teachingTextExplanation
                     .style('opacity', 1)
 
                 // show div
@@ -966,7 +979,8 @@ class Vis {
                     .style("fill", "transparent")
                 vis.teaching_text
                     .style('opacity', 0)
-
+                vis.teachingTextExplanation
+                    .style('opacity', 0)
 
                 // show the locked text box, and show the locked icon
                 showLockedTextBox(vis.lockedText)
@@ -1217,13 +1231,13 @@ class Vis {
 
 
         // add interactive rect that triggers sorting of all courses by q scores or enrollment
-        vis.phd_teaching_group.append('rect')
-            .attr("id", "teachingrect")
-            .attr("x", 0)
-            .attr("y", vis.visHeight*0.35 - vis.visHeight*0.10)
-            .attr("width", vis.phd_width*vis.width)
-            .attr("height", vis.visHeight*0.10)
-            .style("fill", 'transparent')
+        // vis.phd_teaching_group.append('rect')
+        //     .attr("id", "teachingrect")
+        //     .attr("x", 0)
+        //     .attr("y", vis.visHeight*0.35 - vis.visHeight*0.10)
+        //     .attr("width", vis.phd_width*vis.width)
+        //     .attr("height", vis.visHeight*0.10)
+        //     .style("fill", 'red')
 
         vis.diss_y = d3.scaleLinear()
             .domain([0,200])
@@ -1250,21 +1264,39 @@ class Vis {
             .attr('d', vis.disspath)
 
 
-        //console.log(d3.select('#disspath').getPointAtLength())
 
         // p rect
         vis.phd_projects_and_papers = vis.phd_group.selectAll("p-rect").data(presentations)
 
-        vis.phd_projects_and_papers.enter().append("rect")
-            .attr('class', d => 'p-rect')
-            .attr("x", d => vis.phd_x(vis.parseDate(d.date)))
-            .attr("y", d => vis.visHeight * 0.35 - 20)
-            .attr("width", 21)
-            .attr("height", 10)
-            //.style('fill', d => "#83C5BE")
-            .style('fill', d => "transparent")
-            .style('stroke', 'grey')
-            .style('stroke-width', '1px')
+        let groups = vis.phd_projects_and_papers.enter()
+            .append("g")
+            .attr("x", function(d, i) {
+                return vis.phd_x(vis.parseDate(d.date))
+            })
+            .attr("y", d => vis.visHeight * 0.35 - 60)
+            .attr("width", 20)
+            .attr("height", 20)
+            .attr("class", "presentation")
+            .attr('transform', d =>`translate(${vis.phd_x(vis.parseDate(d.date))}, ${ vis.visHeight * 0.25 - vis.visHeight * 0.02 *d.z}) scale(0.080,-0.080)`)
+
+        groups.append('path')
+            .attr("d", `M 137.3 281.5 c -18.9 -5.1 -34 -20.6 -38.3 -39.4 c -1.9 -8.2 -0.8 -22.9 2.5 -31.9 c 12 -33 40.7 -49.2 66 -37.2 c 9.7 4.6 20.5 15.6 26.3 26.7 c 10 19.2 10.9 38.3 2.5 55.2 c -3.6 7.4 -15.1 18.8 -22.5 22.3 c -11.7 5.7 -25.3 7.3 -36.5 4.3 z M 214.3 198.1 c -4.8 -2.2 -7.3 -6.2 -7.3 -11.7 c 0 -2.8 1.1 -5.2 5.1 -10.6 c 5.5 -7.3 9 -9.8 13.8 -9.8 c 2.6 0 4.3 -1.7 15 -15.2 l 12.1 -15.3 l 0 -27.7 l 0 -27.8 l -114.9 0 l -115 0 l -2.7 -2.4 c -3.8 -3.2 -3.9 -8.6 -0.1 -12.4 c 2.7 -2.6 3.1 -2.7 15.7 -3 l 13 -0.4 l 0 -21.2 c 0 -15.2 0.3 -21.5 1.2 -22.4 c 1.7 -1.7 197.9 -1.7 199.6 0 c 0.9 0.9 1.2 7.2 1.2 22.4 l 0 21.2 l 12.9 0.4 c 11.2 0.3 13.2 0.6 15.1 2.3 c 3.4 3.1 4.2 6.1 2.6 10 c -1.9 4.4 -4.2 5.5 -11.5 5.5 l -6.1 0 l 0 30.3 l -0.1 30.2 l -12.9 16.4 c -11.8 14.9 -13 16.8 -12.4 19.5 c 0.7 4.2 -0.8 7.7 -6.2 14.6 c -4.2 5.4 -9.3 9 -12.6 9 c -0.7 0 -3.2 -0.9 -5.5 -1.9 z M 127.5 158.5 c -21.8 -3.4 -30.5 -6.3 -39.6 -13.1 c -11.2 -8.6 -16.2 -19.1 -18.4 -38.6 c -1.3 -12.1 -1.3 -13.4 0.2 -15 c 1.5 -1.7 5.8 -1.8 80.3 -1.8 c 75.4 0 78.8 0.1 80.4 1.9 c 1.5 1.7 1.5 2.8 0.2 14.7 c -0.8 7.3 -2.3 15.3 -3.5 18.5 c -4.9 12.9 -16.4 24.1 -28.9 27.9 c -19.3 6 -51.5 8.5 -70.7 5.5 z`)
+            .style('fill', 'grey')
+            .style('stroke', 'black')
+            .style('opacity', 1)
+
+
+            .on('mouseover', function(event,d){
+                d3.select(this)
+                    .style('fill', '#E29578')
+                    .style('opacity', 0.8)
+            })
+            .on('mouseout', function(event,d){
+                d3.select(this)
+                    .style('fill', 'grey')
+                    .style('opacity', 1)
+            })
+
 
         vis.phd_projects_and_papers.enter().append("rect")
             .attr('class', d => 'p-rect')
@@ -1272,36 +1304,35 @@ class Vis {
             .attr("y", d => vis.visHeight * 0.35 - 60)
             .attr("width", 1)
             .attr("height", 40)
-            //.style('fill', d => "#83C5BE")
             .style('fill', d => "grey")
             .style('stroke', 'grey')
             .style('stroke-width', '0.5px')
 
 
 
-        // pp circle
-        vis.phd_projects_and_papers = vis.phd_group.selectAll("pp-circle").data(projectsAndPapers)
-
-        vis.phd_projects_and_papers.enter().append("circle")
-            .attr('class', d => 'pp-circle')
-            .attr("cx", d => vis.phd_x(vis.parseDate(d.date)))
-            .attr("cy", d => vis.visHeight * 0.20)
-            .attr("r", 12)
-            //.style('fill', d => "#83C5BE")
-            .style('fill', d => "transparent")
-            .style('stroke', 'grey')
-            .style('stroke-width', '1px')
-
-        vis.phd_projects_and_papers.enter().append("rect")
-            .attr('class', d => 'pp-circle-line')
-            .attr("x", d => vis.phd_x(vis.parseDate(d.date)) )
-            .attr("y", d => vis.visHeight * 0.20 + 12)
-            .attr("width", 1)
-            .attr("height", 40)
-            //.style('fill', d => "#83C5BE")
-            .style('fill', d => "grey")
-            .style('stroke', 'grey')
-            .style('stroke-width', '0.5px')
+        // // pp circle
+        // vis.phd_projects_and_papers = vis.phd_group.selectAll("pp-circle").data(projectsAndPapers)
+        //
+        // vis.phd_projects_and_papers.enter().append("circle")
+        //     .attr('class', d => 'pp-circle')
+        //     .attr("cx", d => vis.phd_x(vis.parseDate(d.date)))
+        //     .attr("cy", d => vis.visHeight * 0.20)
+        //     .attr("r", 12)
+        //     //.style('fill', d => "#83C5BE")
+        //     .style('fill', d => "transparent")
+        //     .style('stroke', 'grey')
+        //     .style('stroke-width', '1px')
+        //
+        // vis.phd_projects_and_papers.enter().append("rect")
+        //     .attr('class', d => 'pp-circle-line')
+        //     .attr("x", d => vis.phd_x(vis.parseDate(d.date)) )
+        //     .attr("y", d => vis.visHeight * 0.20 + 12)
+        //     .attr("width", 1)
+        //     .attr("height", 40)
+        //     //.style('fill', d => "#83C5BE")
+        //     .style('fill', d => "grey")
+        //     .style('stroke', 'grey')
+        //     .style('stroke-width', '0.5px')
 
 
 
@@ -1630,12 +1661,18 @@ class Vis {
                 .attr("height", 10)
                 .style('fill',  'transparent')
 
+            vis.teachingTextExplanation
+                .style('opacity', 0)
+
         }
 
         else if(vis.switches.teaching_sorted % 4 === 1){
 
             vis.teaching_text
                 .text('colored by subject')
+
+            vis.teachingTextExplanation
+                .style('opacity', 0)
 
             vis.teaching_rects
                 .style('fill', d => paradigmColorLookUpTable[d.paradigm])
@@ -1646,9 +1683,15 @@ class Vis {
             vis.teaching_text.text('sorted by enrolled students')
             vis.sortTeachingByStudents()
 
+            vis.teachingTextExplanation
+                .style('opacity', 0)
+
         } else if(vis.switches.teaching_sorted % 4 === 3) {
             vis.teaching_text.text('sorted by q score')
             vis.sortTeachingByScore()
+
+            vis.teachingTextExplanation
+                .style('opacity', 0)
 
         }
     }
@@ -1784,32 +1827,6 @@ class Vis {
             })
     }
 
-    resetColors(){
-
-        // courses
-        d3.selectAll('.course').each(function (){
-            d3.select(this)
-                .style('fill', d =>{
-                    let color = vis.colors[4]
-                    if(d.degree === 'msc'){
-                        color = vis.colors[0]
-                    }
-                    return 'transparent'
-                })
-        })
-
-        // teaching
-        d3.selectAll('.teaching').each(function (){
-            d3.select(this)
-                .style('fill', d =>{
-                    let color = vis.colors[3]
-                    if(d.paradigm === 'cs'){
-                        color = vis.colors[1]
-                    }
-                    return 'transparent'
-                })
-        })
-    }
 }
 
 

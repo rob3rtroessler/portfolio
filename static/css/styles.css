@@ -85,3 +85,8 @@
     content: url("/static/img/linkedin_icon_blue.png");
     cursor: pointer;
 }
+
+
+.presentation {
+    fill: red
+}
