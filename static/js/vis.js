@@ -229,7 +229,7 @@ class Vis {
 
         // ba seal
         vis.ba_circle_group.append('image')
-            .attr('xlink:href', 'static/img/ViennaSeal.png/')
+            .attr('xlink:href', 'static/img/ViennaSeal.png')
             .attr("x", vis.ba_width * vis.width / 2 - vis.circle_radius )
             .attr("y", vis.visHeight * 0.8 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
@@ -258,7 +258,7 @@ class Vis {
 
         // ma seal
         vis.ma_circle_group.append('image')
-            .attr('xlink:href', 'static/img/ViennaSeal.png/')
+            .attr('xlink:href', 'static/img/ViennaSeal.png')
             .attr("x", vis.ma_width * vis.width / 2 - vis.circle_radius )
             .attr("y", vis.visHeight * 0.8 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
@@ -304,7 +304,7 @@ class Vis {
         // msc seal
         vis.phd_circle_group.append('image')
             .attr('class', 'clickable')
-            .attr('xlink:href', 'static/img/HarvardSeal.png/')
+            .attr('xlink:href', 'static/img/HarvardSeal.png')
             .attr("x", vis.phd_width * vis.width / 2 - vis.circle_radius * 3 / 2 - vis.circle_radius)
             .attr("y", vis.visHeight * 0.88 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
@@ -359,7 +359,7 @@ class Vis {
         // phd seal
         vis.phd_circle_group.append('image')
             .attr('class', 'clickable')
-            .attr('xlink:href', 'static/img/HarvardSeal.png/')
+            .attr('xlink:href', 'static/img/HarvardSeal.png')
             .attr("x", vis.phd_width * vis.width / 2 + vis.circle_radius * 3 / 2 - vis.circle_radius)
             .attr("y", vis.visHeight * 0.88 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
