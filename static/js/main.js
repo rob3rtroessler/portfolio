@@ -1,4 +1,5 @@
 //
+document.getElementById("intro-button").addEventListener('click', provideOptions)
 
 function provideOptions(){
 
