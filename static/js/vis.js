@@ -131,7 +131,7 @@ class Vis {
             .attr('height', 20)
             .attr('width', 20)
             .append("img")
-            .attr("src", "/static/img/locked.png")
+            .attr("src", "static/img/locked.png")
             .style('width', "25px")
 
 
@@ -229,7 +229,7 @@ class Vis {
 
         // ba seal
         vis.ba_circle_group.append('image')
-            .attr('xlink:href', '/static/img/ViennaSeal.png/')
+            .attr('xlink:href', 'static/img/ViennaSeal.png/')
             .attr("x", vis.ba_width * vis.width / 2 - vis.circle_radius )
             .attr("y", vis.visHeight * 0.8 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
@@ -258,7 +258,7 @@ class Vis {
 
         // ma seal
         vis.ma_circle_group.append('image')
-            .attr('xlink:href', '/static/img/ViennaSeal.png/')
+            .attr('xlink:href', 'static/img/ViennaSeal.png/')
             .attr("x", vis.ma_width * vis.width / 2 - vis.circle_radius )
             .attr("y", vis.visHeight * 0.8 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
@@ -304,7 +304,7 @@ class Vis {
         // msc seal
         vis.phd_circle_group.append('image')
             .attr('class', 'clickable')
-            .attr('xlink:href', '/static/img/HarvardSeal.png/')
+            .attr('xlink:href', 'static/img/HarvardSeal.png/')
             .attr("x", vis.phd_width * vis.width / 2 - vis.circle_radius * 3 / 2 - vis.circle_radius)
             .attr("y", vis.visHeight * 0.88 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
@@ -359,7 +359,7 @@ class Vis {
         // phd seal
         vis.phd_circle_group.append('image')
             .attr('class', 'clickable')
-            .attr('xlink:href', '/static/img/HarvardSeal.png/')
+            .attr('xlink:href', 'static/img/HarvardSeal.png/')
             .attr("x", vis.phd_width * vis.width / 2 + vis.circle_radius * 3 / 2 - vis.circle_radius)
             .attr("y", vis.visHeight * 0.88 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
@@ -848,12 +848,12 @@ class Vis {
 
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/locked.png")
+                        .attr("src", "static/img/locked.png")
 
                 } else {
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/unlocked.png")
+                        .attr("src", "static/img/unlocked.png")
 
                 }
 
@@ -864,13 +864,13 @@ class Vis {
                     // show locked icon
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/unlocked.png")
+                        .attr("src", "static/img/unlocked.png")
                     vis.lockedText = 'legend'
                 } else {
                     // show locked icon
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/locked.png")
+                        .attr("src", "static/img/locked.png")
 
                     // update lockedText
                     vis.lockedText = 'awards'
@@ -889,7 +889,7 @@ class Vis {
                 showLockedTextBox(vis.lockedText)
                 vis.lockedIcon
                     .style('opacity', 1)
-                    .attr("src", "/static/img/locked.png")
+                    .attr("src", "static/img/locked.png")
             })
             .on('contextmenu', function (event,d){
                 event.preventDefault()
@@ -996,12 +996,12 @@ class Vis {
 
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/locked.png")
+                        .attr("src", "static/img/locked.png")
 
                 } else {
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/unlocked.png")
+                        .attr("src", "static/img/unlocked.png")
 
                 }
             })
@@ -1011,13 +1011,13 @@ class Vis {
                     // show locked icon
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/unlocked.png")
+                        .attr("src", "static/img/unlocked.png")
                     vis.lockedText = 'legend'
                 } else {
                     // show locked icon
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/locked.png")
+                        .attr("src", "static/img/locked.png")
 
                     // update lockedText
                     vis.lockedText = 'teaching'
@@ -1037,7 +1037,7 @@ class Vis {
                 showLockedTextBox(vis.lockedText)
                 vis.lockedIcon
                     .style('opacity', 1)
-                    .attr("src", "/static/img/locked.png")
+                    .attr("src", "static/img/locked.png")
 
             })
             .on('contextmenu', function (event,d){
@@ -1328,12 +1328,12 @@ class Vis {
 
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/locked.png")
+                        .attr("src", "/img/locked.png")
 
                 } else {
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/unlocked.png")
+                        .attr("src", "static/img/unlocked.png")
 
                 }
             })
@@ -1343,13 +1343,13 @@ class Vis {
                     // show locked icon
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/unlocked.png")
+                        .attr("src", "static/img/unlocked.png")
                     vis.lockedText = 'legend'
                 } else {
                     // show locked icon
                     vis.lockedIcon
                         .style('opacity', 1)
-                        .attr("src", "/static/img/locked.png")
+                        .attr("src", "static/img/locked.png")
 
                     // update lockedText
                     vis.lockedText = 'teaching'
@@ -1369,7 +1369,7 @@ class Vis {
                 showLockedTextBox(vis.lockedText)
                 vis.lockedIcon
                     .style('opacity', 1)
-                    .attr("src", "/static/img/locked.png")
+                    .attr("src", "static/img/locked.png")
 
             })
             .on('contextmenu', function (event,d){
