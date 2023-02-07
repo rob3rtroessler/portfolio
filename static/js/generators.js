@@ -5,6 +5,8 @@ function showLockedTextBox(lockedItem){
         showIntroTextBox()
     } else if (lockedItem === 'teaching'){
         showTeachingTextBox()
+    } else if (lockedItem === 'awards'){
+        showAwardsTextBox()
     }
 }
 
@@ -39,8 +41,8 @@ function showIntroTextBox(){
     // first, empty the container
     document.getElementById("exp-container").innerHTML = '';
 
-    //then, draw the circles again
-    explanationVis("exp-container")
+    //then, draw the legend vis
+    legendVis("exp-container")
 }
 
 function showTeachingTextBox(){
@@ -84,13 +86,77 @@ function showTeachingTextBox(){
     drawStudentCircle("sc-container")
 }
 
-function hideTeachingTextBox() {
+function showResearchTextBox(){
+    document.getElementById("text-box-inner").innerHTML =
+        `<div class="row" style="border: thin solid black; background: #e7e7e7">
+            <div class="col">
+                <div class="row" style="padding: 5px">
+                    <h1 style="text-align: center; font-size: 1.5em">Research Highlights</h1>
+                </div>
+                <div class="row" style="height: 30vh" id="exp-container">
+                </div>
+                <div class="row" style="font-style: italic; font-size: 1em; padding: 5px">
+                    <span style="text-align: center; ">
+                        Hover over elements to explore connections and tooltips
+                    </span>
+                </div>
+                <div class="row" style="font-style: italic; font-size: 1em; text-align: center; padding: 5px">
+                     <span style="text-align: center;">
+                        Click on elements to lock the current view and access additional information and context
+                    </span>
+                </div>
+                <div class="row" style="font-style: italic; font-size: 1em; text-align: center; padding: 5px">
+                    Right click on unique groups of elements, for advanced interactions such as sorting and filtering
+                </div>
+            </div>
+        </div>`
 
-    d3.select('#text-box').style('opacity', 0)
+    d3.select('#text-box').style('opacity',1)
 
+    // first, empty the container
+    document.getElementById("exp-container").innerHTML = '';
+
+    //then, draw the legend vis
+    legendVis("exp-container")
 }
 
-function explanationVis(parentElement){
+function showAwardsTextBox(){
+    document.getElementById("text-box-inner").innerHTML =
+        `<div class="row" style="border: thin solid black; background: #e7e7e7">
+            <div class="col">
+                <div class="row" style="padding: 5px">
+                    <h1 style="text-align: center; font-size: 1.5em">Awards & Fellowships</h1>
+                </div>
+                <div class="row" style="height: 30vh" id="awards-container">
+                </div>
+                <div class="row" style="font-style: italic; font-size: 1em; padding: 5px">
+                    <span style="text-align: center; ">
+                        Received multiple prestigious and highly competetive fellowships and awards, including the
+                        Pfortzheimer Fellowship, the Term Merit Stipend, and the Bernhard Blume Award. 
+                    </span>
+                </div>
+                <div class="row" style="font-style: italic; font-size: 1em; text-align: center; padding: 5px">
+                     <span style="text-align: center;">
+                        Secured more than 100.000$ for various research projects
+                    </span>
+                </div>
+                <div class="row" style="font-style: italic; font-size: 1em; text-align: center; padding: 5px">
+                    Received an 'Excellent in Teaching Award' for every single class taught (awarded to ~15% of Harvard's instructors)
+                </div>
+            </div>
+        </div>`
+
+    d3.select('#text-box').style('opacity',1)
+
+    // first, empty the container
+    document.getElementById("awards-container").innerHTML = '';
+
+    //then, draw the legend vis
+    drawAwardsChart("awards-container")
+}
+
+
+function legendVis(parentElement){
     let margin = {top: 10, right: $("#" + parentElement).width()/2, bottom: 10, left: 10},
         width = $("#" + parentElement).width() - margin.left - margin.right,
         height = $("#" + parentElement).height() - margin.top - margin.bottom;
@@ -293,7 +359,96 @@ function drawCourseCircle(parentElement){
         .text("Courses");
 }
 
+function drawAwardsChart(parentElement){
 
+    // relative margins
+    const width = $("#" + parentElement).width()
+    const height = $("#" + parentElement).height()
+    const margin = 10;
+    const radius = Math.min(width, height) / 2 - margin
+
+    // init drawing area
+    let svg = d3.select("#" + parentElement).append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("viewBox", [-width / 2, -height / 2, width, height])
+        .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+
+    let tmpData = {}
+    let awardsTotal = 0
+    phd_awards.forEach( (d,i)=>{
+        awardsTotal += 1;
+        if (d.type in tmpData){
+            tmpData[d.type] += 1
+        } else {
+            tmpData[d.type] = 1
+        }
+    })
+
+    let textGroup = svg.append("g")
+
+    let topText = textGroup
+        .append('text')
+        .attr('transform', `translate(0,10)`)
+        .text(awardsTotal)
+        .style('font-size', '3em')
+
+        .style('text-anchor', 'middle')
+        .style('text-align', 'center')
+
+    let bottomText = textGroup
+        .append('g')
+        .attr('transform', `translate(0,30)`)
+        .append('text')
+        .text("Total Awards")
+        .style('font-size', '1em')
+        .style('text-anchor', 'middle')
+        .style('text-align', 'center')
+
+    // Compute the position of each group on the pie:
+    const pie = d3.pie()
+        .sort(null) // Do not sort group by size
+        .value(d => d[1])
+    const data_ready = pie(Object.entries(tmpData))
+
+    // The arc generator
+    const arc = d3.arc()
+        .innerRadius(radius * 0.68)         // This is the size of the donut hole
+        .outerRadius(radius * 0.9)
+
+
+// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+    svg
+        .selectAll('allSlices')
+        .data(data_ready)
+        .join('path')
+        .attr('d', arc)
+        .attr('fill', d => {
+            console.log(d)
+            return awardTypeColorLookup[d.data[0]]
+        })
+        .attr("stroke", "black")
+        .style("stroke-width", "1.5px")
+        .style("opacity", 0.95)
+        .on('mouseover',function (event,d){
+            d3.select(this)
+                .style("stroke-width", "2px")
+                .style("opacity", 0.6)
+
+            topText.text(d.data[1])
+            bottomText.text(d.data[0] + "s")
+        })
+        .on('mouseout',function (event,d){
+            d3.select(this)
+                .style("stroke-width", "1.5px")
+                .style("opacity", 0.95)
+
+            topText.text(awardsTotal)
+            bottomText.text("Total Awards")
+
+        })
+
+}
 
 
 

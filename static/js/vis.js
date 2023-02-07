@@ -299,7 +299,7 @@ class Vis {
             .attr("y", vis.visHeight * 0.88 - vis.circle_radius)
             .attr("width", vis.circle_radius * 2)
             .style("opacity", 0.3)
-            .on('click', function (event, d){
+            .on('click', function (){
 
                 if(!vis.fixed.mscCircle){
                     vis.fixed.mscCircle = true
@@ -312,7 +312,7 @@ class Vis {
                 }
 
             })
-            .on('mouseover', function (event, d){
+            .on('mouseover', function (){
                 d3.select(`#msccircle`).style("stroke", vis.colors[0])
                 d3.selectAll(`.classline.msc`).style("stroke", vis.colors[0])
                 d3.selectAll(`.course.msc`)
@@ -327,7 +327,7 @@ class Vis {
                     })
 
             })
-            .on('mouseout', function (event, d){
+            .on('mouseout', function (){
                 if (!vis.fixed.mscCircle){
                     d3.select(`#msccircle`)
                         .style("stroke", "black")
@@ -551,7 +551,7 @@ class Vis {
             .style('font-size','0.8em')
             .style('text-anchor','middle')
             .style('opacity', 0)
-            .text('(click for info, right click to sort)')
+            .text('(left click to lock info box, right click to sort)')
 
         // draw overlay rect showing descriptive text
         vis.phdCourseWorkGroup.append('rect')
@@ -813,7 +813,7 @@ class Vis {
             .style('font-size','0.8em')
             .style('text-anchor','middle')
             .style('opacity', 0)
-            .text('(click for info, right click to sort)')
+            .text('(left click to lock info box, right click to sort)')
 
         // interactive overlay award rect
         vis.phdAwardsGroup.append('rect')
@@ -831,6 +831,41 @@ class Vis {
                 vis.awardsTextExplanation
                     .style('opacity', 1)
 
+                showAwardsTextBox()
+
+                // show locked status
+                if (vis.lockedText === 'awards'){
+
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/locked.png")
+
+                } else {
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/unlocked.png")
+
+                }
+
+            })
+            .on('click', function (event,d){
+
+                if (vis.lockedText === 'awards'){
+                    // show locked icon
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/unlocked.png")
+                    vis.lockedText = 'legend'
+                } else {
+                    // show locked icon
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/locked.png")
+
+                    // update lockedText
+                    vis.lockedText = 'awards'
+                }
+
             })
             .on('mouseout', function (event,d){
                 d3.select(this)
@@ -839,6 +874,12 @@ class Vis {
                     .style('opacity', 0)
                 vis.awardsTextExplanation
                     .style('opacity', 0)
+
+                // show the locked text box, and show the locked icon
+                showLockedTextBox(vis.lockedText)
+                vis.lockedIcon
+                    .style('opacity', 1)
+                    .attr("src", "/static/img/locked.png")
             })
             .on('contextmenu', function (event,d){
                 event.preventDefault()
@@ -911,7 +952,7 @@ class Vis {
             .style('font-size','0.8em')
             .style('text-anchor','middle')
             .style('opacity', 0)
-            .text('(click for info, right click to sort)')
+            .text('(left click to lock info box, right click to sort)')
 
 
         vis.teachingAxisGroup = vis.phd_teaching_group.append('g')
@@ -1192,7 +1233,6 @@ class Vis {
             })
             .on('mouseout', function (event, d) {
 
-                hideTeachingTextBox()
                 d3.select(this)
                     .style('stroke-width', '0.5px')
                     .style('fill', d => {
@@ -1220,7 +1260,6 @@ class Vis {
 
 
             })
-
 
         vis.drawPresentations()
     }
@@ -1264,28 +1303,49 @@ class Vis {
             .attr('d', vis.disspath)
 
 
-
         // p rect
-        vis.phd_projects_and_papers = vis.phd_group.selectAll("p-rect").data(presentations)
-
-        let groups = vis.phd_projects_and_papers.enter()
+        vis.presGroups = vis.phd_group.selectAll("p-rect").data(presentations)
+            .enter()
             .append("g")
-            .attr("x", function(d, i) {
-                return vis.phd_x(vis.parseDate(d.date))
-            })
-            .attr("y", d => vis.visHeight * 0.35 - 60)
             .attr("width", 20)
             .attr("height", 20)
             .attr("class", "presentation")
-            .attr('transform', d =>`translate(${vis.phd_x(vis.parseDate(d.date))}, ${ vis.visHeight * 0.25 - vis.visHeight * 0.02 *d.z}) scale(0.080,-0.080)`)
+            .attr('transform', d =>`translate(${vis.phd_x(vis.parseDate(d.date))}, ${ vis.visHeight * 0.25 - vis.visHeight * 0.03 *d.z}) scale(0.080,-0.080)`)
+            .on('mouseover', function(event,d){
+                d3.select(this).select('path')
+                    .style('fill', '#E29578')
+                    .style('opacity', 0.8)
+            })
+            .on('mouseout', function(event,d){
+                d3.select(this).select('path')
+                    .style('fill', 'grey')
+                    .style('opacity', 1)
+            })
 
-        groups.append('path')
-            .attr("d", `M 137.3 281.5 c -18.9 -5.1 -34 -20.6 -38.3 -39.4 c -1.9 -8.2 -0.8 -22.9 2.5 -31.9 c 12 -33 40.7 -49.2 66 -37.2 c 9.7 4.6 20.5 15.6 26.3 26.7 c 10 19.2 10.9 38.3 2.5 55.2 c -3.6 7.4 -15.1 18.8 -22.5 22.3 c -11.7 5.7 -25.3 7.3 -36.5 4.3 z M 214.3 198.1 c -4.8 -2.2 -7.3 -6.2 -7.3 -11.7 c 0 -2.8 1.1 -5.2 5.1 -10.6 c 5.5 -7.3 9 -9.8 13.8 -9.8 c 2.6 0 4.3 -1.7 15 -15.2 l 12.1 -15.3 l 0 -27.7 l 0 -27.8 l -114.9 0 l -115 0 l -2.7 -2.4 c -3.8 -3.2 -3.9 -8.6 -0.1 -12.4 c 2.7 -2.6 3.1 -2.7 15.7 -3 l 13 -0.4 l 0 -21.2 c 0 -15.2 0.3 -21.5 1.2 -22.4 c 1.7 -1.7 197.9 -1.7 199.6 0 c 0.9 0.9 1.2 7.2 1.2 22.4 l 0 21.2 l 12.9 0.4 c 11.2 0.3 13.2 0.6 15.1 2.3 c 3.4 3.1 4.2 6.1 2.6 10 c -1.9 4.4 -4.2 5.5 -11.5 5.5 l -6.1 0 l 0 30.3 l -0.1 30.2 l -12.9 16.4 c -11.8 14.9 -13 16.8 -12.4 19.5 c 0.7 4.2 -0.8 7.7 -6.2 14.6 c -4.2 5.4 -9.3 9 -12.6 9 c -0.7 0 -3.2 -0.9 -5.5 -1.9 z M 127.5 158.5 c -21.8 -3.4 -30.5 -6.3 -39.6 -13.1 c -11.2 -8.6 -16.2 -19.1 -18.4 -38.6 c -1.3 -12.1 -1.3 -13.4 0.2 -15 c 1.5 -1.7 5.8 -1.8 80.3 -1.8 c 75.4 0 78.8 0.1 80.4 1.9 c 1.5 1.7 1.5 2.8 0.2 14.7 c -0.8 7.3 -2.3 15.3 -3.5 18.5 c -4.9 12.9 -16.4 24.1 -28.9 27.9 c -19.3 6 -51.5 8.5 -70.7 5.5 z`)
+        let dPres = `M137.3 281.5c-18.9-5.1-34-20.6-38.3-39.4-1.9-8.2-.8-22.9 2.5-31.9 12-33 40.7-49.2 66-37.2 9.7 4.6 20.5 15.6 26.3 26.7 10 19.2 10.9 38.3 2.5 55.2-3.6 7.4-15.1 18.8-22.5 22.3-11.7 5.7-25.3 7.3-36.5 4.3zM214.3 198.1c-4.8-2.2-7.3-6.2-7.3-11.7 0-2.8 1.1-5.2 5.1-10.6 5.5-7.3 9-9.8 13.8-9.8 2.6 0 4.3-1.7 15-15.2l12.1-15.3 0-27.7 0-27.8-114.9 0-115 0-2.7-2.4c-3.8-3.2-3.9-8.6-.1-12.4 2.7-2.6 3.1-2.7 15.7-3l13-.4 0-21.2c0-15.2.3-21.5 1.2-22.4 1.7-1.7 197.9-1.7 199.6 0 .9.9 1.2 7.2 1.2 22.4l0 21.2 12.9.4c11.2.3 13.2.6 15.1 2.3 3.4 3.1 4.2 6.1 2.6 10-1.9 4.4-4.2 5.5-11.5 5.5l-6.1 0 0 30.3-.1 30.2-12.9 16.4c-11.8 14.9-13 16.8-12.4 19.5.7 4.2-.8 7.7-6.2 14.6-4.2 5.4-9.3 9-12.6 9-.7 0-3.2-.9-5.5-1.9zM127.5 158.5c-21.8-3.4-30.5-6.3-39.6-13.1-11.2-8.6-16.2-19.1-18.4-38.6-1.3-12.1-1.3-13.4.2-15 1.5-1.7 5.8-1.8 80.3-1.8 75.4 0 78.8.1 80.4 1.9 1.5 1.7 1.5 2.8.2 14.7-.8 7.3-2.3 15.3-3.5 18.5-4.9 12.9-16.4 24.1-28.9 27.9-19.3 6-51.5 8.5-70.7 5.5z`
+
+        vis.presentations = vis.presGroups.append('path')
+            .attr("d", dPres)
             .style('fill', 'grey')
             .style('stroke', 'black')
             .style('opacity', 1)
 
 
+        vis.publicationGroups = vis.phd_group.selectAll("p-rect").data(publications)
+            .enter()
+            .append("g")
+            .attr("width", 20)
+            .attr("height", 20)
+            .attr("class", "presentation")
+            .attr('transform', d =>`translate(${vis.phd_x(vis.parseDate(d.date))}, ${ vis.visHeight * 0.31 - vis.visHeight * 0.03 *d.z}) scale(0.0050,-0.0050)`)
+
+        let dPub = `M904 4536c-15-15-24-90-24-200l0-176-136 0c-170 0-184-14-184-184l0-136-136 0c-79 0-146-10-160-24-35-35-35-2957 0-2992 18-18 258-24 955-24l931 0 33-79c98-234 656-234 754 0l33 79 931 0c697 0 937 6 955 24 32 32 35 2918 3 2977-17 33-42 39-160 39l-139 0 0 136c0 170-14 184-184 184l-136 0 0 178c0 237 1 236-286 206-487-51-943-251-1276-559l-118-109-118 109c-317 294-766 498-1212 553-230 28-296 28-326-2zm462-177c394-81 724-253 1009-527l105-101 0-1245 0-1246-125 101c-353 285-915 499-1309 499-4 0-6 576-6 1280l0 1280 62 0c34 0 153-19 264-41zm2714-1239c0-704-2-1280-6-1280-394 0-956-214-1309-499l-125-101 0 1246 0 1245 105 101c331 319 866 559 1260 567l75 1 0-1280zm-3200-256c0-1277-13-1184 166-1184 365 0 844-176 1177-432 153-118 161-137 33-86-291 115-908 238-1351 269l-185 13 0 1278 0 1278 80 0 80 0 0-1136zm3520-144 0-1280-45 0c-371-1-1161-148-1494-280-125-49-117-29 35 86 346 262 811 434 1178 434 179 0 166-93 166 1184l0 1136 80 0 80 0 0-1280zm-3840-218c0-918 6-1181 25-1197 14-11 147-25 295-32 526-24 1122-157 1574-352l105-45 145 60c474 195 1014 313 1546 338 143 6 271 20 285 31 19 16 25 279 25 1197l0 1178 80 0 80 0 0-1360 0-1360-889 0c-962 0-972-1-1011-108-47-126-39-122-260-122-221 0-213-4-260 122-39 107-49 108-1011 108l-889 0 0 1360 0 1360 80 0 80 0 0-1178zM1382 3932c-44-52-7-109 84-133 258-66 422-133 685-280 86-49 141-44 163 14 48 125-843 507-932 399zM1381 3531c-36-43-6-109 55-122 170-35 465-146 614-231 208-120 299-120 261-2-43 135-855 446-930 355zM1381 3131c-53-64-7-101 191-157 184-52 435-161 592-258 79-49 139-37 152 29 26 132-847 492-935 386zM1384 2736c-64-64-16-105 188-158 150-39 429-161 594-261 80-48 137-38 150 28 25 129-834 489-932 391zM1379 2328c-47-56 6-94 208-152 173-50 448-174 598-270 65-41 121-20 131 51 21 137-847 481-937 371zM3506 3920c-302-79-696-287-696-368 0-92 60-86 284 32 200 104 346 161 560 215 90 24 128 81 85 132-30 37-56 35-233-11zM3460 3508c-186-54-545-223-617-289-91-85-7-175 102-111 226 135 513 251 739 300 99 22 89 153-11 151-24-1-119-23-213-51zM3480 3118c-167-44-565-230-636-298-97-92-6-177 112-104 157 97 408 206 592 258 198 56 244 93 191 157-31 38-76 35-259-13zM3470 2718c-163-46-559-235-626-298-97-92-9-175 110-103 166 100 444 222 595 262 181 47 232 82 199 136-31 49-115 50-278 3zM3420 2302c-349-116-627-272-616-346 10-70 67-91 131-50 132 86 443 225 610 273 191 55 242 94 196 149-37 46-127 38-321-26z`
+
+        vis.publicationGroups.append('path')
+            .attr("d", dPub)
+            .style('fill', 'grey')
+            .style('stroke', 'black')
+            .style('opacity', 1)
             .on('mouseover', function(event,d){
                 d3.select(this)
                     .style('fill', '#E29578')
@@ -1296,47 +1356,6 @@ class Vis {
                     .style('fill', 'grey')
                     .style('opacity', 1)
             })
-
-
-        vis.phd_projects_and_papers.enter().append("rect")
-            .attr('class', d => 'p-rect')
-            .attr("x", d => vis.phd_x(vis.parseDate(d.date)) + 10)
-            .attr("y", d => vis.visHeight * 0.35 - 60)
-            .attr("width", 1)
-            .attr("height", 40)
-            .style('fill', d => "grey")
-            .style('stroke', 'grey')
-            .style('stroke-width', '0.5px')
-
-
-
-        // // pp circle
-        // vis.phd_projects_and_papers = vis.phd_group.selectAll("pp-circle").data(projectsAndPapers)
-        //
-        // vis.phd_projects_and_papers.enter().append("circle")
-        //     .attr('class', d => 'pp-circle')
-        //     .attr("cx", d => vis.phd_x(vis.parseDate(d.date)))
-        //     .attr("cy", d => vis.visHeight * 0.20)
-        //     .attr("r", 12)
-        //     //.style('fill', d => "#83C5BE")
-        //     .style('fill', d => "transparent")
-        //     .style('stroke', 'grey')
-        //     .style('stroke-width', '1px')
-        //
-        // vis.phd_projects_and_papers.enter().append("rect")
-        //     .attr('class', d => 'pp-circle-line')
-        //     .attr("x", d => vis.phd_x(vis.parseDate(d.date)) )
-        //     .attr("y", d => vis.visHeight * 0.20 + 12)
-        //     .attr("width", 1)
-        //     .attr("height", 40)
-        //     //.style('fill', d => "#83C5BE")
-        //     .style('fill', d => "grey")
-        //     .style('stroke', 'grey')
-        //     .style('stroke-width', '0.5px')
-
-
-
-
 
         vis.drawSkills()
     }
@@ -1826,7 +1845,6 @@ class Vis {
                 return color
             })
     }
-
 }
 
 

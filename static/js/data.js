@@ -194,6 +194,57 @@ let phd_awards = [
     },
 ]
 
+let publications = [
+    {
+        title: 'Vom Dandytum zum Judentum. Biographische und werkästhetische Entwicklungen bei Beer-Hofmann.',
+        in: 'In: Tradition in der Wiener Moderne, ed. by Wilhelm Hemecker, Cornelius Mitterer, and David Österle. Berlin, Boston: De Gruyter 2017, pp. 217-234.',
+        type: 'publication',
+        subtype: 'paper',
+        date: '09/30/2017',
+        z: 0
+    },
+    {
+        title: 'Jung Wien auf der Schulbank.',
+        in: 'Co-curated exhibition at the ‘Akademisches Gymnasium’ in Vienna together with PD Dr. Tobias Heinrich (Univ. of Kent)',
+        type: 'exhibition',
+        subtype: 'paper',
+        date: '04/01/2018',
+        z: 0
+    },
+    {
+        title: 'Moderne Körperroutinen. Zur Optimierung und Technisierung von Habitus und Haltung in Robert Musils Der Riese Agoag.',
+        in: 'In: Das Abenteuer des Gewöhnlichen. Alltag in der deutschsprachigen Literatur der Moderne, ed. By Thorsten Carstensen and Mattias Pirholt, Berlin: Erich Schmidt Verlag 2018, pp. 136 - 152 (=Philologische Studien und Quellen 267) ',
+        type: 'publication',
+        subtype: 'paper',
+        date: '09/30/2018',
+        z: 0
+    },
+    {
+        title: 'TexTiles: Exploring Patterns in Historical Discourse.',
+        in: 'Conference Proceedings of the 4th Workshop on Visualization for the Digital Humanities (at IEEE Vis 2019), pp. 175-281.',
+        type: 'publication',
+        subtype: 'paper',
+        date: '09/30/2019',
+        z: 0
+    },
+    {
+        title: 'Felix Dörmann als Novellist und Sonntagshumorist.',
+        in: 'Felix Dörmann (1870-1928). Special Issue. Journal for Austrian Studies, Volume 54, Number 2, Summer 2021, pp. 47-72.',
+        type: 'publication',
+        subtype: 'paper',
+        date: '07/01/2021',
+        z: 0
+    },
+
+    {
+        title: 'Jung Wien zwischen Stadt und Land. Zu Richard Beer-Hofmanns „sezessionierter“ Villa im Wiener Cottageviertel.',
+        in: 'Planen - Wohnen - Schreiben, ed. by Roland Innerhofer et al, Vienna: Picus 2021',
+        type: 'publication',
+        subtype: 'paper',
+        date: '12/01/2021',
+        z: 0
+    }
+]
 let projectsAndPapers = [
     {
         title: 'Vom Dandytum zum Judentum. Biographische und werkästhetische Entwicklungen bei Beer-Hofmann.',
@@ -277,7 +328,6 @@ let presentations = [
         date: '09/30/2017',
         z: 1,
         x_trans: 0.1
-
     },
     {
         title: 'Die angeleitete Freizeit. Zur Optimierung der freien Stunden von Arbeitern und Angestellten im frühen 20. Jahrhundert',
