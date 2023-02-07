@@ -166,6 +166,16 @@ class Vis {
     drawSeparators(){
         let vis = this;
 
+        // add line above research
+        vis.phd_group.append("line")
+            .attr("x1", 0)
+            .attr("y1", vis.visHeight*0.125)
+            .attr("x2", vis.phd_width*vis.width)
+            .attr("y2", vis.visHeight*0.125)
+            .style('stroke', "#707070")
+            .style('stroke-width', '0.5')
+            .style('stroke-dasharray', 5)
+
         // add line above teaching
         vis.phd_group.append("line")
             .attr("x1", 0)
@@ -1261,22 +1271,113 @@ class Vis {
 
             })
 
-        vis.drawPresentations()
+        vis.drawResearch()
     }
 
-    drawPresentations(){
+    drawResearch(){
 
         let vis = this;
 
+        // create a research group
+        vis.researchGroup = vis.phd_group.append('g')
+            .attr('id', 'phd-research')
+
+        // define the text
+        vis.researchText = vis.researchGroup.append('text')
+            .attr('x', vis.phd_width*vis.width/2)
+            .attr("y", vis.visHeight*0.225 - vis.visHeight*0.075)
+            .style('font-style','italic')
+            .style('text-anchor','middle')
+            .style('opacity', 0)
+            .text('Research Highlights')
+
+        vis.researchTextExplanation = vis.researchGroup.append('text')
+            .attr('x', vis.phd_width*vis.width/2)
+            .attr("y", vis.visHeight*0.225 - vis.visHeight*0.052)
+            .style('font-style','italic')
+            .style('font-size','0.8em')
+            .style('text-anchor','middle')
+            .style('opacity', 0)
+            .text('(left click to lock info box, right click to sort)')
+
 
         // add interactive rect that triggers sorting of all courses by q scores or enrollment
-        // vis.phd_teaching_group.append('rect')
-        //     .attr("id", "teachingrect")
-        //     .attr("x", 0)
-        //     .attr("y", vis.visHeight*0.35 - vis.visHeight*0.10)
-        //     .attr("width", vis.phd_width*vis.width)
-        //     .attr("height", vis.visHeight*0.10)
-        //     .style("fill", 'red')
+        vis.researchGroup.append('rect')
+            .attr("id", "researchrect")
+            .attr("x", 0)
+            .attr("y", vis.visHeight*0.225 - vis.visHeight*0.10)
+            .attr("width", vis.phd_width*vis.width)
+            .attr("height", vis.visHeight*0.225)
+            .style("fill", 'transparent')
+            .on('mouseover', function (event,d){
+                d3.select(this)
+                    .style("fill", "rgba(255,255,255,0.36)")
+
+                vis.researchText
+                    .style('opacity', 1)
+
+                vis.researchTextExplanation
+                    .style('opacity', 1)
+
+
+                // show text box
+                showResearchTextBox()
+
+                // show locked status
+                if (vis.lockedText === 'research'){
+
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/locked.png")
+
+                } else {
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/unlocked.png")
+
+                }
+            })
+            .on('click', function (event,d){
+
+                if (vis.lockedText === 'teaching'){
+                    // show locked icon
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/unlocked.png")
+                    vis.lockedText = 'legend'
+                } else {
+                    // show locked icon
+                    vis.lockedIcon
+                        .style('opacity', 1)
+                        .attr("src", "/static/img/locked.png")
+
+                    // update lockedText
+                    vis.lockedText = 'teaching'
+                }
+
+            })
+            .on('mouseout', function (event,d){
+
+                d3.select(this)
+                    .style("fill", "transparent")
+                vis.teaching_text
+                    .style('opacity', 0)
+                vis.teachingTextExplanation
+                    .style('opacity', 0)
+
+                // show the locked text box, and show the locked icon
+                showLockedTextBox(vis.lockedText)
+                vis.lockedIcon
+                    .style('opacity', 1)
+                    .attr("src", "/static/img/locked.png")
+
+            })
+            .on('contextmenu', function (event,d){
+                event.preventDefault()
+                vis.iterateThroughTeachingViews()
+
+            })
+
 
         vis.diss_y = d3.scaleLinear()
             .domain([0,200])
@@ -1310,7 +1411,7 @@ class Vis {
             .attr("width", 20)
             .attr("height", 20)
             .attr("class", "presentation")
-            .attr('transform', d =>`translate(${vis.phd_x(vis.parseDate(d.date))}, ${ vis.visHeight * 0.25 - vis.visHeight * 0.03 *d.z}) scale(0.080,-0.080)`)
+            .attr('transform', d =>`translate(${vis.phd_x(vis.parseDate(d.date))}, ${ vis.visHeight * 0.25})`)
             .on('mouseover', function(event,d){
                 d3.select(this).select('path')
                     .style('fill', '#E29578')
@@ -1324,11 +1425,33 @@ class Vis {
 
         let dPres = `M137.3 281.5c-18.9-5.1-34-20.6-38.3-39.4-1.9-8.2-.8-22.9 2.5-31.9 12-33 40.7-49.2 66-37.2 9.7 4.6 20.5 15.6 26.3 26.7 10 19.2 10.9 38.3 2.5 55.2-3.6 7.4-15.1 18.8-22.5 22.3-11.7 5.7-25.3 7.3-36.5 4.3zM214.3 198.1c-4.8-2.2-7.3-6.2-7.3-11.7 0-2.8 1.1-5.2 5.1-10.6 5.5-7.3 9-9.8 13.8-9.8 2.6 0 4.3-1.7 15-15.2l12.1-15.3 0-27.7 0-27.8-114.9 0-115 0-2.7-2.4c-3.8-3.2-3.9-8.6-.1-12.4 2.7-2.6 3.1-2.7 15.7-3l13-.4 0-21.2c0-15.2.3-21.5 1.2-22.4 1.7-1.7 197.9-1.7 199.6 0 .9.9 1.2 7.2 1.2 22.4l0 21.2 12.9.4c11.2.3 13.2.6 15.1 2.3 3.4 3.1 4.2 6.1 2.6 10-1.9 4.4-4.2 5.5-11.5 5.5l-6.1 0 0 30.3-.1 30.2-12.9 16.4c-11.8 14.9-13 16.8-12.4 19.5.7 4.2-.8 7.7-6.2 14.6-4.2 5.4-9.3 9-12.6 9-.7 0-3.2-.9-5.5-1.9zM127.5 158.5c-21.8-3.4-30.5-6.3-39.6-13.1-11.2-8.6-16.2-19.1-18.4-38.6-1.3-12.1-1.3-13.4.2-15 1.5-1.7 5.8-1.8 80.3-1.8 75.4 0 78.8.1 80.4 1.9 1.5 1.7 1.5 2.8.2 14.7-.8 7.3-2.3 15.3-3.5 18.5-4.9 12.9-16.4 24.1-28.9 27.9-19.3 6-51.5 8.5-70.7 5.5z`
 
-        vis.presentations = vis.presGroups.append('path')
-            .attr("d", dPres)
-            .style('fill', 'grey')
-            .style('stroke', 'black')
-            .style('opacity', 1)
+        // vis.presentations = vis.presGroups.append('path')
+        //     .attr("d", dPres)
+        //     .style('fill', 'grey')
+        //     .style('stroke', 'black')
+        //     .style('opacity', 1)
+
+        vis.presentationsCircles = vis.presGroups.append('line')
+            .attr("cx", 0)
+            .attr("cy", d=> -25 -d.z*25)
+            .attr("r", 8)
+            .style("fill", 'lightgrey')
+            .style("stroke", "black")
+
+            .attr("x1", 0)
+            .attr("y1", d=> -25 -d.z*25)
+            .attr("x2", 5)
+            .attr("y2", 0)
+            .style('stroke', "#2f2f2f")
+            .style('stroke-width', '0.5')
+
+
+        vis.presentationsCircles = vis.presGroups.append('circle')
+            .attr("cx", 0)
+            .attr("cy", d=> -25 -d.z*25)
+            .attr("r", 8)
+            .style("fill", 'lightgrey')
+            .style("stroke", "black")
 
 
         vis.publicationGroups = vis.phd_group.selectAll("p-rect").data(publications)
@@ -1492,6 +1615,8 @@ class Vis {
             .attr('y', d => vis.visHeight + vis.margin.top + vis.margin.bottom + d.row*50 + 24)
             .text(d=> d.skill_long)
             .style('text-anchor', 'middle')
+            .style('font-size', '0.9em')
+
             .on('click', function (event, d){
                 // when you click on it, you actually should have triggered the hover event first,
                 // so the only thing you need to do is to lock the selection
@@ -1666,7 +1791,7 @@ class Vis {
         if(vis.switches.teaching_sorted % 4 === 0) {
 
             vis.teaching_text
-                .text('teaching experience')
+                .text('Teaching Experience')
 
             vis.teaching_rects
                 .transition()
