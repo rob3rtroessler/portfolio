@@ -1282,6 +1282,7 @@ class Vis {
         vis.researchGroup = vis.phd_group.append('g')
             .attr('id', 'phd-research')
 
+
         // define the text
         vis.researchText = vis.researchGroup.append('text')
             .attr('x', vis.phd_width*vis.width/2)

@@ -93,20 +93,25 @@ function showResearchTextBox(){
                 <div class="row" style="padding: 5px">
                     <h1 style="text-align: center; font-size: 1.5em">Research Highlights</h1>
                 </div>
-                <div class="row" style="height: 30vh" id="exp-container">
+                <div class="row" style="height: 30vh" id="research-container">
                 </div>
                 <div class="row" style="font-style: italic; font-size: 1em; padding: 5px">
                     <span style="text-align: center; ">
-                        Hover over elements to explore connections and tooltips
+                        Published 6 articles, one edited volume, and curated an exhibition.
                     </span>
                 </div>
                 <div class="row" style="font-style: italic; font-size: 1em; text-align: center; padding: 5px">
                      <span style="text-align: center;">
-                        Click on elements to lock the current view and access additional information and context
+                        Presented my research at 10+ domestic and international conferences with an audience of 700+ people
                     </span>
                 </div>
                 <div class="row" style="font-style: italic; font-size: 1em; text-align: center; padding: 5px">
-                    Right click on unique groups of elements, for advanced interactions such as sorting and filtering
+                    Thesis: The Patterns of Discourse. The Mathematizan of Psychological Thought in the Long 19th Century
+                </div>
+                <div class="row" style="font-style: italic; font-size: 1em; text-align: center; padding: 5px">
+                    Developed over a dozen custom software applications in various domains. 
+                    Specialized in complex and interactive dashboard to identify high-level patterns 
+                    in my chosen research corpus
                 </div>
             </div>
         </div>`
