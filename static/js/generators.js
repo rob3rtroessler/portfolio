@@ -106,7 +106,7 @@ function showResearchTextBox(){
                     </span>
                 </div>
                 <div class="row" style="font-style: italic; font-size: 1em; text-align: center; padding: 5px">
-                    Thesis: The Patterns of Discourse. The Mathematizan of Psychological Thought in the Long 19th Century
+                    Thesis: The Patterns of Discourse. The Mathematization of Psychological Thought in the Long 19th Century
                 </div>
                 <div class="row" style="font-style: italic; font-size: 1em; text-align: center; padding: 5px">
                     Developed over a dozen custom software applications in various domains. 
