@@ -33,12 +33,10 @@ function explore(){
         .transition()
         .delay(1000)
 
-
     d3.select("#logo-container")
         .style("left","39vw")
         .style("top", "39vh")
         .style("height", "20vh")
-
 
         .transition()
         .duration(1000)

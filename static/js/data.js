@@ -66,7 +66,6 @@ let phd_awards = [
         year: "07/01/2018",
         tag: 'research',
         z: 2
-
     },
     {
         name: 'Distinction in Teaching Award',
